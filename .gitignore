@@ -1,0 +1,14 @@
+source_materials/*
+!source_materials/README.md
+!source_materials/trace-manifest.json
+!source_materials/example-traces.json
+!source_materials/skill-coverage.json
+!source_materials/agent-routing-cases.json
+!source_materials/THIRD_PARTY_NOTICES.md
+!source_materials/GPL-3.0.txt
+.playwright-mcp/
+.DS_Store
+node_modules/
+*.tgz
+.example-captures/
+.claude/launch.json

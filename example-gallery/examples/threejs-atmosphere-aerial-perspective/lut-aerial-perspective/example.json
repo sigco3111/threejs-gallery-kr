@@ -1,0 +1,30 @@
+{
+  "title": "Atmosphere and Aerial Perspective",
+  "description": "A precomputed-LUT sky and aerial-perspective composition using the package SkyMaterial, SkyLightProbe, SunDirectionalLight, AerialPerspectiveEffect, lens flare, AGX tone mapping, and dithering path with one atmosphere model shared by sky radiance, sun transmittance, and surface-segment inscattering.",
+  "backend": "WebGL2 / package sky and postprocessing effects",
+  "techniques": [
+    "precomputed transmittance scattering and irradiance LUTs",
+    "SkyMaterial full-screen atmospheric sky",
+    "SunDirectionalLight transmittance",
+    "AerialPerspectiveEffect transmittance and inscattering toggles",
+    "AGX tone mapping plus lens flare and dithering"
+  ],
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "defaultDpr": 1,
+  "debugModes": [
+    { "value": "final", "label": "Final" },
+    { "value": "transmittance", "label": "Transmittance only" },
+    { "value": "inscatter", "label": "Inscatter only" },
+    { "value": "no-aerial-perspective", "label": "No aerial perspective" }
+  ],
+  "controls": [
+    "orbit",
+    "pause",
+    "dpr",
+    "debugMode",
+    "capture"
+  ]
+}

@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <title>Three.js Example Inspection</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body, canvas { width: 100%; height: 100%; margin: 0; display: block; }
+      body { overflow: hidden; background: #020305; font-family: system-ui, sans-serif; }
+      canvas { touch-action: none; }
+
+      /* Floating Korean overlay */
+      .overlay {
+        position: fixed;
+        top: 14px;
+        left: 14px;
+        z-index: 10;
+        background: rgba(8, 12, 20, 0.55);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        padding: 10px 14px;
+        color: #e8edf2;
+        font-size: 13px;
+        line-height: 1.4;
+        max-width: 360px;
+        pointer-events: auto;
+      }
+      .overlay h1 { margin: 0 0 4px; font-size: 15px; font-weight: 600; }
+      .overlay .skill {
+        font-size: 11px;
+        color: #8aa4d1;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 4px;
+      }
+      .overlay .desc { font-size: 12px; color: #b8c4d4; margin: 6px 0 0; }
+      .overlay a { color: #6ec1ff; text-decoration: none; font-size: 12px; }
+      .overlay a:hover { text-decoration: underline; }
+      .overlay .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+      .overlay .badge {
+        font-size: 10px;
+        padding: 2px 6px;
+        background: rgba(110, 193, 255, 0.12);
+        color: #6ec1ff;
+        border-radius: 4px;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://esm.sh/three@0.185.1",
+          "three/webgpu": "https://esm.sh/three@0.185.1/webgpu",
+          "three/tsl": "https://esm.sh/three@0.185.1/tsl",
+          "three/addons/": "https://esm.sh/three@0.185.1/examples/jsm/",
+          "@petamoriken/float16": "https://esm.sh/@petamoriken/float16@3.9.2",
+          "astronomy-engine": "https://esm.sh/astronomy-engine@2.1.19",
+          "fflate": "https://esm.sh/fflate@0.8.2",
+          "postprocessing": "https://esm.sh/postprocessing@6.37.4",
+          "three-mesh-bvh": "https://esm.sh/three-mesh-bvh@0.9.10",
+          "three-stdlib": "./three-stdlib-exr-loader.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="overlay" id="overlay" hidden>
+      <div class="skill" id="o-skill"></div>
+      <h1 id="o-title"></h1>
+      <p class="desc" id="o-desc"></p>
+      <div class="badges" id="o-badges"></div>
+      <a href="../" id="o-back">← 갤러리로 돌아가기</a>
+    </div>
+    <canvas></canvas>
+    <script type="module" src="./inspection-host.js"></script>
+    <script>
+      // Korean overlay populated from URL params
+      (() => {
+        const params = new URLSearchParams(window.location.search);
+        const title = params.get("krTitle");
+        const skill = params.get("krSkill");
+        const desc = params.get("krDesc");
+        const back = params.get("krBack");
+        const tech = (params.get("krTech") || "").split("|").filter(Boolean);
+        if (!title) return;
+        document.title = title + " — 갤러리";
+        document.documentElement.lang = "ko";
+        const ov = document.getElementById("overlay");
+        document.getElementById("o-skill").textContent = skill || "";
+        document.getElementById("o-title").textContent = title;
+        document.getElementById("o-desc").textContent = desc || "";
+        const badges = document.getElementById("o-badges");
+        for (const t of tech) {
+          const b = document.createElement("span");
+          b.className = "badge";
+          b.textContent = t;
+          badges.append(b);
+        }
+        const backLink = document.getElementById("o-back");
+        backLink.href = back || "../";
+        ov.hidden = false;
+      })();
+    </script>
+  </body>
+</html>

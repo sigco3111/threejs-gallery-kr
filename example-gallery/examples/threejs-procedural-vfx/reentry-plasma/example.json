@@ -1,0 +1,32 @@
+{
+  "title": "Reentry Plasma",
+  "description": "A stack of closed, flow-aligned plasma wake shells with tapered expansion, advected filament fields, Fresnel-supported all-angle coverage, thermal color progression, and additive emission.",
+  "backend": "WebGL2 / GLSL additive wake shells",
+  "techniques": [
+    "closed layered capsule-profile wake geometry",
+    "flow-axis taper and expansion",
+    "coarse and fine advected filament fields",
+    "Fresnel-supported all-angle shell coverage",
+    "thermal color and additive emission hierarchy"
+  ],
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "defaultDpr": 1,
+  "debugModes": [
+    { "value": "final", "label": "Final" },
+    { "value": "shell-coverage", "label": "Shell coverage" },
+    { "value": "filaments", "label": "Filaments" },
+    { "value": "thermal-color", "label": "Thermal color" },
+    { "value": "opacity", "label": "Opacity" }
+  ],
+  "controls": [
+    "orbit",
+    "pause",
+    "timeScale",
+    "dpr",
+    "debugMode",
+    "capture"
+  ]
+}

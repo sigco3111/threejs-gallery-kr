@@ -1,0 +1,914 @@
+/* ---------------------------------------------------------------------------
+   Visual example gallery — achromatic inspection chrome.
+
+   The rendered example is the only source of colour in this interface. Every
+   surface, rule, and label is a warm neutral on cool graphite so the eye
+   calibrates on the render and not on the tooling around it.
+--------------------------------------------------------------------------- */
+
+:root {
+  --bg: #0b0b0d;
+  --panel: #0e0e11;
+  --panel-raised: #131317;
+  --stage: #050506;
+
+  --ink: #edeae3;
+  --ink-2: #a5a29c;
+  --ink-3: #76736e;
+  --ink-4: #55534f;
+
+  --line: rgba(240, 238, 232, 0.085);
+  --line-soft: rgba(240, 238, 232, 0.05);
+  --line-frame: rgba(240, 238, 232, 0.14);
+  --line-strong: rgba(240, 238, 232, 0.28);
+  --tint: rgba(240, 238, 232, 0.04);
+  --tint-strong: rgba(240, 238, 232, 0.07);
+  --danger: #e0705f;
+
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+  --topbar-height: 58px;
+  --catalog-head-height: 38px;
+  --status-height: 28px;
+  --catalog-width: 292px;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  color: var(--ink);
+  background: var(--bg);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-width: 960px;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+}
+
+button,
+input,
+select {
+  color: inherit;
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 1px solid var(--line-strong);
+  outline-offset: 2px;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-rows: var(--topbar-height) minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+}
+
+/* --- top bar -------------------------------------------------------------- */
+
+.topbar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 0 16px 0 18px;
+  background: var(--bg);
+}
+
+/* Hairline that resolves into the frame instead of butting into both edges. */
+.topbar::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--line) 4%,
+    var(--line) 96%,
+    transparent
+  );
+  content: "";
+}
+
+.brand,
+.topbar-actions,
+.toolbar,
+.catalog-heading {
+  display: flex;
+  align-items: center;
+}
+
+.brand {
+  gap: 11px;
+}
+
+/* The mark's contours only occupy the middle two thirds of its box, so it is
+   set larger than the cap height it sits beside. */
+.brand-mark {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  color: var(--ink);
+}
+
+.eyebrow {
+  margin: 0 0 3px;
+  color: var(--ink-4);
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.19em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+}
+
+.topbar-actions {
+  gap: 8px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 320px;
+  height: 32px;
+  padding: 0 7px 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel);
+  transition:
+    border-color 150ms var(--ease),
+    background 150ms var(--ease);
+}
+
+.search:focus-within {
+  border-color: var(--line-strong);
+  background: var(--panel-raised);
+}
+
+.search:focus-within kbd {
+  opacity: 0;
+}
+
+.search > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 12.5px;
+  letter-spacing: -0.005em;
+}
+
+.search input::placeholder {
+  color: var(--ink-4);
+}
+
+.search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+kbd {
+  padding: 3px 5px;
+  border-radius: 3px;
+  color: var(--ink-4);
+  background: var(--tint);
+  font-family: var(--mono);
+  font-size: 9px;
+  line-height: 1;
+  transition: opacity 120ms var(--ease);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 32px;
+  padding: 0 13px 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink-2);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    border-color 150ms var(--ease),
+    color 150ms var(--ease),
+    background 150ms var(--ease);
+}
+
+.button:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+  background: var(--tint);
+}
+
+.button-icon {
+  flex: none;
+  width: 15px;
+  height: 15px;
+  color: var(--ink-3);
+  transition: color 150ms var(--ease);
+}
+
+.button:hover .button-icon {
+  color: var(--ink-2);
+}
+
+#refresh.is-refreshing .button-icon {
+  color: var(--ink);
+  animation: rotate 620ms linear infinite;
+}
+
+/* The overview control is a destination, not a toggle: it reads as "current"
+   while the grid is on screen — the cells fill instead of the label changing. */
+.button-primary {
+  color: var(--ink);
+}
+
+.button-primary .button-icon rect {
+  fill: none;
+  transition: fill 160ms var(--ease);
+}
+
+.button-primary[aria-current="true"] {
+  border-color: var(--line-strong);
+  background: var(--tint-strong);
+}
+
+.button-primary[aria-current="true"] .button-icon {
+  color: var(--ink);
+}
+
+.button-primary[aria-current="true"] .button-icon rect {
+  fill: currentColor;
+}
+
+/* --- layout --------------------------------------------------------------- */
+
+.main-layout {
+  display: grid;
+  grid-template-columns: var(--catalog-width) minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* --- catalog -------------------------------------------------------------- */
+
+.catalog {
+  display: grid;
+  grid-template-rows: var(--catalog-head-height) minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.catalog-heading {
+  justify-content: space-between;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--line-soft);
+  color: var(--ink-4);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+#runtime-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+#runtime-summary::before {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ink-4);
+  content: "";
+  transition: background 200ms var(--ease);
+}
+
+#runtime-summary[data-state="ready"]::before {
+  background: var(--ink);
+}
+
+#runtime-summary[data-state="loading"]::before {
+  background: var(--ink-3);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+#runtime-summary[data-state="error"]::before {
+  background: var(--danger);
+}
+
+#example-list {
+  min-height: 0;
+  padding: 0 10px 28px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.skill-group {
+  margin: 0;
+}
+
+/* Sticky group headers keep the current skill legible while the list scrolls. */
+.skill-group h3 {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 17px 2px 8px;
+  color: var(--ink-4);
+  background: linear-gradient(
+    180deg,
+    var(--panel) 0 74%,
+    rgba(14, 14, 17, 0) 100%
+  );
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  transition: color 160ms var(--ease);
+}
+
+.skill-group h3::after {
+  order: 2;
+  flex: 1;
+  height: 1px;
+  background: var(--line-soft);
+  content: "";
+}
+
+.skill-group[data-has-current="true"] h3 {
+  color: var(--ink-2);
+}
+
+.group-count {
+  order: 3;
+  color: var(--ink-4);
+  font-variant-numeric: tabular-nums;
+}
+
+.example-link {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 1px 0;
+  padding: 8px 10px 8px 12px;
+  border: 0;
+  border-radius: 3px;
+  color: var(--ink-2);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  /* Keeps a keyboard-revealed row clear of the sticky group header. */
+  scroll-margin: 42px 0 18px;
+  transition:
+    color 140ms var(--ease),
+    background 140ms var(--ease);
+}
+
+/* Selection rail: grows from the row's centre, readable at a glance while
+   stepping through examples with j/k. */
+.example-link::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 2px;
+  height: 0;
+  border-radius: 1px;
+  background: var(--ink);
+  content: "";
+  transform: translateY(-50%);
+  transition: height 200ms var(--ease);
+}
+
+.example-link:hover {
+  color: var(--ink);
+  background: var(--tint);
+}
+
+.example-link[aria-current="true"] {
+  color: var(--ink);
+  background: var(--tint-strong);
+}
+
+.example-link[aria-current="true"]::before {
+  height: calc(100% - 12px);
+}
+
+.example-link strong {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.008em;
+  line-height: 1.35;
+}
+
+/* --- inspection ----------------------------------------------------------- */
+
+.inspection {
+  position: relative;
+  min-width: 0;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--stage);
+}
+
+.single-view {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+}
+
+.toolbar {
+  z-index: 2;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 44px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-left: 8px;
+  color: var(--ink-4);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.toolbar select {
+  height: 30px;
+  padding: 0 24px 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  outline: 0;
+  color: var(--ink-2);
+  background: var(--panel-raised);
+  font-family: inherit;
+  font-size: 11.5px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.toolbar .button {
+  min-height: 30px;
+  padding: 0 11px;
+  font-size: 11.5px;
+}
+
+.stage-shell {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) var(--status-height);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--stage);
+}
+
+.stage {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.stage iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #000;
+}
+
+/* A fixed viewport reads as a plate on an easel; a responsive one runs edge to
+   edge with no rule doubling the surrounding frame. */
+.stage[data-fit="fixed"] iframe {
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.stage-status {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-4);
+  background: var(--panel);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.stage-status > span:not(:empty) ~ span:not(:empty) {
+  margin-left: 14px;
+  padding-left: 14px;
+  border-left: 1px solid var(--line-soft);
+}
+
+#frame-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-3);
+}
+
+#frame-status::before {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ink-4);
+  content: "";
+}
+
+#frame-status[data-state="loading"]::before {
+  background: var(--ink-3);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+#frame-status[data-state="ready"]::before {
+  background: var(--ink);
+}
+
+#frame-status[data-state="ready"] {
+  color: var(--ink-2);
+}
+
+#frame-status[data-state="error"] {
+  color: var(--danger);
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+#frame-status[data-state="error"]::before {
+  background: var(--danger);
+}
+
+#frame-metrics {
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- overview ------------------------------------------------------------- */
+
+.overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  align-content: start;
+  gap: 22px 16px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 18px 18px 32px;
+  overflow-y: auto;
+  background: var(--bg);
+}
+
+.overview-card {
+  display: grid;
+  grid-template-rows: auto auto;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+  border: 0;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  outline: 0;
+}
+
+.overview-thumbnail-shell {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  /* A defined edge: dark renders must not bleed into the page. */
+  border: 1px solid var(--line-frame);
+  border-radius: 2px;
+  background: var(--stage);
+  transition:
+    border-color 180ms var(--ease),
+    box-shadow 180ms var(--ease);
+}
+
+.overview-card:hover .overview-thumbnail-shell,
+.overview-card:focus-visible .overview-thumbnail-shell {
+  border-color: var(--line-strong);
+}
+
+.overview-card:focus-visible .overview-thumbnail-shell {
+  box-shadow: 0 0 0 1px var(--line-strong);
+}
+
+.overview-card[data-active="true"] .overview-thumbnail-shell {
+  border-color: var(--line-strong);
+}
+
+.overview-thumbnail-shell::before {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  color: var(--ink-4);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+  content: attr(data-message);
+}
+
+/* Indeterminate progress reads as a light sweep, not a spinner. */
+.overview-thumbnail-shell[data-state="loading"]::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 34%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(240, 238, 232, 0.45),
+    transparent
+  );
+  content: "";
+  animation: sweep 1.8s var(--ease) infinite;
+}
+
+.overview-thumbnail-shell[data-state="ready"]::before {
+  content: "";
+}
+
+.overview-thumbnail-shell[data-state="error"]::before {
+  color: var(--danger);
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+.overview-thumbnail {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 220ms var(--ease);
+  pointer-events: none;
+}
+
+.overview-thumbnail-shell[data-state="ready"] .overview-thumbnail {
+  opacity: 1;
+}
+
+.overview-card footer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 2px 0;
+}
+
+.overview-card strong {
+  display: block;
+  color: var(--ink-2);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.008em;
+  transition: color 160ms var(--ease);
+}
+
+.overview-card:hover strong,
+.overview-card:focus-visible strong,
+.overview-card[data-active="true"] strong {
+  color: var(--ink);
+}
+
+.overview-card .inspect-label {
+  flex: none;
+  color: var(--ink-4);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 160ms var(--ease);
+}
+
+.overview-card:hover .inspect-label,
+.overview-card:focus-visible .inspect-label {
+  color: var(--ink-2);
+}
+
+/* --- empty state ---------------------------------------------------------- */
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 40px;
+  background: var(--bg);
+  text-align: center;
+}
+
+.empty-state h2 {
+  max-width: 620px;
+  margin-bottom: 12px;
+  font-size: 22px;
+  font-weight: 450;
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+}
+
+.empty-state > p:last-child {
+  max-width: 520px;
+  color: var(--ink-3);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.empty-state code {
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 0.92em;
+}
+
+.empty-orbit {
+  position: relative;
+  width: 78px;
+  height: 58px;
+  margin-bottom: 26px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+
+.empty-orbit::before {
+  position: absolute;
+  inset: 9px;
+  border: 1px dashed var(--line);
+  content: "";
+}
+
+.empty-orbit span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--ink-3);
+  transform: translate(-50%, -50%);
+}
+
+/* --- scrollbars ----------------------------------------------------------- */
+
+#example-list,
+.overview {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(240, 238, 232, 0.13) transparent;
+}
+
+#example-list::-webkit-scrollbar,
+.overview::-webkit-scrollbar {
+  width: 10px;
+}
+
+#example-list::-webkit-scrollbar-track,
+.overview::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#example-list::-webkit-scrollbar-thumb,
+.overview::-webkit-scrollbar-thumb {
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: rgba(240, 238, 232, 0.13);
+  background-clip: padding-box;
+}
+
+#example-list::-webkit-scrollbar-thumb:hover,
+.overview::-webkit-scrollbar-thumb:hover {
+  background: rgba(240, 238, 232, 0.26);
+  background-clip: padding-box;
+}
+
+/* --- motion --------------------------------------------------------------- */
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.28;
+  }
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sweep {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 1180px) {
+  :root {
+    --catalog-width: 244px;
+  }
+
+  .search {
+    width: 220px;
+  }
+
+  .overview {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}

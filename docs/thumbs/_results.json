@@ -1,0 +1,207 @@
+[
+  {
+    "id": "threejs-parallax-occlusion-mapping/silhouette-relief",
+    "ok": true,
+    "size": 675999
+  },
+  {
+    "id": "threejs-atmosphere-aerial-perspective/lut-aerial-perspective",
+    "ok": true,
+    "size": 1035677
+  },
+  {
+    "id": "threejs-precipitation-surfaces/snow-accumulation",
+    "ok": true,
+    "size": 2410032
+  },
+  {
+    "id": "threejs-precipitation-surfaces/wet-puddle-rain",
+    "ok": true,
+    "size": 1472025
+  },
+  {
+    "id": "threejs-procedural-geometry/porcelain-brass-submarine",
+    "ok": true,
+    "size": 454488
+  },
+  {
+    "id": "threejs-procedural-geometry/formula-one-race-car",
+    "ok": true,
+    "size": 371848
+  },
+  {
+    "id": "threejs-procedural-architecture/procedural-financial-tower",
+    "ok": true,
+    "size": 649388
+  },
+  {
+    "id": "threejs-procedural-geometry/sculpted-gallery-frame",
+    "ok": true,
+    "size": 1124528
+  },
+  {
+    "id": "threejs-procedural-geometry/sport-motorcycle",
+    "ok": true,
+    "size": 494895
+  },
+  {
+    "id": "threejs-procedural-materials/hybrid-soil-moss-surface",
+    "ok": true,
+    "size": 2094450
+  },
+  {
+    "id": "threejs-procedural-geometry/procedural-optimus-humanoid",
+    "ok": true,
+    "size": 327951
+  },
+  {
+    "id": "threejs-procedural-materials/lava-flow-surface",
+    "ok": true,
+    "size": 1433269
+  },
+  {
+    "id": "threejs-procedural-materials/physical-diffraction-grating",
+    "ok": true,
+    "size": 1130187
+  },
+  {
+    "id": "threejs-procedural-materials/raytraced-diamond",
+    "ok": true,
+    "size": 279106
+  },
+  {
+    "id": "threejs-procedural-materials/softbody-jelly",
+    "ok": true,
+    "size": 358487
+  },
+  {
+    "id": "threejs-procedural-materials/spectral-dispersive-glass",
+    "ok": true,
+    "size": 1280424
+  },
+  {
+    "id": "threejs-procedural-materials/thin-film-soap-bubbles",
+    "ok": true,
+    "size": 1558392
+  },
+  {
+    "id": "threejs-procedural-planets/procedural-planet-surface",
+    "ok": true,
+    "size": 481502
+  },
+  {
+    "id": "threejs-procedural-vegetation/gpu-computed-grass",
+    "ok": true,
+    "size": 2340522
+  },
+  {
+    "id": "threejs-procedural-vegetation/procedural-surface-ivy",
+    "ok": true,
+    "size": 213130
+  },
+  {
+    "id": "threejs-procedural-vegetation/gpu-culled-flower-field",
+    "ok": true,
+    "size": 1092294
+  },
+  {
+    "id": "threejs-procedural-vegetation/structured-ash-growth",
+    "ok": true,
+    "size": 1834623
+  },
+  {
+    "id": "threejs-procedural-vegetation/stylized-meadow-grass",
+    "ok": true,
+    "size": 1313819
+  },
+  {
+    "id": "threejs-procedural-vfx/holographic-shape-transition",
+    "ok": true,
+    "size": 208033
+  },
+  {
+    "id": "threejs-procedural-vfx/filmic-lens-flare",
+    "ok": true,
+    "size": 755665
+  },
+  {
+    "id": "threejs-procedural-vfx/raymarched-aurora-curtains",
+    "ok": true,
+    "size": 1622537
+  },
+  {
+    "id": "threejs-procedural-vfx/reentry-plasma",
+    "ok": true,
+    "size": 203899
+  },
+  {
+    "id": "threejs-raymarched-space-effects/curved-ray-accretion-volume",
+    "ok": true,
+    "size": 456797
+  },
+  {
+    "id": "threejs-procedural-vfx/volumetric-fluid-fire",
+    "ok": true,
+    "size": 92412
+  },
+  {
+    "id": "threejs-raymarched-space-effects/schwarzschild-geodesic-black-hole",
+    "ok": true,
+    "size": 1673875
+  },
+  {
+    "id": "threejs-raymarched-space-effects/traversable-wormhole-transit",
+    "ok": true,
+    "size": 1701752
+  },
+  {
+    "id": "threejs-spectral-ocean/hybrid-clear-water-ocean",
+    "ok": true,
+    "size": 1774825
+  },
+  {
+    "id": "threejs-spectral-ocean/coastal-breaker-ocean",
+    "ok": true,
+    "size": 1162209
+  },
+  {
+    "id": "threejs-spectral-ocean/stylized-above-below-ocean",
+    "ok": true,
+    "size": 450393
+  },
+  {
+    "id": "threejs-spectral-ocean/spectral-cascade-ocean",
+    "ok": true,
+    "size": 1664184
+  },
+  {
+    "id": "threejs-temporal-surfaces/refractive-window-rain",
+    "ok": true,
+    "size": 1399196
+  },
+  {
+    "id": "threejs-spectral-ocean/submerged-snell-ocean",
+    "ok": true,
+    "size": 1982448
+  },
+  {
+    "id": "threejs-temporal-surfaces/touch-history-frost",
+    "ok": true,
+    "size": 3747520
+  },
+  {
+    "id": "threejs-water-optics/analytic-wave-optics",
+    "ok": true,
+    "size": 830973
+  },
+  {
+    "id": "threejs-volumetric-clouds/weather-volume-clouds",
+    "ok": true,
+    "size": 1793874
+  },
+  {
+    "id": "threejs-water-optics/interactive-pool-volume",
+    "ok": true,
+    "size": 606350
+  }
+]
