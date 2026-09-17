@@ -1,7 +1,11 @@
 // GitHub Pages lives under /<repo>/ — every absolute path import in the
 // downstream example code (e.g. "/skills/...", "/example-gallery/...") needs
-// the repo prefix prepended. Easiest: inject a <base> tag before any module
-// resolution happens.
+// the repo prefix prepended. We do two things:
+//   1. Inject a <base> tag — handles static module imports via importmap prefix
+//      mappings already declared in the page HTML.
+//   2. Wrap global fetch() to redirect any "/absolute/path" request through
+//      document.baseURI so scene-internal fetch("/skills/foo.webp") resolves
+//      under the repo path.
 {
   const m = window.location.pathname.match(/^(\/[^/]+)?\/example-gallery\//);
   const repoPrefix = m ? (m[1] || "") : "";
@@ -9,12 +13,39 @@
     const base = document.createElement("base");
     base.href = repoPrefix + "/";
     document.head.prepend(base);
-    window.__repoPrefix = repoPrefix;
   }
 }
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { exampleRuntime } from "./example-runtime.js";
+
+// Patch global fetch to redirect "/absolute" requests through document.baseURI.
+const originalFetch = window.fetch.bind(window);
+window.fetch = function patchedFetch(input, init) {
+  if (typeof input === "string" && input.startsWith("/")) {
+    input = new URL(input, document.baseURI).href;
+  } else if (input instanceof Request && input.url.startsWith("/")) {
+    input = new Request(new URL(input.url, document.baseURI).href, input);
+  } else if (input instanceof URL && input.pathname.startsWith("/")) {
+    input = new URL(input.href.replace(input.origin + input.pathname, new URL(input.pathname, document.baseURI).href));
+  }
+  return originalFetch(input, init);
+};
+
+// THREE.TextureLoader / RGBELoader / GLTFLoader / EXRLoader / CubeTextureLoader
+// can call fetch via three.js's image-loading pipeline. Wrapping their .load()
+// (called once THREE is imported, further down) ensures absolute-path asset
+// URLs like "/skills/foo/bar.webp" resolve under document.baseURI.
+function wrapLoaderLoad(LoaderCtor) {
+  if (!LoaderCtor || !LoaderCtor.prototype?.load) return;
+  const originalLoad = LoaderCtor.prototype.load;
+  LoaderCtor.prototype.load = function patchedLoad(url, ...rest) {
+    const redirected = typeof url === "string" && url.startsWith("/")
+      ? new URL(url, document.baseURI).href
+      : url;
+    return originalLoad.call(this, redirected, ...rest);
+  };
+}
 
 const params = new URLSearchParams(window.location.search);
 const modulePath = params.get("module");
@@ -39,6 +70,11 @@ const rawWebGpu = adapter.backend === "raw-webgpu";
 const THREE = adapter.backend === "webgpu"
   ? await import("three/webgpu")
   : await import("three");
+wrapLoaderLoad(THREE.TextureLoader);
+wrapLoaderLoad(THREE.RGBELoader);
+wrapLoaderLoad(THREE.GLTFLoader);
+wrapLoaderLoad(THREE.EXRLoader);
+wrapLoaderLoad(THREE.CubeTextureLoader);
 const canvas = document.querySelector("canvas");
 const rendererOptions = {
   canvas,

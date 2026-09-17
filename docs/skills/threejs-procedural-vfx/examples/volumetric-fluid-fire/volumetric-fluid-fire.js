@@ -1,9 +1,9 @@
 export {
   VolumetricFluidFire,
-} from "./source/VolumetricFluidFire.ts";
-export { SDFShape } from "./source/sdf/shape/SDFShape.ts";
-export { SDFBox } from "./source/sdf/shape/SDFBox.ts";
-export { SDFEllipsoid } from "./source/sdf/shape/SDFEllipsoid.ts";
+} from "./source/VolumetricFluidFire.js";
+export { SDFShape } from "./source/sdf/shape/SDFShape.js";
+export { SDFBox } from "./source/sdf/shape/SDFBox.js";
+export { SDFEllipsoid } from "./source/sdf/shape/SDFEllipsoid.js";
 
 export const VOLUMETRIC_FLUID_FIRE_PRESET = Object.freeze({
   resolution: 0.75,
