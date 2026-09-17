@@ -1,3 +1,51 @@
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __knownSymbol = (name, symbol) => (symbol = Symbol[name]) ? symbol : Symbol.for("Symbol." + name);
+var __typeError = (msg) => {
+  throw TypeError(msg);
+};
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __decoratorStart = (base) => [, , , __create(base?.[__knownSymbol("metadata")] ?? null)];
+var __decoratorStrings = ["class", "method", "getter", "setter", "accessor", "field", "value", "get", "set"];
+var __expectFn = (fn) => fn !== void 0 && typeof fn !== "function" ? __typeError("Function expected") : fn;
+var __decoratorContext = (kind, name, done, metadata, fns) => ({ kind: __decoratorStrings[kind], name, metadata, addInitializer: (fn) => done._ ? __typeError("Already initialized") : fns.push(__expectFn(fn || null)) });
+var __decoratorMetadata = (array, target) => __defNormalProp(target, __knownSymbol("metadata"), array[3]);
+var __runInitializers = (array, flags, self, value) => {
+  for (var i = 0, fns = array[flags >> 1], n = fns && fns.length; i < n; i++) flags & 1 ? fns[i].call(self) : value = fns[i].call(self, value);
+  return value;
+};
+var __decorateElement = (array, flags, name, decorators, target, extra) => {
+  var fn, it, done, ctx, access, k = flags & 7, s = !!(flags & 8), p = !!(flags & 16);
+  var j = k > 3 ? array.length + 1 : k ? s ? 1 : 2 : 0, key = __decoratorStrings[k + 5];
+  var initializers = k > 3 && (array[j - 1] = []), extraInitializers = array[j] || (array[j] = []);
+  var desc = k && (!p && !s && (target = target.prototype), k < 5 && (k > 3 || !p) && __getOwnPropDesc(k < 4 ? target : { get [name]() {
+    return __privateGet(this, extra);
+  }, set [name](x) {
+    return __privateSet(this, extra, x);
+  } }, name));
+  k ? p && k < 4 && __name(extra, (k > 2 ? "set " : k > 1 ? "get " : "") + name) : __name(target, name);
+  for (var i = decorators.length - 1; i >= 0; i--) {
+    ctx = __decoratorContext(k, name, done = {}, array[3], extraInitializers);
+    if (k) {
+      ctx.static = s, ctx.private = p, access = ctx.access = { has: p ? (x) => __privateIn(target, x) : (x) => name in x };
+      if (k ^ 3) access.get = p ? (x) => (k ^ 1 ? __privateGet : __privateMethod)(x, target, k ^ 4 ? extra : desc.get) : (x) => x[name];
+      if (k > 2) access.set = p ? (x, y) => __privateSet(x, target, y, k ^ 4 ? extra : desc.set) : (x, y) => x[name] = y;
+    }
+    it = (0, decorators[i])(k ? k < 4 ? p ? extra : desc[key] : k > 4 ? void 0 : { get: desc.get, set: desc.set } : target, ctx), done._ = 1;
+    if (k ^ 4 || it === void 0) __expectFn(it) && (k > 4 ? initializers.unshift(it) : k ? p ? extra = it : desc[key] = it : target = it);
+    else if (typeof it !== "object" || it === null) __typeError("Object expected");
+    else __expectFn(fn = it.get) && (desc.get = fn), __expectFn(fn = it.set) && (desc.set = fn), __expectFn(fn = it.init) && initializers.unshift(fn);
+  }
+  return k || __decoratorMetadata(array, target), desc && __defProp(target, name, desc), p ? k ^ 4 ? extra : desc : target;
+};
+var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
+var __privateIn = (member, obj) => Object(obj) !== obj ? __typeError('Cannot use the "in" operator on this value') : member.has(obj);
+var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
+var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
+var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
+
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/effects/createHaldLookupTexture.ts
 import { LookupTexture, RawImageData } from "https://esm.sh/postprocessing@6.37.4?deps=three@0.185.1&external=three";
 function createHaldLookupTexture(texture) {
@@ -128,7 +176,10 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    parseTypedArray = parser;
+    constructor() {
+      super(...arguments);
+      this.parseTypedArray = parser;
+    }
   };
 }
 
@@ -144,7 +195,10 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  parameters = {};
+  constructor() {
+    super(...arguments);
+    this.parameters = {};
+  }
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -177,12 +231,15 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    Texture = Texture;
-    TypedArrayLoader = createTypedArrayLoaderClass(parser);
-    parameters = {
-      ...defaultDataTextureParameter,
-      ...parameters
-    };
+    constructor() {
+      super(...arguments);
+      this.Texture = Texture;
+      this.TypedArrayLoader = createTypedArrayLoaderClass(parser);
+      this.parameters = {
+        ...defaultDataTextureParameter,
+        ...parameters
+      };
+    }
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {
@@ -300,12 +357,13 @@ var vectorScratch1 = /* @__PURE__ */ new Vector33();
 var vectorScratch2 = /* @__PURE__ */ new Vector33();
 var vectorScratch3 = /* @__PURE__ */ new Vector33();
 var Ellipsoid = class _Ellipsoid {
-  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
-    6378137,
-    6378137,
-    6356752314245179e-9
-  );
-  radii;
+  static {
+    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
+      6378137,
+      6378137,
+      6356752314245179e-9
+    );
+  }
   constructor(x, y, z) {
     this.radii = new Vector33(x, y, z);
   }
@@ -416,10 +474,18 @@ var Geodetic = class _Geodetic {
     this.latitude = latitude;
     this.height = height;
   }
-  static MIN_LONGITUDE = -Math.PI;
-  static MAX_LONGITUDE = Math.PI;
-  static MIN_LATITUDE = -Math.PI / 2;
-  static MAX_LATITUDE = Math.PI / 2;
+  static {
+    this.MIN_LONGITUDE = -Math.PI;
+  }
+  static {
+    this.MAX_LONGITUDE = Math.PI;
+  }
+  static {
+    this.MIN_LATITUDE = -Math.PI / 2;
+  }
+  static {
+    this.MAX_LATITUDE = Math.PI / 2;
+  }
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -528,12 +594,14 @@ var Rectangle = class _Rectangle {
     this.east = east;
     this.north = north;
   }
-  static MAX = /* @__PURE__ */ new _Rectangle(
-    Geodetic.MIN_LONGITUDE,
-    Geodetic.MIN_LATITUDE,
-    Geodetic.MAX_LONGITUDE,
-    Geodetic.MAX_LATITUDE
-  );
+  static {
+    this.MAX = /* @__PURE__ */ new _Rectangle(
+      Geodetic.MIN_LONGITUDE,
+      Geodetic.MIN_LATITUDE,
+      Geodetic.MAX_LONGITUDE,
+      Geodetic.MAX_LATITUDE
+    );
+  }
   get width() {
     let east = this.east;
     if (east < this.west) {
@@ -659,7 +727,8 @@ var depthEffectOptionsDefaults = {
   near: 1,
   far: 1e3
 };
-var DepthEffect = class extends Effect {
+var _useTurbo_dec, _a, _init;
+var DepthEffect = class extends (_a = Effect, _useTurbo_dec = [define("USE_TURBO")], _a) {
   constructor(options) {
     const { blendFunction, useTurbo, near, far } = {
       ...depthEffectOptionsDefaults,
@@ -681,10 +750,9 @@ var DepthEffect = class extends Effect {
         )
       }
     );
+    this.useTurbo = __runInitializers(_init, 8, this), __runInitializers(_init, 11, this);
     this.useTurbo = useTurbo;
   }
-  @define("USE_TURBO")
-  useTurbo;
   get near() {
     return this.uniforms.get("near").value;
   }
@@ -698,6 +766,9 @@ var DepthEffect = class extends Effect {
     this.uniforms.get("far").value = value;
   }
 };
+_init = __decoratorStart(_a);
+__decorateElement(_init, 5, "useTurbo", _useTurbo_dec, DepthEffect);
+__decoratorMetadata(_init, DepthEffect);
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/effects/DitheringEffect.ts
 import { BlendFunction as BlendFunction2, Effect as Effect2 } from "https://esm.sh/postprocessing@6.37.4?deps=three@0.185.1&external=three";
@@ -855,7 +926,6 @@ function setupMaterialsForGeometryPass() {
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/effects/GeometryPass.ts
 var GeometryPass = class extends RenderPass {
-  geometryTexture;
   constructor(inputBuffer, scene, camera, overrideMaterial) {
     super(scene, camera, overrideMaterial);
     this.geometryTexture = inputBuffer.texture.clone();
@@ -1057,15 +1127,6 @@ var lensFlareEffectOptionsDefaults = {
   intensity: 5e-3
 };
 var LensFlareEffect = class extends Effect3 {
-  resolution;
-  renderTarget1;
-  renderTarget2;
-  thresholdMaterial;
-  thresholdPass;
-  blurPass;
-  preBlurPass;
-  featuresMaterial;
-  featuresPass;
   constructor(options) {
     const {
       blendFunction,
@@ -1090,6 +1151,9 @@ var LensFlareEffect = class extends Effect3 {
         })
       )
     });
+    this.onResolutionChange = () => {
+      this.setSize(this.resolution.baseWidth, this.resolution.baseHeight);
+    };
     this.renderTarget1 = new WebGLRenderTarget(1, 1, {
       depthBuffer: false,
       stencilBuffer: false,
@@ -1122,9 +1186,6 @@ var LensFlareEffect = class extends Effect3 {
     this.resolution.addEventListener("change", this.onResolutionChange);
     this.intensity = intensity;
   }
-  onResolutionChange = () => {
-    this.setSize(this.resolution.baseWidth, this.resolution.baseHeight);
-  };
   initialize(renderer, alpha, frameBufferType) {
     this.thresholdPass.initialize(renderer, alpha, frameBufferType);
     this.blurPass.initialize(renderer, alpha, frameBufferType);
@@ -1184,7 +1245,8 @@ var normalEffectOptionsDefaults = {
   octEncoded: false,
   reconstructFromDepth: false
 };
-var NormalEffect = class extends Effect4 {
+var _reconstructFromDepth_dec, _octEncoded_dec, _a2, _init2;
+var NormalEffect = class extends (_a2 = Effect4, _octEncoded_dec = [define("OCT_ENCODED")], _reconstructFromDepth_dec = [define("RECONSTRUCT_FROM_DEPTH")], _a2) {
   constructor(camera, options) {
     const {
       blendFunction,
@@ -1217,6 +1279,8 @@ var NormalEffect = class extends Effect4 {
       }
     );
     this.camera = camera;
+    this.octEncoded = __runInitializers(_init2, 8, this), __runInitializers(_init2, 11, this);
+    this.reconstructFromDepth = __runInitializers(_init2, 12, this), __runInitializers(_init2, 15, this);
     if (camera != null) {
       this.mainCamera = camera;
     }
@@ -1245,11 +1309,11 @@ var NormalEffect = class extends Effect4 {
   set normalBuffer(value) {
     this.uniforms.get("normalBuffer").value = value;
   }
-  @define("OCT_ENCODED")
-  octEncoded;
-  @define("RECONSTRUCT_FROM_DEPTH")
-  reconstructFromDepth;
 };
+_init2 = __decoratorStart(_a2);
+__decorateElement(_init2, 5, "octEncoded", _octEncoded_dec, NormalEffect);
+__decorateElement(_init2, 5, "reconstructFromDepth", _reconstructFromDepth_dec, NormalEffect);
+__decoratorMetadata(_init2, NormalEffect);
 export {
   DepthEffect,
   DitheringEffect,

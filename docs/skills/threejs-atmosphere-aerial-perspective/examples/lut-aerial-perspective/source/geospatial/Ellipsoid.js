@@ -57,12 +57,13 @@ var vectorScratch1 = /* @__PURE__ */ new Vector32();
 var vectorScratch2 = /* @__PURE__ */ new Vector32();
 var vectorScratch3 = /* @__PURE__ */ new Vector32();
 var Ellipsoid = class _Ellipsoid {
-  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
-    6378137,
-    6378137,
-    6356752314245179e-9
-  );
-  radii;
+  static {
+    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
+      6378137,
+      6378137,
+      6356752314245179e-9
+    );
+  }
   constructor(x, y, z) {
     this.radii = new Vector32(x, y, z);
   }

@@ -177,15 +177,6 @@ var lensFlareEffectOptionsDefaults = {
   intensity: 5e-3
 };
 var LensFlareEffect = class extends Effect {
-  resolution;
-  renderTarget1;
-  renderTarget2;
-  thresholdMaterial;
-  thresholdPass;
-  blurPass;
-  preBlurPass;
-  featuresMaterial;
-  featuresPass;
   constructor(options) {
     const {
       blendFunction,
@@ -210,6 +201,9 @@ var LensFlareEffect = class extends Effect {
         })
       )
     });
+    this.onResolutionChange = () => {
+      this.setSize(this.resolution.baseWidth, this.resolution.baseHeight);
+    };
     this.renderTarget1 = new WebGLRenderTarget(1, 1, {
       depthBuffer: false,
       stencilBuffer: false,
@@ -242,9 +236,6 @@ var LensFlareEffect = class extends Effect {
     this.resolution.addEventListener("change", this.onResolutionChange);
     this.intensity = intensity;
   }
-  onResolutionChange = () => {
-    this.setSize(this.resolution.baseWidth, this.resolution.baseHeight);
-  };
   initialize(renderer, alpha, frameBufferType) {
     this.thresholdPass.initialize(renderer, alpha, frameBufferType);
     this.blurPass.initialize(renderer, alpha, frameBufferType);

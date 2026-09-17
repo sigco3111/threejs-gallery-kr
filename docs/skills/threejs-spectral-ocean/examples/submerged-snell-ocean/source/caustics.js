@@ -52,11 +52,9 @@ var CAUSTIC_TILE = 17;
 var GRID = 256;
 var PROJECT_DEPTH = 24;
 var CausticsPass = class {
-  renderTarget;
-  textureNode;
-  scene = new Scene();
-  camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
   constructor(sim, resolution) {
+    this.scene = new Scene();
+    this.camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
     this.renderTarget = new RenderTarget(resolution, resolution, {
       type: HalfFloatType,
       depthBuffer: false

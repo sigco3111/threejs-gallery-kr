@@ -14,13 +14,9 @@ import {
   WebGLRenderTarget
 } from "https://esm.sh/three@0.185.1?external";
 var ProceduralTextureBase = class {
-  size;
-  needsRender = true;
-  material;
-  mesh;
-  renderTarget;
-  camera = new Camera();
   constructor({ size, fragmentShader }) {
+    this.needsRender = true;
+    this.camera = new Camera();
     this.size = size;
     this.material = new RawShaderMaterial({
       glslVersion: GLSL3,

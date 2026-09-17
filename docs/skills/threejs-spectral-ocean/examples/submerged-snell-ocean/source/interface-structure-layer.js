@@ -154,20 +154,16 @@ function clipGeometryAboveY(source, minimumY) {
   return result;
 }
 var InterfaceStructureLayer = class {
-  nodes;
-  target;
-  scene = new Scene();
-  activeUniform = uniform2(0);
-  structures = [];
-  size = new Vector2();
-  clearColor = new Color2();
-  rootInverse = new Matrix4();
-  relativeMatrix = new Matrix4();
-  sim;
-  submerged;
-  warmed = false;
-  active = false;
   constructor(sim, submerged) {
+    this.scene = new Scene();
+    this.activeUniform = uniform2(0);
+    this.structures = [];
+    this.size = new Vector2();
+    this.clearColor = new Color2();
+    this.rootInverse = new Matrix4();
+    this.relativeMatrix = new Matrix4();
+    this.warmed = false;
+    this.active = false;
     this.sim = sim;
     this.submerged = submerged;
     const depthTexture = new DepthTexture(1, 1);

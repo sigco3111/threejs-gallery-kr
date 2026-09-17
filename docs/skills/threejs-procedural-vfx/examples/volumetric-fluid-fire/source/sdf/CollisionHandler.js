@@ -21,13 +21,12 @@ var SDFShape = class {
   constructor(maxCount, name) {
     this.maxCount = maxCount;
     this.name = name;
+    this.shapeTypeIndex = ++ShapeIndex;
     this.uDataIndex = uniformArray(
       Array.from({ length: maxCount }, () => 0),
       "uint"
     );
   }
-  shapeTypeIndex = ++ShapeIndex;
-  uDataIndex;
   /**
    * creates a collider on the given object. You can override this (but you must call this too super.createColliderOn ) to configure
    * custom uniforms that your implementation may require. This must be called since it provides basic function.
@@ -98,39 +97,20 @@ var invertedQ = new Quaternion();
 var UNIFORM_SCALE = new Vector3(1, 1, 1);
 var tempScale = new Vector3();
 var CollisionHandler = class {
-  /**
-   * Uniforms used to store data relative to the colliders such as their position, velocity, inverse matrix, etc...
-   */
-  context;
-  uCollisionMargin;
-  get collisionMargin() {
-    return this.uCollisionMargin.value;
-  }
-  set collisionMargin(v2) {
-    this.uCollisionMargin.value = v2;
-  }
-  // private uBoxes: UniformArrayNode<"uint">; // [ dataIndex]
-  // private uBoxCount: UniformNode<"uint", number>;
-  /**
-   * Base Surface friction coefficient of surfaces
-   */
-  uFriction = uniform2(0.8, "float");
-  /**
-   * Inverse matrices
-   */
-  dataBindings = [];
-  config;
-  obj2Collider = /* @__PURE__ */ new WeakMap();
-  removeCollider = /* @__PURE__ */ new Map();
-  /**
-   * scans all the colliding sdf shapes and returns the distance
-   */
-  mapSDF;
-  bakeTexture;
-  // [ vec3(normal), distance(float) ]
-  bakeVelocityTexture;
   // [ vec3(vx,vy,vz), --- ]
   constructor(config = {}) {
+    // private uBoxes: UniformArrayNode<"uint">; // [ dataIndex]
+    // private uBoxCount: UniformNode<"uint", number>;
+    /**
+     * Base Surface friction coefficient of surfaces
+     */
+    this.uFriction = uniform2(0.8, "float");
+    /**
+     * Inverse matrices
+     */
+    this.dataBindings = [];
+    this.obj2Collider = /* @__PURE__ */ new WeakMap();
+    this.removeCollider = /* @__PURE__ */ new Map();
     const customShapes = config.sdfShapes ?? [];
     delete config.sdfShapes;
     const cfg = {
@@ -262,6 +242,12 @@ var CollisionHandler = class {
       outNormal.assign(closestNormal);
       return minDistance;
     });
+  }
+  get collisionMargin() {
+    return this.uCollisionMargin.value;
+  }
+  set collisionMargin(v2) {
+    this.uCollisionMargin.value = v2;
   }
   /**
    * Use the object as a proxy to control a collider in the simulation.

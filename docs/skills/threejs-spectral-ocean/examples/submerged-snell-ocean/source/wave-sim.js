@@ -49,10 +49,8 @@ function createFrequencyTexture(n) {
   return tex;
 }
 var PackedIFFT = class {
-  stages = [];
-  /** Where the spatial result lives after horizontal + vertical passes. */
-  output;
   constructor(ping, pong, n) {
+    this.stages = [];
     const logN = Math.log2(n);
     if (!Number.isInteger(logN) || n > 256) {
       throw new Error(`PackedIFFT requires a power-of-two workgroup size up to 256; received ${n}`);
@@ -239,19 +237,11 @@ function createMapTexture(n) {
   return tex;
 }
 var WaveSim = class {
-  patchLengths;
-  /** The sea state these cascades were built from — consumers that need the
-   * wind axis (foam windrows) must read it here, never re-import a default. */
-  sea;
-  /** TSL texture nodes — .value is repointed after each ping-pong swap. */
-  displacementNodes;
-  derivativeNodes;
-  cascades;
-  timeUniform = uniform(0);
-  dtUniform = uniform(1 / 60);
-  current = 0;
-  initialized = false;
   constructor(rng, sea = DEFAULT_SEA_STATE) {
+    this.timeUniform = uniform(0);
+    this.dtUniform = uniform(1 / 60);
+    this.current = 0;
+    this.initialized = false;
     const { resolution: n, patchLengths, boundaryFactor, choppiness, foamRecovery, amplitude } = OCEAN_PRESET;
     this.patchLengths = patchLengths;
     this.sea = sea;

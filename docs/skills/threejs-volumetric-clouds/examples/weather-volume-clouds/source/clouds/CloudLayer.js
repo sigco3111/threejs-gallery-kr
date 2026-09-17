@@ -62,20 +62,22 @@ function applyOptions(target, params) {
   }
 }
 var CloudLayer = class _CloudLayer {
-  static DEFAULT = /* @__PURE__ */ new _CloudLayer();
-  channel = "r";
-  altitude = 0;
-  height = 0;
-  densityScale = 0.2;
-  shapeAmount = 1;
-  shapeDetailAmount = 1;
-  weatherExponent = 1;
-  shapeAlteringBias = 0.35;
-  coverageFilterWidth = 0.6;
-  densityProfile = new DensityProfile(0, 0, 0.75, 0.25);
-  shadow = false;
   constructor(options) {
+    this.channel = "r";
+    this.altitude = 0;
+    this.height = 0;
+    this.densityScale = 0.2;
+    this.shapeAmount = 1;
+    this.shapeDetailAmount = 1;
+    this.weatherExponent = 1;
+    this.shapeAlteringBias = 0.35;
+    this.coverageFilterWidth = 0.6;
+    this.densityProfile = new DensityProfile(0, 0, 0.75, 0.25);
+    this.shadow = false;
     this.set(options);
+  }
+  static {
+    this.DEFAULT = /* @__PURE__ */ new _CloudLayer();
   }
   set(options) {
     applyOptions(this, options);

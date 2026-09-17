@@ -30,10 +30,20 @@ for (const tsPath of tsFiles) {
       entryPoints: [tsPath],
       bundle: true,
       format: "esm",
-      target: "es2022",
+      // TS5 standard decorators are processed natively by esbuild when
+      // target is omitted (defaults to esnext). Helper functions like
+      // __decorateElement are NOT emitted; the browser interprets them.
+      tsconfigRaw: {
+        compilerOptions: {
+          experimentalDecorators: false,
+          useDefineForClassFields: false,
+          target: "esnext",
+          module: "esnext",
+          moduleResolution: "bundler",
+        },
+      },
       supported: {
-        // TS5+ standard decorators (TC39 Stage 3).
-        decorators: true,
+        "decorators": true,
       },
       write: false,
       sourcemap: false,
@@ -49,6 +59,8 @@ for (const tsPath of tsFiles) {
         "astronomy-engine": "https://esm.sh/astronomy-engine@2.1.19?external",
       },
       loader: {
+        ".ts": "ts",
+        ".js": "js",
         ".frag": "text",
         ".vert": "text",
         ".glsl": "text",

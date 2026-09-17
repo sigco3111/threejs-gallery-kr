@@ -10,8 +10,6 @@ function hashLabel(str) {
   return (h ^ h >>> 16) >>> 0;
 }
 var Rng = class _Rng {
-  seed;
-  s;
   constructor(seed) {
     this.seed = seed >>> 0;
     this.s = this.seed === 0 ? 2654435769 : this.seed;

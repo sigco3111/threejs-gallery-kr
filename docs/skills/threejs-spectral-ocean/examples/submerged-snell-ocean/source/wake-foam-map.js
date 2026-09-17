@@ -29,27 +29,22 @@ var DIFFUSE_RATE = 1.1;
 var BLEED_RATE = 4e-3;
 var QUIET_AFTER = 35;
 var WakeFoamMap = class {
-  /** Stable texture node for the surface material — repointed after swaps. */
-  foamNode;
-  maps;
-  steps;
-  clears;
-  splatShapes = uniformArray(
-    Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 1, 0))
-  );
-  splatPowers = uniformArray(
-    Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 0, 0))
-  );
-  freshKeep = uniform(1);
-  residueKeep = uniform(1);
-  diffuse = uniform(0);
-  bleed = uniform(0);
-  pendingCount = 0;
-  hasPending = false;
-  activeUntil = -Infinity;
-  current = 0;
-  initialized = false;
   constructor() {
+    this.splatShapes = uniformArray(
+      Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 1, 0))
+    );
+    this.splatPowers = uniformArray(
+      Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 0, 0))
+    );
+    this.freshKeep = uniform(1);
+    this.residueKeep = uniform(1);
+    this.diffuse = uniform(0);
+    this.bleed = uniform(0);
+    this.pendingCount = 0;
+    this.hasPending = false;
+    this.activeUntil = -Infinity;
+    this.current = 0;
+    this.initialized = false;
     const make = () => {
       const map = new StorageTexture(RESOLUTION, RESOLUTION);
       map.type = HalfFloatType;

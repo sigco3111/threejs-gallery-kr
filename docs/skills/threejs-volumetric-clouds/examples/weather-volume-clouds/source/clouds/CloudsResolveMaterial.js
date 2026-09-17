@@ -1,3 +1,51 @@
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __knownSymbol = (name, symbol) => (symbol = Symbol[name]) ? symbol : Symbol.for("Symbol." + name);
+var __typeError = (msg) => {
+  throw TypeError(msg);
+};
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
+var __decoratorStart = (base) => [, , , __create(base?.[__knownSymbol("metadata")] ?? null)];
+var __decoratorStrings = ["class", "method", "getter", "setter", "accessor", "field", "value", "get", "set"];
+var __expectFn = (fn) => fn !== void 0 && typeof fn !== "function" ? __typeError("Function expected") : fn;
+var __decoratorContext = (kind, name, done, metadata, fns) => ({ kind: __decoratorStrings[kind], name, metadata, addInitializer: (fn) => done._ ? __typeError("Already initialized") : fns.push(__expectFn(fn || null)) });
+var __decoratorMetadata = (array, target) => __defNormalProp(target, __knownSymbol("metadata"), array[3]);
+var __runInitializers = (array, flags, self, value) => {
+  for (var i = 0, fns = array[flags >> 1], n = fns && fns.length; i < n; i++) flags & 1 ? fns[i].call(self) : value = fns[i].call(self, value);
+  return value;
+};
+var __decorateElement = (array, flags, name, decorators, target, extra) => {
+  var fn, it, done, ctx, access, k = flags & 7, s = !!(flags & 8), p = !!(flags & 16);
+  var j = k > 3 ? array.length + 1 : k ? s ? 1 : 2 : 0, key = __decoratorStrings[k + 5];
+  var initializers = k > 3 && (array[j - 1] = []), extraInitializers = array[j] || (array[j] = []);
+  var desc = k && (!p && !s && (target = target.prototype), k < 5 && (k > 3 || !p) && __getOwnPropDesc(k < 4 ? target : { get [name]() {
+    return __privateGet(this, extra);
+  }, set [name](x) {
+    return __privateSet(this, extra, x);
+  } }, name));
+  k ? p && k < 4 && __name(extra, (k > 2 ? "set " : k > 1 ? "get " : "") + name) : __name(target, name);
+  for (var i = decorators.length - 1; i >= 0; i--) {
+    ctx = __decoratorContext(k, name, done = {}, array[3], extraInitializers);
+    if (k) {
+      ctx.static = s, ctx.private = p, access = ctx.access = { has: p ? (x) => __privateIn(target, x) : (x) => name in x };
+      if (k ^ 3) access.get = p ? (x) => (k ^ 1 ? __privateGet : __privateMethod)(x, target, k ^ 4 ? extra : desc.get) : (x) => x[name];
+      if (k > 2) access.set = p ? (x, y) => __privateSet(x, target, y, k ^ 4 ? extra : desc.set) : (x, y) => x[name] = y;
+    }
+    it = (0, decorators[i])(k ? k < 4 ? p ? extra : desc[key] : k > 4 ? void 0 : { get: desc.get, set: desc.set } : target, ctx), done._ = 1;
+    if (k ^ 4 || it === void 0) __expectFn(it) && (k > 4 ? initializers.unshift(it) : k ? p ? extra = it : desc[key] = it : target = it);
+    else if (typeof it !== "object" || it === null) __typeError("Object expected");
+    else __expectFn(fn = it.get) && (desc.get = fn), __expectFn(fn = it.set) && (desc.set = fn), __expectFn(fn = it.init) && initializers.unshift(fn);
+  }
+  return k || __decoratorMetadata(array, target), desc && __defProp(target, name, desc), p ? k ^ 4 ? extra : desc : target;
+};
+var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
+var __privateIn = (member, obj) => Object(obj) !== obj ? __typeError('Cannot use the "in" operator on this value') : member.has(obj);
+var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
+var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
+var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
+
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/CloudsResolveMaterial.ts
 import {
   GLSL3,
@@ -112,7 +160,10 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    parseTypedArray = parser;
+    constructor() {
+      super(...arguments);
+      this.parseTypedArray = parser;
+    }
   };
 }
 
@@ -128,7 +179,10 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  parameters = {};
+  constructor() {
+    super(...arguments);
+    this.parameters = {};
+  }
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -161,12 +215,15 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    Texture = Texture;
-    TypedArrayLoader = createTypedArrayLoaderClass(parser);
-    parameters = {
-      ...defaultDataTextureParameter,
-      ...parameters
-    };
+    constructor() {
+      super(...arguments);
+      this.Texture = Texture;
+      this.TypedArrayLoader = createTypedArrayLoaderClass(parser);
+      this.parameters = {
+        ...defaultDataTextureParameter,
+        ...parameters
+      };
+    }
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {
@@ -284,12 +341,13 @@ var vectorScratch1 = /* @__PURE__ */ new Vector33();
 var vectorScratch2 = /* @__PURE__ */ new Vector33();
 var vectorScratch3 = /* @__PURE__ */ new Vector33();
 var Ellipsoid = class _Ellipsoid {
-  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
-    6378137,
-    6378137,
-    6356752314245179e-9
-  );
-  radii;
+  static {
+    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
+      6378137,
+      6378137,
+      6356752314245179e-9
+    );
+  }
   constructor(x, y, z) {
     this.radii = new Vector33(x, y, z);
   }
@@ -400,10 +458,18 @@ var Geodetic = class _Geodetic {
     this.latitude = latitude;
     this.height = height;
   }
-  static MIN_LONGITUDE = -Math.PI;
-  static MAX_LONGITUDE = Math.PI;
-  static MIN_LATITUDE = -Math.PI / 2;
-  static MAX_LATITUDE = Math.PI / 2;
+  static {
+    this.MIN_LONGITUDE = -Math.PI;
+  }
+  static {
+    this.MAX_LONGITUDE = Math.PI;
+  }
+  static {
+    this.MIN_LATITUDE = -Math.PI / 2;
+  }
+  static {
+    this.MAX_LATITUDE = Math.PI / 2;
+  }
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -512,12 +578,14 @@ var Rectangle = class _Rectangle {
     this.east = east;
     this.north = north;
   }
-  static MAX = /* @__PURE__ */ new _Rectangle(
-    Geodetic.MIN_LONGITUDE,
-    Geodetic.MIN_LATITUDE,
-    Geodetic.MAX_LONGITUDE,
-    Geodetic.MAX_LATITUDE
-  );
+  static {
+    this.MAX = /* @__PURE__ */ new _Rectangle(
+      Geodetic.MIN_LONGITUDE,
+      Geodetic.MIN_LATITUDE,
+      Geodetic.MAX_LONGITUDE,
+      Geodetic.MAX_LATITUDE
+    );
+  }
   get width() {
     let east = this.east;
     if (east < this.west) {
@@ -996,7 +1064,8 @@ var cloudsResolve_default2 = "precision highp float;\n\nlayout(location = 0) in 
 var varianceClipping_default = "#ifdef VARIANCE_9_SAMPLES\n#define VARIANCE_OFFSET_COUNT (8)\nconst ivec2 varianceOffsets[8] = ivec2[8](\n  ivec2(-1, -1),\n  ivec2(-1, 1),\n  ivec2(1, -1),\n  ivec2(1, 1),\n  ivec2(1, 0),\n  ivec2(0, -1),\n  ivec2(0, 1),\n  ivec2(-1, 0)\n);\n#else // VARIANCE_9_SAMPLES\n#define VARIANCE_OFFSET_COUNT (4)\nconst ivec2 varianceOffsets[4] = ivec2[4](ivec2(1, 0), ivec2(0, -1), ivec2(0, 1), ivec2(-1, 0));\n#endif // VARIANCE_9_SAMPLES\n\n// Reference: https://github.com/playdeadgames/temporal\nvec4 clipAABB(const vec4 current, const vec4 history, const vec4 minColor, const vec4 maxColor) {\n  vec3 pClip = 0.5 * (maxColor.rgb + minColor.rgb);\n  vec3 eClip = 0.5 * (maxColor.rgb - minColor.rgb) + 1e-7;\n  vec4 vClip = history - vec4(pClip, current.a);\n  vec3 vUnit = vClip.xyz / eClip;\n  vec3 aUnit = abs(vUnit);\n  float maUnit = max(aUnit.x, max(aUnit.y, aUnit.z));\n  if (maUnit > 1.0) {\n    return vec4(pClip, current.a) + vClip / maUnit;\n  }\n  return history;\n}\n\n#ifdef VARIANCE_SAMPLER_ARRAY\n#define VARIANCE_SAMPLER sampler2DArray\n#define VARIANCE_SAMPLER_COORD ivec3\n#else // VARIANCE_SAMPLER_ARRAY\n#define VARIANCE_SAMPLER sampler2D\n#define VARIANCE_SAMPLER_COORD ivec2\n#endif // VARIANCE_SAMPLER_ARRAY\n\n// Variance clipping\n// Reference: https://developer.download.nvidia.com/gameworks/events/GDC2016/msalvi_temporal_supersampling.pdf\nvec4 varianceClipping(\n  const VARIANCE_SAMPLER inputBuffer,\n  const VARIANCE_SAMPLER_COORD coord,\n  const vec4 current,\n  const vec4 history,\n  const float gamma\n) {\n  vec4 moment1 = current;\n  vec4 moment2 = current * current;\n  vec4 neighbor;\n  #pragma unroll_loop_start\n  for (int i = 0; i < 8; ++i) {\n    #if UNROLLED_LOOP_INDEX < VARIANCE_OFFSET_COUNT\n    neighbor = texelFetchOffset(inputBuffer, coord, 0, varianceOffsets[i]);\n    moment1 += neighbor;\n    moment2 += neighbor * neighbor;\n    #endif // UNROLLED_LOOP_INDEX < VARIANCE_OFFSET_COUNT\n  }\n  #pragma unroll_loop_end\n\n  const float N = float(VARIANCE_OFFSET_COUNT + 1);\n  vec4 mean = moment1 / N;\n  vec4 varianceGamma = sqrt(max(moment2 / N - mean * mean, 0.0)) * gamma;\n  vec4 minColor = mean - varianceGamma;\n  vec4 maxColor = mean + varianceGamma;\n  return clipAABB(clamp(mean, minColor, maxColor), history, minColor, maxColor);\n}\n\nvec4 varianceClipping(\n  const VARIANCE_SAMPLER inputBuffer,\n  const VARIANCE_SAMPLER_COORD coord,\n  const vec4 current,\n  const vec4 history\n) {\n  return varianceClipping(inputBuffer, coord, current, history, 1.0);\n}\n\nvec4 varianceClipping(\n  const sampler2D inputBuffer,\n  const vec2 coord,\n  const vec4 current,\n  const vec4 history,\n  const float gamma\n) {\n  vec4 moment1 = current;\n  vec4 moment2 = current * current;\n  vec4 neighbor;\n  #pragma unroll_loop_start\n  for (int i = 0; i < 8; ++i) {\n    #if UNROLLED_LOOP_INDEX < VARIANCE_OFFSET_COUNT\n    neighbor = textureOffset(inputBuffer, coord, varianceOffsets[i]);\n    moment1 += neighbor;\n    moment2 += neighbor * neighbor;\n    #endif // UNROLLED_LOOP_INDEX < VARIANCE_OFFSET_COUNT\n  }\n  #pragma unroll_loop_end\n\n  const float N = float(VARIANCE_OFFSET_COUNT + 1);\n  vec4 mean = moment1 / N;\n  vec4 varianceGamma = sqrt(max(moment2 / N - mean * mean, 0.0)) * gamma;\n  vec4 minColor = mean - varianceGamma;\n  vec4 maxColor = mean + varianceGamma;\n  return clipAABB(clamp(mean, minColor, maxColor), history, minColor, maxColor);\n}\n\nvec4 varianceClipping(\n  const sampler2D inputBuffer,\n  const vec2 coord,\n  const vec4 current,\n  const vec4 history\n) {\n  return varianceClipping(inputBuffer, coord, current, history, 1.0);\n}\n";
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/CloudsResolveMaterial.ts
-var CloudsResolveMaterial = class extends RawShaderMaterial {
+var _shadowLength_dec, _temporalUpscale_dec, _a, _init;
+var CloudsResolveMaterial = class extends (_a = RawShaderMaterial, _temporalUpscale_dec = [define("TEMPORAL_UPSCALE")], _shadowLength_dec = [define("SHADOW_LENGTH")], _a) {
   constructor({
     colorBuffer = null,
     depthVelocityBuffer = null,
@@ -1028,6 +1097,8 @@ var CloudsResolveMaterial = class extends RawShaderMaterial {
         temporalAlpha: new Uniform(0.1)
       }
     });
+    this.temporalUpscale = __runInitializers(_init, 8, this, true), __runInitializers(_init, 11, this);
+    this.shadowLength = __runInitializers(_init, 12, this, true), __runInitializers(_init, 15, this);
   }
   setSize(width, height) {
     this.uniforms.texelSize.value.set(1 / width, 1 / height);
@@ -1040,11 +1111,11 @@ var CloudsResolveMaterial = class extends RawShaderMaterial {
     const dy = (offset.y - 0.5) * 4;
     this.uniforms.jitterOffset.value.set(dx, dy);
   }
-  @define("TEMPORAL_UPSCALE")
-  temporalUpscale = true;
-  @define("SHADOW_LENGTH")
-  shadowLength = true;
 };
+_init = __decoratorStart(_a);
+__decorateElement(_init, 5, "temporalUpscale", _temporalUpscale_dec, CloudsResolveMaterial);
+__decorateElement(_init, 5, "shadowLength", _shadowLength_dec, CloudsResolveMaterial);
+__decoratorMetadata(_init, CloudsResolveMaterial);
 export {
   CloudsResolveMaterial
 };
