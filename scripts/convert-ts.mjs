@@ -30,7 +30,11 @@ for (const tsPath of tsFiles) {
       entryPoints: [tsPath],
       bundle: true,
       format: "esm",
-      target: "esnext",
+      target: "es2022",
+      supported: {
+        // TS5+ standard decorators (TC39 Stage 3).
+        decorators: true,
+      },
       write: false,
       sourcemap: false,
       // Critical: alias to esm.sh URLs so esbuild pulls packages that share
