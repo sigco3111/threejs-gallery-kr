@@ -343,7 +343,7 @@ async function main() {
     const backend = ex.backend;
 
     const q = (s) => encodeURIComponent(s);
-    let runtimeUrl = `../example-gallery/runtime/index.html?module=${q(modulePath)}&krTitle=${q(ex.title_kr)}&krSkill=${q(ex.skill_kr)}&krDesc=${q(desc)}&krTech=${q(tech)}&krBack=${q("../../")}`;
+    let runtimeUrl = `../../example-gallery/runtime/index.html?module=${q(modulePath)}&krTitle=${q(ex.title_kr)}&krSkill=${q(ex.skill_kr)}&krDesc=${q(desc)}&krTech=${q(tech)}&krBack=${q("../../../")}`;
     if (/webgpu|tsl|WebGPU/i.test(backend)) runtimeUrl += "&galleryBackend=webgpu";
 
     const html = `<!doctype html>
