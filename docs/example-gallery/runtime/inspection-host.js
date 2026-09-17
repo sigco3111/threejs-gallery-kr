@@ -8,6 +8,11 @@
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { exampleRuntime } from "./example-runtime.js";
+import { TextureLoader } from "three/addons/loaders/TextureLoader.js";
+import { CubeTextureLoader } from "three/addons/loaders/CubeTextureLoader.js";
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
+import { EXRLoader } from "three/addons/loaders/EXRLoader.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 const REPO_PREFIX = "/threejs-gallery-kr";
 
@@ -49,11 +54,11 @@ const rawWebGpu = adapter.backend === "raw-webgpu";
 const THREE = adapter.backend === "webgpu"
   ? await import("three/webgpu")
   : await import("three");
-wrapLoaderLoad(THREE.TextureLoader);
-wrapLoaderLoad(THREE.RGBELoader);
-wrapLoaderLoad(THREE.GLTFLoader);
-wrapLoaderLoad(THREE.EXRLoader);
-wrapLoaderLoad(THREE.CubeTextureLoader);
+wrapLoaderLoad(TextureLoader);
+wrapLoaderLoad(CubeTextureLoader);
+wrapLoaderLoad(RGBELoader);
+wrapLoaderLoad(EXRLoader);
+wrapLoaderLoad(GLTFLoader);
 const canvas = document.querySelector("canvas");
 const rendererOptions = {
   canvas,
