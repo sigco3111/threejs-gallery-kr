@@ -1,3 +1,17 @@
+// GitHub Pages lives under /<repo>/ — every absolute path import in the
+// downstream example code (e.g. "/skills/...", "/example-gallery/...") needs
+// the repo prefix prepended. Easiest: inject a <base> tag before any module
+// resolution happens.
+{
+  const m = window.location.pathname.match(/^(\/[^/]+)?\/example-gallery\//);
+  const repoPrefix = m ? (m[1] || "") : "";
+  if (repoPrefix) {
+    const base = document.createElement("base");
+    base.href = repoPrefix + "/";
+    document.head.prepend(base);
+  }
+}
+
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { exampleRuntime } from "./example-runtime.js";
 
@@ -9,17 +23,9 @@ if (!modulePath?.startsWith("/examples/")) {
   throw new Error("Inspection runtime requires a dev example module.");
 }
 
-// GitHub Pages lives under /<repo>/ — modulePath comes in as absolute /examples/...
-// but the browser resolves it against window.location.origin (no repo prefix).
-// Detect the repo prefix (everything before /example-gallery/ in the current path)
-// and prepend it so /examples/... hits the real path under /<repo>/.
-const repoPrefix = (() => {
-  const m = window.location.pathname.match(/^(\/[^/]+)?\/example-gallery\//);
-  return m ? (m[1] || "") : "";
-})();
-const resolvedModulePath = repoPrefix + modulePath;
-
-const adapterModule = await import(resolvedModulePath);
+// With <base> injected above, absolute paths inside example code already
+// resolve under the repo prefix. Use modulePath as-is.
+const adapterModule = await import(modulePath);
 const adapter = adapterModule.default;
 
 if (!adapter || typeof adapter.setup !== "function") {
@@ -120,9 +126,9 @@ const context = {
   camera,
   controls,
   runtime: exampleRuntime,
-  moduleUrl: new URL(resolvedModulePath, window.location.origin),
+  moduleUrl: new URL(modulePath, window.location.href),
   resolveAsset(relativePath) {
-    return new URL(relativePath, new URL(resolvedModulePath, window.location.origin))
+    return new URL(relativePath, new URL(modulePath, window.location.href))
       .href;
   },
 };

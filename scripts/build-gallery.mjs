@@ -312,31 +312,41 @@ async function main() {
   );
   // Inject basePrefix + resolvedModulePath right before the dynamic import,
   // and switch moduleUrl/resolveAsset to use the resolved URL.
-  ih = ih.replace(
-    'const adapterModule = await import(modulePath);\nconst adapter = adapterModule.default;',
-    [
-      '// GitHub Pages lives under /<repo>/ — modulePath comes in as absolute /examples/...',
-      '// but the browser resolves it against window.location.origin (no repo prefix).',
-      '// Detect the repo prefix (everything before /example-gallery/ in the current path)',
-      '// and prepend it so /examples/... hits the real path under /<repo>/.',
-      'const repoPrefix = (() => {',
-      '  const m = window.location.pathname.match(/^(\\\\/[^/]+)?\\\\/example-gallery\\\\//);',
-      '  return m ? (m[1] || "") : "";',
-      '})();',
-      'const resolvedModulePath = repoPrefix + modulePath;',
-      '',
-      'const adapterModule = await import(resolvedModulePath);',
-      'const adapter = adapterModule.default;',
-    ].join("\n")
-  );
-  ih = ih.replace(
-    'moduleUrl: new URL(modulePath, window.location.origin),',
-    'moduleUrl: new URL(resolvedModulePath, window.location.origin),'
-  );
-  ih = ih.replace(
-    'return new URL(relativePath, new URL(modulePath, window.location.origin))\n      .href;',
-    'return new URL(relativePath, new URL(resolvedModulePath, window.location.origin))\n      .href;'
-  );
+  // Inject <base> tag at the top of inspection-host.js so all absolute-path
+    // imports inside example code (/skills/..., /example-gallery/...) resolve
+    // under the GitHub Pages repo prefix. Then switch dynamic import and
+    // moduleUrl/resolveAsset to use modulePath as-is (resolved against <base>).
+    ih = ih.replace(
+      'import { OrbitControls } from "three/addons/controls/OrbitControls.js";\nimport { exampleRuntime } from "./example-runtime.js";',
+      [
+        '// GitHub Pages lives under /<repo>/ — inject <base> so absolute paths',
+        '// in example code (/skills/..., /example-gallery/...) resolve correctly.',
+        '{',
+        '  const m = window.location.pathname.match(/^(\\\\/[^/]+)?\\\\/example-gallery\\\\//);',
+        '  const repoPrefix = m ? (m[1] || "") : "";',
+        '  if (repoPrefix) {',
+        '    const base = document.createElement("base");',
+        '    base.href = repoPrefix + "/";',
+        '    document.head.prepend(base);',
+        '  }',
+        '}',
+        '',
+        'import { OrbitControls } from "three/addons/controls/OrbitControls.js";',
+        'import { exampleRuntime } from "./example-runtime.js";',
+      ].join("\n")
+    );
+    ih = ih.replace(
+      'const adapterModule = await import(modulePath);\nconst adapter = adapterModule.default;',
+      'const adapterModule = await import(modulePath);\nconst adapter = adapterModule.default;'
+    );
+    ih = ih.replace(
+      'moduleUrl: new URL(modulePath, window.location.origin),',
+      'moduleUrl: new URL(modulePath, window.location.href),'
+    );
+    ih = ih.replace(
+      'return new URL(relativePath, new URL(modulePath, window.location.origin))\n      .href;',
+      'return new URL(relativePath, new URL(modulePath, window.location.href))\n      .href;'
+    );
   await writeFile(ihPath, ih);
 
   // 6. Discover examples and build examples.json + per-example pages
