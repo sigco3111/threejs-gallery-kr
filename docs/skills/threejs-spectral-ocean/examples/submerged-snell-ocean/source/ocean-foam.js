@@ -1,8 +1,8 @@
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/ocean-foam.ts
-import { dot as dot3, float as float4, max as max2, mix as mix4, normalize as normalize2, pow as pow2, smoothstep as smoothstep2, vec2 as vec22, vec3 as vec33 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { dot as dot3, float as float4, max as max2, mix as mix4, normalize as normalize2, pow as pow2, smoothstep as smoothstep2, vec2 as vec22, vec3 as vec33 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/noise.ts
-import { Fn, Loop, float, fract, dot, floor, mix, sin, vec2, vec3 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { Fn, Loop, float, fract, dot, floor, mix, sin, vec2, vec3 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var hash21 = /* @__PURE__ */ Fn(([p]) => {
   const p3 = fract(vec3(p.x, p.y, p.x).mul(0.1031)).toVar();
   p3.addAssign(dot(p3, vec3(p3.y, p3.z, p3.x).add(33.33)));
@@ -35,11 +35,11 @@ var fbm2 = /* @__PURE__ */ Fn(([p]) => {
 });
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sky-radiance.ts
-import { Fn as Fn2, dot as dot2, float as float2, max, mix as mix2, normalize, pow, smoothstep, vec3 as vec32 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { Fn as Fn2, dot as dot2, float as float2, max, mix as mix2, normalize, pow, smoothstep, vec3 as vec32 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sun.ts
 import { Color, Vector3 } from "https://esm.sh/three@0.185.1?external";
-import { uniform } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { uniform } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var SUN_ELEVATION = 42 * Math.PI / 180;
 var SUN_AZIMUTH = 215 * Math.PI / 180;
 var sunDirection = new Vector3(
@@ -78,7 +78,7 @@ var skyRadiance = /* @__PURE__ */ Fn2(
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/wake-foam-map.ts
 import { HalfFloatType, LinearFilter, Vector4 } from "https://esm.sh/three@0.185.1?external";
-import { StorageTexture } from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import { StorageTexture } from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 import {
   Fn as Fn3,
   exp,
@@ -94,7 +94,7 @@ import {
   uniform as uniform2,
   uniformArray,
   vec4
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var WAKE_FOAM_CENTER_X = 0;
 var WAKE_FOAM_CENTER_Z = 10;
 var WAKE_FOAM_SIZE = 820;

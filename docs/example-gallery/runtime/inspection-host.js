@@ -19,28 +19,35 @@ const REPO_PREFIX = "/threejs-gallery-kr";
 // ensures absolute-path asset URLs like "/skills/foo/bar.webp" resolve under
 // the repo path. (fetch wrapper in runtime/index.html already handles most,
 // but some loaders cache the URL before our wrapper runs.)
+// NOTE: wrap the base Loader too — custom loaders (PrecomputedTexturesLoader,
+// STBNLoader, DataLoader subclasses) extend it and bypass the per-class wraps.
+import { Loader } from "three";
 function wrapLoaderLoad(LoaderCtor) {
   if (!LoaderCtor || !LoaderCtor.prototype?.load) return;
   const originalLoad = LoaderCtor.prototype.load;
-  LoaderCtor.prototype.load = function patchedLoad(url, ...rest) {
-    let redirected = url;
-    if (typeof url === "string") {
-      if (url.charAt(0) === "/") {
-        // Absolute path — prepend repo prefix by string concatenation
-        // (new URL() ignores the base when the spec is an absolute path).
-        redirected = window.location.origin + REPO_PREFIX + url;
-      } else if (url.startsWith(window.location.origin + "/") && !url.startsWith(window.location.origin + REPO_PREFIX + "/")) {
-        // Fully-qualified URL missing the repo prefix (e.g. resolveAsset()
-        // built on a prefix-less base) — splice the prefix back in.
-        redirected = window.location.origin + REPO_PREFIX + url.slice(window.location.origin.length);
-      } else if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) {
-        // Already absolute URL or data URI — leave as-is.
-      } else {
-        // Relative path — resolve under repo prefix so scenes that pass
-        // "assets/foo.hdr" still land under /threejs-gallery-kr/.
-        redirected = new URL(url, window.location.origin + REPO_PREFIX + "/").href;
-      }
+  const redirectOne = (u) => {
+    if (typeof u !== "string") return u;
+    if (u.charAt(0) === "/") {
+      // Absolute path — prepend repo prefix by string concatenation
+      // (new URL() ignores the base when the spec is an absolute path).
+      return window.location.origin + REPO_PREFIX + u;
     }
+    if (u.startsWith(window.location.origin + "/") && !u.startsWith(window.location.origin + REPO_PREFIX + "/")) {
+      // Fully-qualified URL missing the repo prefix (e.g. resolveAsset()
+      // built on a prefix-less base) — splice the prefix back in.
+      return window.location.origin + REPO_PREFIX + u.slice(window.location.origin.length);
+    }
+    if (u.startsWith("http://") || u.startsWith("https://") || u.startsWith("data:")) {
+      // Already absolute URL or data URI — leave as-is.
+      return u;
+    }
+    // Relative path — resolve under repo prefix so scenes that pass
+    // "assets/foo.hdr" still land under /threejs-gallery-kr/.
+    return new URL(u, window.location.origin + REPO_PREFIX + "/").href;
+  };
+  LoaderCtor.prototype.load = function patchedLoad(url, ...rest) {
+    // CubeTextureLoader takes an ARRAY of 6 URLs — redirect each entry.
+    const redirected = Array.isArray(url) ? url.map(redirectOne) : redirectOne(url);
     return originalLoad.call(this, redirected, ...rest);
   };
 }
@@ -69,6 +76,7 @@ const rawWebGpu = adapter.backend === "raw-webgpu";
 const THREE = adapter.backend === "webgpu"
   ? await import("three/webgpu")
   : await import("three");
+wrapLoaderLoad(Loader);
 wrapLoaderLoad(EXRLoader);
 wrapLoaderLoad(RGBELoader);
 wrapLoaderLoad(GLTFLoader);

@@ -10,7 +10,7 @@ import {
 import {
   MeshBasicNodeMaterial as MeshBasicNodeMaterial2,
   RenderPipeline
-} from "https://esm.sh/three@0.185.1/webgpu?external=three";
+} from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 import {
   Fn as Fn3,
   If,
@@ -41,8 +41,8 @@ import {
   vec2 as vec22,
   vec3 as vec33,
   vec4 as vec43
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
-import { bloom } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/display/BloomNode.js?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
+import { bloom } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/display/BloomNode.js?deps=three@0.185.1";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/caustics.ts
 import {
@@ -57,7 +57,7 @@ import {
   RepeatWrapping,
   Scene
 } from "https://esm.sh/three@0.185.1?external";
-import { MeshBasicNodeMaterial } from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import { MeshBasicNodeMaterial } from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 import {
   Fn,
   dFdx,
@@ -77,11 +77,11 @@ import {
   vec2,
   vec3,
   vec4
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sun.ts
 import { Color, Vector3 } from "https://esm.sh/three@0.185.1?external";
-import { uniform } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { uniform } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var SUN_ELEVATION = 42 * Math.PI / 180;
 var SUN_AZIMUTH = 215 * Math.PI / 180;
 var sunDirection = new Vector3(
@@ -127,7 +127,7 @@ function causticWorldSample(causticsNode, options = {}) {
 }
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/current.ts
-import { Fn as Fn2, cos, sin, vec3 as vec32 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { Fn as Fn2, cos, sin, vec3 as vec32 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var currentFlow = /* @__PURE__ */ Fn2(([p, t]) => {
   const x = p.x.mul(0.05);
   const z = p.z.mul(0.05);
@@ -149,7 +149,7 @@ import {
   RGBAFormat,
   UnsignedByteType
 } from "https://esm.sh/three@0.185.1?external";
-import { lut3D } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/display/Lut3DNode.js?external=three";
+import { lut3D } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/display/Lut3DNode.js?deps=three@0.185.1";
 import {
   clamp,
   float as float2,
@@ -158,7 +158,7 @@ import {
   texture3D,
   uniform as uniform3,
   vec4 as vec42
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var asColor = (node) => node;
 var LUT_SIZE = 32;
 var gradeParams = {

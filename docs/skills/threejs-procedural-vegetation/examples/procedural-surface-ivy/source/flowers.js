@@ -1,6 +1,6 @@
 // docs/skills/threejs-procedural-vegetation/examples/procedural-surface-ivy/source/flowers.ts
 import * as THREE from "https://esm.sh/three@0.185.1?external";
-import { mergeGeometries } from "https://esm.sh/three@0.185.1/examples/jsm/utils/BufferGeometryUtils.js?external=three";
+import { mergeGeometries } from "https://esm.sh/three@0.185.1/examples/jsm/utils/BufferGeometryUtils.js?deps=three@0.185.1";
 var highGeo = null;
 var lowGeo = null;
 var highBudGeo = null;

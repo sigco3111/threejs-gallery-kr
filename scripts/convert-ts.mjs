@@ -88,6 +88,11 @@ for (const tsPath of tsFiles) {
         // the subpath to the alias target and emits broken URLs like
         // "https://esm.sh/three@0.185.1?external/addons/..." which
         // serve the core module (missing addons exports → SyntaxError).
+        // NOTE: use ?deps= (not ?external=) so the inner .mjs shares
+        // the same three.mjs instance as the page importmap — ?external=
+        // leaves inner "three" imports bare, creating a SECOND Three.js
+        // instance (storageTexture NodeBuilder errors, Multiple instances
+        // warnings, black screens on TSL/compute scenes).
         {
           name: "three-subpaths",
           setup(build) {
@@ -97,7 +102,7 @@ for (const tsPath of tsFiles) {
                 ? "examples/jsm/" + sub.slice("addons/".length)
                 : sub;
               return {
-                path: `https://esm.sh/three@0.185.1/${mapped}?external=three`,
+                path: `https://esm.sh/three@0.185.1/${mapped}?deps=three@0.185.1`,
                 external: true,
               };
             });

@@ -1,5 +1,5 @@
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/advectDyePass.ts
-import { float, floor, If, max, vec3, vec4 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { float, floor, If, max, vec3, vec4 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var advectDyePass = (context) => () => {
   const coord = context.grid.dye.coord;
   const uvw = context.grid.dye.uvw;

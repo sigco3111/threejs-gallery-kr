@@ -1,6 +1,6 @@
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/wave-sim.ts
 import { HalfFloatType, LinearFilter, RepeatWrapping } from "https://esm.sh/three@0.185.1?external";
-import { StorageTexture as StorageTexture2 } from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import { StorageTexture as StorageTexture2 } from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 import {
   Fn as Fn2,
   float as float2,
@@ -16,11 +16,11 @@ import {
   uniform,
   vec2 as vec22,
   vec4 as vec42
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/fft-compute.ts
 import { DataTexture, FloatType, NearestFilter, RGBAFormat } from "https://esm.sh/three@0.185.1?external";
-import { StorageBufferAttribute, StorageTexture } from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import { StorageBufferAttribute, StorageTexture } from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 import {
   Fn,
   float,
@@ -39,7 +39,7 @@ import {
   workgroupArray,
   workgroupBarrier,
   workgroupId
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 function createFrequencyTexture(n) {
   const tex = new StorageTexture(n, n);
   tex.type = FloatType;

@@ -1,9 +1,9 @@
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/CollisionHandler.ts
-import { Matrix4, Quaternion, Vector3 } from "https://esm.sh/three@0.185.1/webgpu?external=three";
-import { cross, dot, float, If, Loop, mat4, uint, uniform as uniform2, uniformArray as uniformArray2, vec3 as vec32, vec4, normalize, mix } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { Matrix4, Quaternion, Vector3 } from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
+import { cross, dot, float, If, Loop, mat4, uint, uniform as uniform2, uniformArray as uniformArray2, vec3 as vec32, vec4, normalize, mix } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/sdfSampler.ts
-import { Fn, vec3 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { Fn, vec3 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var sdfSampler = (fn) => {
   const sampler = Fn((params) => fn.apply(null, params));
   return (worldPos, outVel, outNormal) => {
@@ -14,7 +14,7 @@ var sdfSampler = (fn) => {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/shape/SDFShape.ts
-import { uniformArray } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { uniformArray } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var ShapeIndex = 0;
 var SDFShape = class {
   //protected readonly uCount: UniformNode<"uint", number>;
@@ -71,7 +71,7 @@ var SDFShape = class {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/shape/SDFBox.ts
-import { abs, length, max, min } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { abs, length, max, min } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var SDFBox = class extends SDFShape {
   sdf(localPos, halfExtents) {
     const q2 = abs(localPos).sub(halfExtents);
@@ -80,7 +80,7 @@ var SDFBox = class extends SDFShape {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/shape/SDFEllipsoid.ts
-import { length as length2 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { length as length2 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var SDFEllipsoid = class extends SDFShape {
   sdf(position, radii) {
     const k0 = length2(position.div(radii));

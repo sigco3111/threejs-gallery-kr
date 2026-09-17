@@ -1,5 +1,5 @@
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/vorticityPass.ts
-import { cross, length, vec3, vec4 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { cross, length, vec3, vec4 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var vorticityPass = (context) => () => {
   const grid = context.grid.phy;
   const coord = grid.coord;

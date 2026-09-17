@@ -1,9 +1,9 @@
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sky-radiance.ts
-import { Fn, dot, float, max, mix, normalize, pow, smoothstep, vec3 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { Fn, dot, float, max, mix, normalize, pow, smoothstep, vec3 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sun.ts
 import { Color, Vector3 } from "https://esm.sh/three@0.185.1?external";
-import { uniform } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { uniform } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var SUN_ELEVATION = 42 * Math.PI / 180;
 var SUN_AZIMUTH = 215 * Math.PI / 180;
 var sunDirection = new Vector3(

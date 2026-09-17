@@ -18,19 +18,30 @@
     <script>
       (function () {
         var REPO_PREFIX = "/threejs-gallery-kr";
+        var ORIGIN = window.location.origin;
         var originalFetch = window.fetch.bind(window);
         // Convert "/foo/bar" → origin + REPO_PREFIX + "/foo/bar"
         // by stripping the leading "/" and concatenating. Using new URL()
         // with the absolute path as the spec would ignore the base entirely.
         function withRepoPrefix(absPath) {
-          return window.location.origin + REPO_PREFIX + absPath;
+          return ORIGIN + REPO_PREFIX + absPath;
+        }
+        function needsPrefix(url) {
+          return typeof url === "string"
+            && url.charAt(0) === "/"
+            && url.indexOf(REPO_PREFIX + "/") !== 0;
         }
         function redirect(input) {
-          if (typeof input === "string" && input.charAt(0) === "/") {
+          if (typeof input === "string" && needsPrefix(input)) {
             return withRepoPrefix(input);
           }
-          if (input instanceof Request && input.url.charAt(0) === "/") {
-            return new Request(withRepoPrefix(input.url), input);
+          if (input instanceof Request) {
+            // Request.url is ALWAYS fully qualified — compare against
+            // ORIGIN + "/" and splice the prefix back in when missing.
+            var u = input.url;
+            if (u.indexOf(ORIGIN + "/") === 0 && u.indexOf(ORIGIN + REPO_PREFIX + "/") !== 0) {
+              return new Request(ORIGIN + REPO_PREFIX + u.slice(ORIGIN.length), input);
+            }
           }
           return input;
         }

@@ -18,7 +18,7 @@ import {
   Sphere,
   Vector2
 } from "https://esm.sh/three@0.185.1?external";
-import { MeshStandardNodeMaterial } from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import { MeshStandardNodeMaterial } from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 import {
   cameraPosition,
   cameraProjectionMatrix,
@@ -41,13 +41,13 @@ import {
   vec2,
   vec3,
   vec4
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
-import { mergeGeometries } from "https://esm.sh/three@0.185.1/examples/jsm/utils/BufferGeometryUtils.js?external=three";
-import { TessellateModifier } from "https://esm.sh/three@0.185.1/examples/jsm/modifiers/TessellateModifier.js?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
+import { mergeGeometries } from "https://esm.sh/three@0.185.1/examples/jsm/utils/BufferGeometryUtils.js?deps=three@0.185.1";
+import { TessellateModifier } from "https://esm.sh/three@0.185.1/examples/jsm/modifiers/TessellateModifier.js?deps=three@0.185.1";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sun.ts
 import { Color, Vector3 } from "https://esm.sh/three@0.185.1?external";
-import { uniform } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { uniform } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var SUN_ELEVATION = 42 * Math.PI / 180;
 var SUN_AZIMUTH = 215 * Math.PI / 180;
 var sunDirection = new Vector3(

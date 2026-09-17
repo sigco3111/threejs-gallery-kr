@@ -1,5 +1,5 @@
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/sdfSampler.ts
-import { Fn, vec3 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { Fn, vec3 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var sdfSampler = (fn) => {
   const sampler = Fn((params) => fn.apply(null, params));
   return (worldPos, outVel, outNormal) => {

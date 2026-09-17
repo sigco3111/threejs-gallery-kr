@@ -1,6 +1,6 @@
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/wake-foam-map.ts
 import { HalfFloatType, LinearFilter, Vector4 } from "https://esm.sh/three@0.185.1?external";
-import { StorageTexture } from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import { StorageTexture } from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 import {
   Fn,
   exp,
@@ -16,7 +16,7 @@ import {
   uniform,
   uniformArray,
   vec4
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var WAKE_FOAM_CENTER_X = 0;
 var WAKE_FOAM_CENTER_Z = 10;
 var WAKE_FOAM_SIZE = 820;

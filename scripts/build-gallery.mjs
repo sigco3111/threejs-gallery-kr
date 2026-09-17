@@ -218,6 +218,10 @@ async function main() {
   console.log(`Rewrote imports in ${rewritten} files`);
 
   // 4. Overwrite runtime/index.html with CDN-based importmap
+  // NOTE: the fetch/XHR shim below must stay in sync with
+  // docs/example-gallery/runtime/index.html (the production Pages file).
+  // Request.url is ALWAYS fully qualified — the Request branch must
+  // compare against ORIGIN + "/" (charAt(0) === "/" never matches).
   const runtimeHtml = `<!doctype html>
 <html lang="en">
   <head>
@@ -225,6 +229,68 @@ async function main() {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
     <title>Three.js Example Inspection</title>
+    <!-- Pre-module fetch shim: redirect absolute-path fetches through
+         document.baseURI so scene-internal fetch("/skills/foo.webp") and
+         dynamic imports resolve under the GitHub Pages repo path.
+         Must run before any module code.
+         We do NOT inject <base> here — it would also rewrite our own
+         relative <script src="./inspection-host.js"> to a wrong path.
+         <base> is added later by inspection-host.js (after dynamic-import
+         resolution has succeeded), and the importmap prefix mappings
+         declared just below use relative paths so they resolve correctly
+         without <base>. -->
+    <script>
+      (function () {
+        var REPO_PREFIX = "/threejs-gallery-kr";
+        var ORIGIN = window.location.origin;
+        var originalFetch = window.fetch.bind(window);
+        // Convert "/foo/bar" → origin + REPO_PREFIX + "/foo/bar"
+        // by stripping the leading "/" and concatenating. Using new URL()
+        // with the absolute path as the spec would ignore the base entirely.
+        function withRepoPrefix(absPath) {
+          return ORIGIN + REPO_PREFIX + absPath;
+        }
+        function needsPrefix(url) {
+          return typeof url === "string"
+            && url.charAt(0) === "/"
+            && url.indexOf(REPO_PREFIX + "/") !== 0;
+        }
+        function redirect(input) {
+          if (typeof input === "string" && needsPrefix(input)) {
+            return withRepoPrefix(input);
+          }
+          if (input instanceof Request) {
+            // Request.url is ALWAYS fully qualified — compare against
+            // ORIGIN + "/" and splice the prefix back in when missing.
+            var u = input.url;
+            if (u.indexOf(ORIGIN + "/") === 0 && u.indexOf(ORIGIN + REPO_PREFIX + "/") !== 0) {
+              return new Request(ORIGIN + REPO_PREFIX + u.slice(ORIGIN.length), input);
+            }
+          }
+          return input;
+        }
+        window.fetch = function (input, init) {
+          return originalFetch(redirect(input), init);
+        };
+
+        // Also patch XMLHttpRequest — some loaders (e.g. older patterns)
+        // still use XHR for asset loading.
+        var OriginalXHR = window.XMLHttpRequest;
+        function PatchedXHR() {
+          var xhr = new OriginalXHR();
+          var origOpen = xhr.open;
+          xhr.open = function (method, url) {
+            if (typeof url === "string" && url.charAt(0) === "/") {
+              arguments[1] = withRepoPrefix(url);
+            }
+            return origOpen.apply(xhr, arguments);
+          };
+          return xhr;
+        }
+        PatchedXHR.prototype = OriginalXHR.prototype;
+        window.XMLHttpRequest = PatchedXHR;
+      })();
+    </script>
     <style>
       * { box-sizing: border-box; }
       html, body, canvas { width: 100%; height: 100%; margin: 0; display: block; }

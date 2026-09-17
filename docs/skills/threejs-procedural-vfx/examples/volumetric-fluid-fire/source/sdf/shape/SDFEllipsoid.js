@@ -1,5 +1,5 @@
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/shape/SDFShape.ts
-import { uniformArray } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { uniformArray } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var ShapeIndex = 0;
 var SDFShape = class {
   //protected readonly uCount: UniformNode<"uint", number>;
@@ -56,7 +56,7 @@ var SDFShape = class {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/shape/SDFEllipsoid.ts
-import { length } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { length } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var SDFEllipsoid = class extends SDFShape {
   sdf(position, radii) {
     const k0 = length(position.div(radii));

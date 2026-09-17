@@ -7,7 +7,7 @@ import {
   uvec3,
   vec3,
   vec4
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var emitObjectPassFragment = (context) => (vertexPos, worldPos, emitMultiplier, worldMatrix, objVelData, tintFactor) => {
   context.insideBoundingVolume(worldPos, (uvw) => {
     const grid = context.grid.dye;

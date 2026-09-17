@@ -35,14 +35,14 @@ import {
   uniform as uniform4,
   uniformArray as uniformArray4,
   vec3 as vec313
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 import {
   VolumeNodeMaterial
-} from "https://esm.sh/three@0.185.1/webgpu?external=three";
+} from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/EmitterManager.ts
-import { Fn, If, instanceIndex, Return, storage, vec4 } from "https://esm.sh/three@0.185.1/tsl?external=three";
-import * as THREE from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import { Fn, If, instanceIndex, Return, storage, vec4 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
+import * as THREE from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 var EmitterManager = class {
   constructor(emitterBuffer) {
     this.emitters = [];
@@ -290,10 +290,10 @@ import {
   uniformArray,
   uvec3,
   vec3 as vec32
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/util/createStorage3D.ts
-import * as THREE2 from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import * as THREE2 from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
 function createStorage3D(name, sizeX, sizeY, sizeZ, format = THREE2.RGBAFormat, dataType = THREE2.HalfFloatType) {
   const texture2 = new THREE2.Storage3DTexture(sizeX, sizeY, sizeZ);
   texture2.name = name;
@@ -309,7 +309,7 @@ function createStorage3D(name, sizeX, sizeY, sizeZ, format = THREE2.RGBAFormat, 
 }
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/FluidFireShaderContext.ts
-import { snoise } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/math/curlNoise.js?external=three";
+import { snoise } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/math/curlNoise.js?deps=three@0.185.1";
 var gridCoordToUVW = (coord, grid) => vec32(coord).add(0.5).div(vec32(grid.x, grid.y, grid.z));
 function makeDataTexture(name, size, config) {
   const texture2 = createStorage3D(name, size.x, size.y, size.z, config?.format, config?.dataType);
@@ -501,8 +501,8 @@ var FluidFireShaderContext = class {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/curlNoisePass.ts
-import { float as float2, globalId as globalId2, If as If3, ivec3, Return as Return2, vec3 as vec33, vec4 as vec43 } from "https://esm.sh/three@0.185.1/tsl?external=three";
-import { snoiseVec3 } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/math/curlNoise.js?external=three";
+import { float as float2, globalId as globalId2, If as If3, ivec3, Return as Return2, vec3 as vec33, vec4 as vec43 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
+import { snoiseVec3 } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/math/curlNoise.js?deps=three@0.185.1";
 var curlNoisePass = (context) => () => {
   const coord = globalId2;
   const noiseSize = context.noiseTextureConfig.size;
@@ -538,10 +538,10 @@ var curlNoisePass = (context) => () => {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/advectVelocityPass.ts
-import { float as float4, max, min as min2, smoothstep as smoothstep2, vec3 as vec35, vec4 as vec45 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { float as float4, max, min as min2, smoothstep as smoothstep2, vec3 as vec35, vec4 as vec45 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/vorticityPass.ts
-import { cross, length as length2, vec3 as vec34, vec4 as vec44 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { cross, length as length2, vec3 as vec34, vec4 as vec44 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var vorticityPass = (context) => () => {
   const grid = context.grid.phy;
   const coord = grid.coord;
@@ -607,7 +607,7 @@ var advectVelocityPass = (context) => () => {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/divergencePass.ts
-import { dot, select, vec3 as vec36, vec4 as vec46 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { dot, select, vec3 as vec36, vec4 as vec46 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var divergencePass = (context) => () => {
   const grid = context.grid.phy;
   const coord = grid.coord;
@@ -646,7 +646,7 @@ var divergencePass = (context) => () => {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/jacobiPass.ts
-import { float as float6, If as If6, vec3 as vec37, vec4 as vec47 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { float as float6, If as If6, vec3 as vec37, vec4 as vec47 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var jacobiPass = (context, readFrom, writeTo) => () => {
   const coord = context.grid.phy.coord;
   const uvw = context.grid.phy.uvw;
@@ -694,7 +694,7 @@ var jacobiPass = (context, readFrom, writeTo) => () => {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/projectPass.ts
-import { float as float7, If as If7, vec3 as vec38, vec4 as vec48 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { float as float7, If as If7, vec3 as vec38, vec4 as vec48 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var projectPass = (context) => () => {
   const coord = context.grid.phy.coord;
   const uvw = context.grid.phy.uvw;
@@ -742,7 +742,7 @@ var projectPass = (context) => () => {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/advectDyePass.ts
-import { float as float8, floor, If as If8, max as max3, vec3 as vec39, vec4 as vec49 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { float as float8, floor, If as If8, max as max3, vec3 as vec39, vec4 as vec49 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var advectDyePass = (context) => () => {
   const coord = context.grid.dye.coord;
   const uvw = context.grid.dye.uvw;
@@ -783,7 +783,7 @@ import {
   uvec3 as uvec32,
   vec3 as vec310,
   vec4 as vec410
-} from "https://esm.sh/three@0.185.1/tsl?external=three";
+} from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var emitObjectPassFragment = (context) => (vertexPos, worldPos, emitMultiplier, worldMatrix, objVelData, tintFactor) => {
   context.insideBoundingVolume(worldPos, (uvw) => {
     const grid = context.grid.dye;
@@ -826,14 +826,14 @@ var emitObjectsVelocityAndDyePassFragment = (context) => (vertexPos, worldPos, e
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/VolumetricFluidFire.ts
-import { gaussianBlur } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/display/GaussianBlurNode.js?external=three";
+import { gaussianBlur } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/display/GaussianBlurNode.js?deps=three@0.185.1";
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/CollisionHandler.ts
-import { Matrix4 as Matrix43, Quaternion, Vector3 as Vector33 } from "https://esm.sh/three@0.185.1/webgpu?external=three";
-import { cross as cross2, dot as dot3, float as float10, If as If10, Loop as Loop3, mat4, uint, uniform as uniform3, uniformArray as uniformArray3, vec3 as vec312, vec4 as vec411, normalize, mix as mix2 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { Matrix4 as Matrix43, Quaternion, Vector3 as Vector33 } from "https://esm.sh/three@0.185.1/webgpu?deps=three@0.185.1";
+import { cross as cross2, dot as dot3, float as float10, If as If10, Loop as Loop3, mat4, uint, uniform as uniform3, uniformArray as uniformArray3, vec3 as vec312, vec4 as vec411, normalize, mix as mix2 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/sdfSampler.ts
-import { Fn as Fn6, vec3 as vec311 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { Fn as Fn6, vec3 as vec311 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var sdfSampler = (fn) => {
   const sampler = Fn6((params) => fn.apply(null, params));
   return (worldPos, outVel, outNormal) => {
@@ -844,7 +844,7 @@ var sdfSampler = (fn) => {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/shape/SDFShape.ts
-import { uniformArray as uniformArray2 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { uniformArray as uniformArray2 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var ShapeIndex = 0;
 var SDFShape = class {
   //protected readonly uCount: UniformNode<"uint", number>;
@@ -901,7 +901,7 @@ var SDFShape = class {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/shape/SDFBox.ts
-import { abs as abs2, length as length4, max as max5, min as min4 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { abs as abs2, length as length4, max as max5, min as min4 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var SDFBox = class extends SDFShape {
   sdf(localPos, halfExtents) {
     const q2 = abs2(localPos).sub(halfExtents);
@@ -910,7 +910,7 @@ var SDFBox = class extends SDFShape {
 };
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/shape/SDFEllipsoid.ts
-import { length as length5 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { length as length5 } from "https://esm.sh/three@0.185.1/tsl?deps=three@0.185.1";
 var SDFEllipsoid = class extends SDFShape {
   sdf(position, radii) {
     const k0 = length5(position.div(radii));
