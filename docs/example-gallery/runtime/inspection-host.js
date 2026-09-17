@@ -9,7 +9,13 @@ if (!modulePath?.startsWith("/examples/")) {
   throw new Error("Inspection runtime requires a dev example module.");
 }
 
-const adapterModule = await import(modulePath);
+// GitHub Pages lives under /<repo>/ — modulePath comes in as absolute /examples/...
+// but the browser resolves it against window.location.origin (no repo prefix).
+// Prepend the current directory's prefix so /examples/... hits the real path under /<repo>/.
+const basePrefix = window.location.pathname.replace(/\/[^/]*$/, "");
+const resolvedModulePath = basePrefix + modulePath;
+
+const adapterModule = await import(resolvedModulePath);
 const adapter = adapterModule.default;
 
 if (!adapter || typeof adapter.setup !== "function") {
@@ -110,9 +116,9 @@ const context = {
   camera,
   controls,
   runtime: exampleRuntime,
-  moduleUrl: new URL(modulePath, window.location.origin),
+  moduleUrl: new URL(resolvedModulePath, window.location.origin),
   resolveAsset(relativePath) {
-    return new URL(relativePath, new URL(modulePath, window.location.origin))
+    return new URL(relativePath, new URL(resolvedModulePath, window.location.origin))
       .href;
   },
 };

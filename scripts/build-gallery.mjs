@@ -303,12 +303,34 @@ async function main() {
 </html>`;
   await writeFile(path.join(DST, "example-gallery", "runtime", "index.html"), runtimeHtml);
 
-  // 5. Patch inspection-host.js module path check
+  // 5. Patch inspection-host.js module path check + base-aware resolution for GitHub Pages
   const ihPath = path.join(DST, "example-gallery", "runtime", "inspection-host.js");
   let ih = await readFile(ihPath, "utf8");
   ih = ih.replace(
     'if (!modulePath?.startsWith("/example-gallery/examples/"))',
     'if (!modulePath?.startsWith("/examples/"))'
+  );
+  // Inject basePrefix + resolvedModulePath right before the dynamic import,
+  // and switch moduleUrl/resolveAsset to use the resolved URL.
+  ih = ih.replace(
+    'const adapterModule = await import(modulePath);\nconst adapter = adapterModule.default;',
+    [
+      '// GitHub Pages lives under /<repo>/ — prepend the current directory\'s',
+      '// prefix so /examples/... resolves under the repo path.',
+      'const basePrefix = window.location.pathname.replace(/\\/[^/]*$/, "");',
+      'const resolvedModulePath = basePrefix + modulePath;',
+      '',
+      'const adapterModule = await import(resolvedModulePath);',
+      'const adapter = adapterModule.default;',
+    ].join("\n")
+  );
+  ih = ih.replace(
+    'moduleUrl: new URL(modulePath, window.location.origin),',
+    'moduleUrl: new URL(resolvedModulePath, window.location.origin),'
+  );
+  ih = ih.replace(
+    'return new URL(relativePath, new URL(modulePath, window.location.origin))\n      .href;',
+    'return new URL(relativePath, new URL(resolvedModulePath, window.location.origin))\n      .href;'
   );
   await writeFile(ihPath, ih);
 
