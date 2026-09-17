@@ -23,9 +23,19 @@ function wrapLoaderLoad(LoaderCtor) {
   if (!LoaderCtor || !LoaderCtor.prototype?.load) return;
   const originalLoad = LoaderCtor.prototype.load;
   LoaderCtor.prototype.load = function patchedLoad(url, ...rest) {
-    const redirected = typeof url === "string" && url.startsWith("/")
-      ? new URL(url, window.location.origin + REPO_PREFIX + "/").href
-      : url;
+    let redirected = url;
+    if (typeof url === "string") {
+      if (url.charAt(0) === "/") {
+        // Absolute path — prepend repo prefix.
+        redirected = new URL(url, window.location.origin + REPO_PREFIX + "/").href;
+      } else if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) {
+        // Already absolute URL or data URI — leave as-is.
+      } else {
+        // Relative path — resolve under repo prefix so scenes that pass
+        // "assets/foo.hdr" still land under /threejs-gallery-kr/.
+        redirected = new URL(url, window.location.origin + REPO_PREFIX + "/").href;
+      }
+    }
     return originalLoad.call(this, redirected, ...rest);
   };
 }
@@ -149,8 +159,8 @@ const context = {
   runtime: exampleRuntime,
   moduleUrl: new URL(modulePath, window.location.origin + REPO_PREFIX + "/"),
   resolveAsset(relativePath) {
-    return new URL(relativePath, new URL(modulePath, window.location.origin + REPO_PREFIX + "/"))
-      .href;
+    const baseUrl = new URL(modulePath, window.location.origin + REPO_PREFIX + "/").href;
+    return new URL(relativePath, baseUrl).href;
   },
 };
 
