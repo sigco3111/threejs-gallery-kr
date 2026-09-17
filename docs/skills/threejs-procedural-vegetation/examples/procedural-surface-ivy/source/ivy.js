@@ -383,32 +383,32 @@ var IvyPlant = class {
   constructor(samples, seed, settings, targets) {
     this.settings = settings;
     this.targets = targets;
+    this.group = new THREE4.Group();
+    this.stems = [];
+    this.leaves = [];
+    this.leafMesh = null;
+    this.leafCount = 0;
+    // instances currently revealed
+    this.restApplied = false;
+    // matrices already written for still air + finished growth
+    this.flowers = [];
+    this.flowerMesh = null;
+    // open umbels (bloom > 0)
+    this.budMesh = null;
+    // closed bud-balls (bloom < 1)
+    this.bloomAnim = false;
+    // any bloom spring currently moving
+    this.flowersRested = false;
+    this.progress = 0;
+    this.total = 0;
+    this.done = false;
+    // Hundreds of surface-projection rays run per rebuild — BVH + first-hit keeps them cheap.
+    this.raycaster = firstHitOnly(new THREE4.Raycaster());
     const rnd = mulberry32(seed);
     const stems = this.generateSkeleton(samples, rnd);
     this.buildMeshes(stems);
     this.group.name = "ivy";
   }
-  group = new THREE4.Group();
-  stems = [];
-  leaves = [];
-  leafMesh = null;
-  leafCount = 0;
-  // instances currently revealed
-  restApplied = false;
-  // matrices already written for still air + finished growth
-  flowers = [];
-  flowerMesh = null;
-  // open umbels (bloom > 0)
-  budMesh = null;
-  // closed bud-balls (bloom < 1)
-  bloomAnim = false;
-  // any bloom spring currently moving
-  flowersRested = false;
-  progress = 0;
-  total = 0;
-  done = false;
-  // Hundreds of surface-projection rays run per rebuild — BVH + first-hit keeps them cheap.
-  raycaster = firstHitOnly(new THREE4.Raycaster());
   get finished() {
     return this.done;
   }

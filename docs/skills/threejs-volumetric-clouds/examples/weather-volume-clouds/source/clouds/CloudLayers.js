@@ -62,20 +62,22 @@ function applyOptions(target, params) {
   }
 }
 var CloudLayer = class _CloudLayer {
-  static DEFAULT = /* @__PURE__ */ new _CloudLayer();
-  channel = "r";
-  altitude = 0;
-  height = 0;
-  densityScale = 0.2;
-  shapeAmount = 1;
-  shapeDetailAmount = 1;
-  weatherExponent = 1;
-  shapeAlteringBias = 0.35;
-  coverageFilterWidth = 0.6;
-  densityProfile = new DensityProfile(0, 0, 0.75, 0.25);
-  shadow = false;
   constructor(options) {
+    this.channel = "r";
+    this.altitude = 0;
+    this.height = 0;
+    this.densityScale = 0.2;
+    this.shapeAmount = 1;
+    this.shapeDetailAmount = 1;
+    this.weatherExponent = 1;
+    this.shapeAlteringBias = 0.35;
+    this.coverageFilterWidth = 0.6;
+    this.densityProfile = new DensityProfile(0, 0, 0.75, 0.25);
+    this.shadow = false;
     this.set(options);
+  }
+  static {
+    this.DEFAULT = /* @__PURE__ */ new _CloudLayer();
   }
   set(options) {
     applyOptions(this, options);
@@ -113,44 +115,46 @@ function compareEntries(a, b) {
   return a.value !== b.value ? a.value - b.value : a.flag - b.flag;
 }
 var CloudLayers = class _CloudLayers extends Array {
-  static DEFAULT = /* @__PURE__ */ new _CloudLayers([
-    {
-      channel: "r",
-      altitude: 750,
-      height: 650,
-      densityScale: 0.2,
-      shapeAmount: 1,
-      shapeDetailAmount: 1,
-      weatherExponent: 1,
-      shapeAlteringBias: 0.35,
-      coverageFilterWidth: 0.6,
-      shadow: true
-    },
-    {
-      channel: "g",
-      altitude: 1e3,
-      height: 1200,
-      densityScale: 0.2,
-      shapeAmount: 1,
-      shapeDetailAmount: 1,
-      weatherExponent: 1,
-      shapeAlteringBias: 0.35,
-      coverageFilterWidth: 0.6,
-      shadow: true
-    },
-    {
-      channel: "b",
-      altitude: 7500,
-      height: 500,
-      densityScale: 3e-3,
-      shapeAmount: 0.4,
-      shapeDetailAmount: 0,
-      weatherExponent: 1,
-      shapeAlteringBias: 0.35,
-      coverageFilterWidth: 0.5
-    },
-    { channel: "a" }
-  ]);
+  static {
+    this.DEFAULT = /* @__PURE__ */ new _CloudLayers([
+      {
+        channel: "r",
+        altitude: 750,
+        height: 650,
+        densityScale: 0.2,
+        shapeAmount: 1,
+        shapeDetailAmount: 1,
+        weatherExponent: 1,
+        shapeAlteringBias: 0.35,
+        coverageFilterWidth: 0.6,
+        shadow: true
+      },
+      {
+        channel: "g",
+        altitude: 1e3,
+        height: 1200,
+        densityScale: 0.2,
+        shapeAmount: 1,
+        shapeDetailAmount: 1,
+        weatherExponent: 1,
+        shapeAlteringBias: 0.35,
+        coverageFilterWidth: 0.6,
+        shadow: true
+      },
+      {
+        channel: "b",
+        altitude: 7500,
+        height: 500,
+        densityScale: 3e-3,
+        shapeAmount: 0.4,
+        shapeDetailAmount: 0,
+        weatherExponent: 1,
+        shapeAlteringBias: 0.35,
+        coverageFilterWidth: 0.5
+      },
+      { channel: "a" }
+    ]);
+  }
   constructor(options) {
     super(
       new CloudLayer(options?.[0]),

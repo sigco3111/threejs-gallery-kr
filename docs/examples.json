@@ -1676,7 +1676,91 @@
           "label": "Caustics"
         }
       ]
+    },
+    {
+      "skill": "threejs-atmosphere-aerial-perspective",
+      "skill_kr": "대기 원근법",
+      "skill_desc": "공유 Rayleigh/Mie 대기, 스카이, 깊이 산란",
+      "slug": "lut-aerial-perspective",
+      "title": "Atmosphere and Aerial Perspective",
+      "title_kr": "LUT 대기 원근법",
+      "description": "A precomputed-LUT sky and aerial-perspective composition using the package SkyMaterial, SkyLightProbe, SunDirectionalLight, AerialPerspectiveEffect, lens flare, AGX tone mapping, and dithering path with one atmosphere model shared by sky radiance, sun transmittance, and surface-segment inscattering.",
+      "techniques": [
+        "precomputed transmittance scattering and irradiance LUTs",
+        "SkyMaterial full-screen atmospheric sky",
+        "SunDirectionalLight transmittance",
+        "AerialPerspectiveEffect transmittance and inscattering toggles",
+        "AGX tone mapping plus lens flare and dithering"
+      ],
+      "backend": "WebGL2 / package sky and postprocessing effects",
+      "thumb": "thumbs/threejs-atmosphere-aerial-perspective__lut-aerial-perspective.png",
+      "url": "examples/threejs-atmosphere-aerial-perspective/lut-aerial-perspective/",
+      "debug_modes": [
+        {
+          "value": "final",
+          "label": "Final"
+        },
+        {
+          "value": "transmittance",
+          "label": "Transmittance only"
+        },
+        {
+          "value": "inscatter",
+          "label": "Inscatter only"
+        },
+        {
+          "value": "no-aerial-perspective",
+          "label": "No aerial perspective"
+        }
+      ]
+    },
+    {
+      "skill": "threejs-volumetric-clouds",
+      "skill_kr": "볼류메트릭 구름",
+      "skill_desc": "날씨-모양 밀도, 바운디드 레이마칭, 클라우드 라이팅, 그림자",
+      "slug": "weather-volume-clouds",
+      "title": "Weather Volume Clouds",
+      "title_kr": "날씨 볼류메트릭 구름",
+      "description": "A large-world volumetric cloud composition using the package CloudsEffect, CloudsPass, ShadowPass, cascaded cloud shadow maps, local weather, 128-cubed shape and 32-cubed detail volumes, turbulence, STBN jitter, NormalPass deferred lighting, AerialPerspectiveEffect atmosphere composition, lens flare, AGX tone mapping, and dithering.",
+      "techniques": [
+        "package CloudLayers weather-channel density",
+        "bounded layer interval selection and cascaded cloud shadows",
+        "128-cubed base shape and 32-cubed detail erosion",
+        "curl-texture turbulence displacement",
+        "front-to-back volumetric integration",
+        "NormalPass deferred atmosphere lighting",
+        "low-resolution temporal upscale"
+      ],
+      "backend": "WebGL2 / package CloudsEffect and postprocessing",
+      "thumb": "thumbs/threejs-volumetric-clouds__weather-volume-clouds.png",
+      "url": "examples/threejs-volumetric-clouds/weather-volume-clouds/",
+      "debug_modes": [
+        {
+          "value": "final",
+          "label": "Final"
+        },
+        {
+          "value": "atmosphere-only",
+          "label": "Atmosphere only"
+        },
+        {
+          "value": "clouds-only",
+          "label": "Clouds only"
+        },
+        {
+          "value": "no-detail",
+          "label": "No detail volume"
+        },
+        {
+          "value": "no-turbulence",
+          "label": "No turbulence"
+        },
+        {
+          "value": "native-resolution",
+          "label": "Native resolution"
+        }
+      ]
     }
   ],
-  "count": 39
+  "count": 41
 }

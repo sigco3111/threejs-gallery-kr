@@ -1,0 +1,11 @@
+// docs/examples/threejs-atmosphere-aerial-perspective/lut-aerial-perspective/source/geospatial/typedArray.ts
+import {
+  Float16Array
+} from "https://esm.sh/@petamoriken/float16@3.9.2?external";
+function isTypedArray(value) {
+  return value instanceof Int8Array || value instanceof Uint8Array || value instanceof Uint8ClampedArray || value instanceof Int16Array || value instanceof Uint16Array || value instanceof Int32Array || value instanceof Uint32Array || value instanceof Float16Array || value instanceof Float32Array || value instanceof Float64Array;
+}
+export {
+  Float16Array,
+  isTypedArray
+};

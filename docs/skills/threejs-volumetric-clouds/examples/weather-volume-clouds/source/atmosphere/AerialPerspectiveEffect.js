@@ -1,52 +1,13 @@
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __knownSymbol = (name, symbol) => (symbol = Symbol[name]) ? symbol : Symbol.for("Symbol." + name);
-var __typeError = (msg) => {
-  throw TypeError(msg);
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
 };
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-var __decoratorStart = (base) => [, , , __create(base?.[__knownSymbol("metadata")] ?? null)];
-var __decoratorStrings = ["class", "method", "getter", "setter", "accessor", "field", "value", "get", "set"];
-var __expectFn = (fn) => fn !== void 0 && typeof fn !== "function" ? __typeError("Function expected") : fn;
-var __decoratorContext = (kind, name, done, metadata, fns) => ({ kind: __decoratorStrings[kind], name, metadata, addInitializer: (fn) => done._ ? __typeError("Already initialized") : fns.push(__expectFn(fn || null)) });
-var __decoratorMetadata = (array, target) => __defNormalProp(target, __knownSymbol("metadata"), array[3]);
-var __runInitializers = (array, flags, self, value) => {
-  for (var i = 0, fns = array[flags >> 1], n = fns && fns.length; i < n; i++) flags & 1 ? fns[i].call(self) : value = fns[i].call(self, value);
-  return value;
-};
-var __decorateElement = (array, flags, name, decorators, target, extra) => {
-  return;  // patched: no-op to avoid Object.defineProperty crash
-  var fn, it, done, ctx, access, k = flags & 7, s = !!(flags & 8), p = !!(flags & 16);
-  var j = k > 3 ? array.length + 1 : k ? s ? 1 : 2 : 0, key = __decoratorStrings[k + 5];
-  var initializers = k > 3 && (array[j - 1] = []), extraInitializers = array[j] || (array[j] = []);
-  var desc = k && (!p && !s && (target = target.prototype), k < 5 && (k > 3 || !p) && __getOwnPropDesc(k < 4 ? target : { get [name]() {
-    return __privateGet(this, extra);
-  }, set [name](x) {
-    return __privateSet(this, extra, x);
-  } }, name));
-  k ? p && k < 4 && __name(extra, (k > 2 ? "set " : k > 1 ? "get " : "") + name) : __name(target, name);
-  for (var i = decorators.length - 1; i >= 0; i--) {
-    ctx = __decoratorContext(k, name, done = {}, array[3], extraInitializers);
-    if (k) {
-      ctx.static = s, ctx.private = p, access = ctx.access = { has: p ? (x) => __privateIn(target, x) : (x) => name in x };
-      if (k ^ 3) access.get = p ? (x) => (k ^ 1 ? __privateGet : __privateMethod)(x, target, k ^ 4 ? extra : desc.get) : (x) => x[name];
-      if (k > 2) access.set = p ? (x, y) => __privateSet(x, target, y, k ^ 4 ? extra : desc.set) : (x, y) => x[name] = y;
-    }
-    it = (0, decorators[i])(k ? k < 4 ? p ? extra : desc[key] : k > 4 ? void 0 : { get: desc.get, set: desc.set } : target, ctx), done._ = 1;
-    if (k ^ 4 || it === void 0) __expectFn(it) && (k > 4 ? initializers.unshift(it) : k ? p ? extra = it : desc[key] = it : target = it);
-    else if (typeof it !== "object" || it === null) __typeError("Object expected");
-    else __expectFn(fn = it.get) && (desc.get = fn), __expectFn(fn = it.set) && (desc.set = fn), __expectFn(fn = it.init) && initializers.unshift(fn);
-  }
-  return k || __decoratorMetadata(array, target), desc && __defProp(target, name, desc), p ? k ^ 4 ? extra : desc : target;
-};
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
-var __privateIn = (member, obj) => Object(obj) !== obj ? __typeError('Cannot use the "in" operator on this value') : member.has(obj);
-var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
-var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
-var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/atmosphere/AerialPerspectiveEffect.ts
 import { BlendFunction, Effect, EffectAttribute } from "https://esm.sh/postprocessing@6.37.4?deps=three@0.185.1&external=three";
@@ -164,7 +125,10 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    parseTypedArray = parser;
+    constructor() {
+      super(...arguments);
+      this.parseTypedArray = parser;
+    }
   };
 }
 
@@ -180,7 +144,10 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  parameters = {};
+  constructor() {
+    super(...arguments);
+    this.parameters = {};
+  }
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -213,12 +180,15 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    Texture = Texture;
-    TypedArrayLoader = createTypedArrayLoaderClass(parser);
-    parameters = {
-      ...defaultDataTextureParameter,
-      ...parameters
-    };
+    constructor() {
+      super(...arguments);
+      this.Texture = Texture;
+      this.TypedArrayLoader = createTypedArrayLoaderClass(parser);
+      this.parameters = {
+        ...defaultDataTextureParameter,
+        ...parameters
+      };
+    }
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {
@@ -381,12 +351,13 @@ var vectorScratch1 = /* @__PURE__ */ new Vector33();
 var vectorScratch2 = /* @__PURE__ */ new Vector33();
 var vectorScratch3 = /* @__PURE__ */ new Vector33();
 var Ellipsoid = class _Ellipsoid {
-  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
-    6378137,
-    6378137,
-    6356752314245179e-9
-  );
-  radii;
+  static {
+    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
+      6378137,
+      6378137,
+      6356752314245179e-9
+    );
+  }
   constructor(x, y, z) {
     this.radii = new Vector33(x, y, z);
   }
@@ -497,10 +468,18 @@ var Geodetic = class _Geodetic {
     this.latitude = latitude;
     this.height = height;
   }
-  static MIN_LONGITUDE = -Math.PI;
-  static MAX_LONGITUDE = Math.PI;
-  static MIN_LATITUDE = -Math.PI / 2;
-  static MAX_LATITUDE = Math.PI / 2;
+  static {
+    this.MIN_LONGITUDE = -Math.PI;
+  }
+  static {
+    this.MAX_LONGITUDE = Math.PI;
+  }
+  static {
+    this.MIN_LATITUDE = -Math.PI / 2;
+  }
+  static {
+    this.MAX_LATITUDE = Math.PI / 2;
+  }
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -609,12 +588,14 @@ var Rectangle = class _Rectangle {
     this.east = east;
     this.north = north;
   }
-  static MAX = /* @__PURE__ */ new _Rectangle(
-    Geodetic.MIN_LONGITUDE,
-    Geodetic.MIN_LATITUDE,
-    Geodetic.MAX_LONGITUDE,
-    Geodetic.MAX_LATITUDE
-  );
+  static {
+    this.MAX = /* @__PURE__ */ new _Rectangle(
+      Geodetic.MIN_LONGITUDE,
+      Geodetic.MIN_LATITUDE,
+      Geodetic.MAX_LONGITUDE,
+      Geodetic.MAX_LATITUDE
+    );
+  }
   get width() {
     let east = this.east;
     if (east < this.west) {
@@ -871,27 +852,29 @@ function applyOptions(target, params) {
   }
 }
 var AtmosphereParameters = class _AtmosphereParameters {
-  static DEFAULT = /* @__PURE__ */ new _AtmosphereParameters();
-  solarIrradiance = new Vector37(1.474, 1.8504, 1.91198);
-  sunAngularRadius = 4675e-6;
-  bottomRadius = 636e4;
-  topRadius = 642e4;
-  rayleighScattering = new Vector37(5802e-6, 0.013558, 0.0331);
-  mieScattering = new Vector37(3996e-6, 3996e-6, 3996e-6);
-  miePhaseFunctionG = 0.8;
-  muSMin = Math.cos(radians(120));
-  // Radiance to luminance conversion
-  // prettier-ignore
-  skyRadianceToLuminance = new Vector37(114974.916437, 71305.954816, 65310.548555);
-  sunRadianceToLuminance = new Vector37(98242.786222, 69954.398112, 66475.012354);
-  luminousEfficiency = new Vector37(0.2126, 0.7152, 0.0722);
-  skyRadianceToRelativeLuminance = new Vector37();
-  sunRadianceToRelativeLuminance = new Vector37();
   constructor(options) {
+    this.solarIrradiance = new Vector37(1.474, 1.8504, 1.91198);
+    this.sunAngularRadius = 4675e-6;
+    this.bottomRadius = 636e4;
+    this.topRadius = 642e4;
+    this.rayleighScattering = new Vector37(5802e-6, 0.013558, 0.0331);
+    this.mieScattering = new Vector37(3996e-6, 3996e-6, 3996e-6);
+    this.miePhaseFunctionG = 0.8;
+    this.muSMin = Math.cos(radians(120));
+    // Radiance to luminance conversion
+    // prettier-ignore
+    this.skyRadianceToLuminance = new Vector37(114974.916437, 71305.954816, 65310.548555);
+    this.sunRadianceToLuminance = new Vector37(98242.786222, 69954.398112, 66475.012354);
+    this.luminousEfficiency = new Vector37(0.2126, 0.7152, 0.0722);
+    this.skyRadianceToRelativeLuminance = new Vector37();
+    this.sunRadianceToRelativeLuminance = new Vector37();
     applyOptions(this, options);
     const luminance = this.luminousEfficiency.dot(this.skyRadianceToLuminance);
     this.skyRadianceToRelativeLuminance.copy(this.skyRadianceToLuminance).divideScalar(luminance);
     this.sunRadianceToRelativeLuminance.copy(this.sunRadianceToLuminance).divideScalar(luminance);
+  }
+  static {
+    this.DEFAULT = /* @__PURE__ */ new _AtmosphereParameters();
   }
 };
 
@@ -1903,8 +1886,7 @@ var aerialPerspectiveEffectOptionsDefaults = {
   // ≈ 15.5 arcminutes
   lunarRadianceScale: 1
 };
-var _shadowSampleCount_dec, _moon_dec, _sun_dec, _sky_dec, _inscatter_dec, _transmittance_dec, _skyIrradiance_dec, _sunIrradiance_dec, _photometric_dec, _correctGeometricError_dec, _reconstructNormal_dec, _octEncodedNormal_dec, _a, _init;
-var AerialPerspectiveEffect = class extends (_a = Effect, _octEncodedNormal_dec = [define("OCT_ENCODED_NORMAL")], _reconstructNormal_dec = [define("RECONSTRUCT_NORMAL")], _correctGeometricError_dec = [define("CORRECT_GEOMETRIC_ERROR")], _photometric_dec = [define("PHOTOMETRIC")], _sunIrradiance_dec = [define("SUN_IRRADIANCE")], _skyIrradiance_dec = [define("SKY_IRRADIANCE")], _transmittance_dec = [define("TRANSMITTANCE")], _inscatter_dec = [define("INSCATTER")], _sky_dec = [define("SKY")], _sun_dec = [define("SUN")], _moon_dec = [define("MOON")], _shadowSampleCount_dec = [defineInt("SHADOW_SAMPLE_COUNT", { min: 1, max: 16 })], _a) {
+var AerialPerspectiveEffect = class extends Effect {
   constructor(camera = new Camera(), options, atmosphere = AtmosphereParameters.DEFAULT) {
     const {
       blendFunction,
@@ -2025,25 +2007,12 @@ var AerialPerspectiveEffect = class extends (_a = Effect, _octEncodedNormal_dec 
     );
     this.camera = camera;
     this.atmosphere = atmosphere;
-    __publicField(this, "_ellipsoid");
-    __publicField(this, "ellipsoidMatrix", new Matrix43());
-    __publicField(this, "correctAltitude");
-    __publicField(this, "overlay", null);
-    __publicField(this, "shadow", null);
-    __publicField(this, "shadowLength", null);
-    __publicField(this, "irradianceMask", null);
-    __publicField(this, "octEncodedNormal", __runInitializers(_init, 8, this)), __runInitializers(_init, 11, this);
-    __publicField(this, "reconstructNormal", __runInitializers(_init, 12, this)), __runInitializers(_init, 15, this);
-    __publicField(this, "correctGeometricError", __runInitializers(_init, 16, this)), __runInitializers(_init, 19, this);
-    __publicField(this, "photometric", __runInitializers(_init, 20, this)), __runInitializers(_init, 23, this);
-    __publicField(this, "sunIrradiance", __runInitializers(_init, 24, this)), __runInitializers(_init, 27, this);
-    __publicField(this, "skyIrradiance", __runInitializers(_init, 28, this)), __runInitializers(_init, 31, this);
-    __publicField(this, "transmittance", __runInitializers(_init, 32, this)), __runInitializers(_init, 35, this);
-    __publicField(this, "inscatter", __runInitializers(_init, 36, this)), __runInitializers(_init, 39, this);
-    __publicField(this, "sky", __runInitializers(_init, 40, this)), __runInitializers(_init, 43, this);
-    __publicField(this, "sun", __runInitializers(_init, 44, this)), __runInitializers(_init, 47, this);
-    __publicField(this, "moon", __runInitializers(_init, 48, this)), __runInitializers(_init, 51, this);
-    __publicField(this, "shadowSampleCount", __runInitializers(_init, 52, this, 8)), __runInitializers(_init, 55, this);
+    this.ellipsoidMatrix = new Matrix43();
+    this.overlay = null;
+    this.shadow = null;
+    this.shadowLength = null;
+    this.irradianceMask = null;
+    this.shadowSampleCount = 8;
     this.octEncodedNormal = octEncodedNormal;
     this.reconstructNormal = reconstructNormal;
     this.ellipsoid = ellipsoid;
@@ -2284,20 +2253,42 @@ var AerialPerspectiveEffect = class extends (_a = Effect, _octEncodedNormal_dec 
     this.uniforms.get("shadowRadius").value = value;
   }
 };
-_init = __decoratorStart(_a);
-__decorateElement(_init, 5, "octEncodedNormal", _octEncodedNormal_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "reconstructNormal", _reconstructNormal_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "correctGeometricError", _correctGeometricError_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "photometric", _photometric_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "sunIrradiance", _sunIrradiance_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "skyIrradiance", _skyIrradiance_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "transmittance", _transmittance_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "inscatter", _inscatter_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "sky", _sky_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "sun", _sun_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "moon", _moon_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "shadowSampleCount", _shadowSampleCount_dec, AerialPerspectiveEffect);
-__decoratorMetadata(_init, AerialPerspectiveEffect);
+__decorateClass([
+  define("OCT_ENCODED_NORMAL")
+], AerialPerspectiveEffect.prototype, "octEncodedNormal", 2);
+__decorateClass([
+  define("RECONSTRUCT_NORMAL")
+], AerialPerspectiveEffect.prototype, "reconstructNormal", 2);
+__decorateClass([
+  define("CORRECT_GEOMETRIC_ERROR")
+], AerialPerspectiveEffect.prototype, "correctGeometricError", 2);
+__decorateClass([
+  define("PHOTOMETRIC")
+], AerialPerspectiveEffect.prototype, "photometric", 2);
+__decorateClass([
+  define("SUN_IRRADIANCE")
+], AerialPerspectiveEffect.prototype, "sunIrradiance", 2);
+__decorateClass([
+  define("SKY_IRRADIANCE")
+], AerialPerspectiveEffect.prototype, "skyIrradiance", 2);
+__decorateClass([
+  define("TRANSMITTANCE")
+], AerialPerspectiveEffect.prototype, "transmittance", 2);
+__decorateClass([
+  define("INSCATTER")
+], AerialPerspectiveEffect.prototype, "inscatter", 2);
+__decorateClass([
+  define("SKY")
+], AerialPerspectiveEffect.prototype, "sky", 2);
+__decorateClass([
+  define("SUN")
+], AerialPerspectiveEffect.prototype, "sun", 2);
+__decorateClass([
+  define("MOON")
+], AerialPerspectiveEffect.prototype, "moon", 2);
+__decorateClass([
+  defineInt("SHADOW_SAMPLE_COUNT", { min: 1, max: 16 })
+], AerialPerspectiveEffect.prototype, "shadowSampleCount", 2);
 export {
   AerialPerspectiveEffect,
   aerialPerspectiveEffectOptionsDefaults

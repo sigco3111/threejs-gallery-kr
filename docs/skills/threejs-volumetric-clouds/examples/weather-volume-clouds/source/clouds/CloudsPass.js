@@ -1,52 +1,13 @@
-var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __knownSymbol = (name, symbol) => (symbol = Symbol[name]) ? symbol : Symbol.for("Symbol." + name);
-var __typeError = (msg) => {
-  throw TypeError(msg);
+var __decorateClass = (decorators, target, key, kind) => {
+  var result = kind > 1 ? void 0 : kind ? __getOwnPropDesc(target, key) : target;
+  for (var i = decorators.length - 1, decorator; i >= 0; i--)
+    if (decorator = decorators[i])
+      result = (kind ? decorator(target, key, result) : decorator(result)) || result;
+  if (kind && result) __defProp(target, key, result);
+  return result;
 };
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-var __decoratorStart = (base) => [, , , __create(base?.[__knownSymbol("metadata")] ?? null)];
-var __decoratorStrings = ["class", "method", "getter", "setter", "accessor", "field", "value", "get", "set"];
-var __expectFn = (fn) => fn !== void 0 && typeof fn !== "function" ? __typeError("Function expected") : fn;
-var __decoratorContext = (kind, name, done, metadata, fns) => ({ kind: __decoratorStrings[kind], name, metadata, addInitializer: (fn) => done._ ? __typeError("Already initialized") : fns.push(__expectFn(fn || null)) });
-var __decoratorMetadata = (array, target) => __defNormalProp(target, __knownSymbol("metadata"), array[3]);
-var __runInitializers = (array, flags, self, value) => {
-  for (var i = 0, fns = array[flags >> 1], n = fns && fns.length; i < n; i++) flags & 1 ? fns[i].call(self) : value = fns[i].call(self, value);
-  return value;
-};
-var __decorateElement = (array, flags, name, decorators, target, extra) => {
-  return;  // patched: no-op to avoid Object.defineProperty crash
-  var fn, it, done, ctx, access, k = flags & 7, s = !!(flags & 8), p = !!(flags & 16);
-  var j = k > 3 ? array.length + 1 : k ? s ? 1 : 2 : 0, key = __decoratorStrings[k + 5];
-  var initializers = k > 3 && (array[j - 1] = []), extraInitializers = array[j] || (array[j] = []);
-  var desc = k && (!p && !s && (target = target.prototype), k < 5 && (k > 3 || !p) && __getOwnPropDesc(k < 4 ? target : { get [name]() {
-    return __privateGet(this, extra);
-  }, set [name](x) {
-    return __privateSet(this, extra, x);
-  } }, name));
-  k ? p && k < 4 && __name(extra, (k > 2 ? "set " : k > 1 ? "get " : "") + name) : __name(target, name);
-  for (var i = decorators.length - 1; i >= 0; i--) {
-    ctx = __decoratorContext(k, name, done = {}, array[3], extraInitializers);
-    if (k) {
-      ctx.static = s, ctx.private = p, access = ctx.access = { has: p ? (x) => __privateIn(target, x) : (x) => name in x };
-      if (k ^ 3) access.get = p ? (x) => (k ^ 1 ? __privateGet : __privateMethod)(x, target, k ^ 4 ? extra : desc.get) : (x) => x[name];
-      if (k > 2) access.set = p ? (x, y) => __privateSet(x, target, y, k ^ 4 ? extra : desc.set) : (x, y) => x[name] = y;
-    }
-    it = (0, decorators[i])(k ? k < 4 ? p ? extra : desc[key] : k > 4 ? void 0 : { get: desc.get, set: desc.set } : target, ctx), done._ = 1;
-    if (k ^ 4 || it === void 0) __expectFn(it) && (k > 4 ? initializers.unshift(it) : k ? p ? extra = it : desc[key] = it : target = it);
-    else if (typeof it !== "object" || it === null) __typeError("Object expected");
-    else __expectFn(fn = it.get) && (desc.get = fn), __expectFn(fn = it.set) && (desc.set = fn), __expectFn(fn = it.init) && initializers.unshift(fn);
-  }
-  return k || __decoratorMetadata(array, target), desc && __defProp(target, name, desc), p ? k ^ 4 ? extra : desc : target;
-};
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
-var __privateIn = (member, obj) => Object(obj) !== obj ? __typeError('Cannot use the "in" operator on this value') : member.has(obj);
-var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
-var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
-var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/CloudsPass.ts
 import { ShaderPass as ShaderPass2 } from "https://esm.sh/postprocessing@6.37.4?deps=three@0.185.1&external=three";
@@ -187,7 +148,10 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    parseTypedArray = parser;
+    constructor() {
+      super(...arguments);
+      this.parseTypedArray = parser;
+    }
   };
 }
 
@@ -203,7 +167,10 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  parameters = {};
+  constructor() {
+    super(...arguments);
+    this.parameters = {};
+  }
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -236,12 +203,15 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters2) {
   return class extends DataLoader {
-    Texture = Texture;
-    TypedArrayLoader = createTypedArrayLoaderClass(parser);
-    parameters = {
-      ...defaultDataTextureParameter,
-      ...parameters2
-    };
+    constructor() {
+      super(...arguments);
+      this.Texture = Texture;
+      this.TypedArrayLoader = createTypedArrayLoaderClass(parser);
+      this.parameters = {
+        ...defaultDataTextureParameter,
+        ...parameters2
+      };
+    }
   };
 }
 function createData3DTextureLoaderClass(parser, parameters2) {
@@ -484,12 +454,13 @@ var vectorScratch1 = /* @__PURE__ */ new Vector33();
 var vectorScratch2 = /* @__PURE__ */ new Vector33();
 var vectorScratch3 = /* @__PURE__ */ new Vector33();
 var Ellipsoid = class _Ellipsoid {
-  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
-    6378137,
-    6378137,
-    6356752314245179e-9
-  );
-  radii;
+  static {
+    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
+      6378137,
+      6378137,
+      6356752314245179e-9
+    );
+  }
   constructor(x, y, z) {
     this.radii = new Vector33(x, y, z);
   }
@@ -600,10 +571,18 @@ var Geodetic = class _Geodetic {
     this.latitude = latitude;
     this.height = height;
   }
-  static MIN_LONGITUDE = -Math.PI;
-  static MAX_LONGITUDE = Math.PI;
-  static MIN_LATITUDE = -Math.PI / 2;
-  static MAX_LATITUDE = Math.PI / 2;
+  static {
+    this.MIN_LONGITUDE = -Math.PI;
+  }
+  static {
+    this.MAX_LONGITUDE = Math.PI;
+  }
+  static {
+    this.MIN_LATITUDE = -Math.PI / 2;
+  }
+  static {
+    this.MAX_LATITUDE = Math.PI / 2;
+  }
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -712,12 +691,14 @@ var Rectangle = class _Rectangle {
     this.east = east;
     this.north = north;
   }
-  static MAX = /* @__PURE__ */ new _Rectangle(
-    Geodetic.MIN_LONGITUDE,
-    Geodetic.MIN_LATITUDE,
-    Geodetic.MAX_LONGITUDE,
-    Geodetic.MAX_LATITUDE
-  );
+  static {
+    this.MAX = /* @__PURE__ */ new _Rectangle(
+      Geodetic.MIN_LONGITUDE,
+      Geodetic.MIN_LATITUDE,
+      Geodetic.MAX_LONGITUDE,
+      Geodetic.MAX_LATITUDE
+    );
+  }
   get width() {
     let east = this.east;
     if (east < this.west) {
@@ -982,27 +963,29 @@ function applyOptions(target, params) {
   }
 }
 var AtmosphereParameters = class _AtmosphereParameters {
-  static DEFAULT = /* @__PURE__ */ new _AtmosphereParameters();
-  solarIrradiance = new Vector37(1.474, 1.8504, 1.91198);
-  sunAngularRadius = 4675e-6;
-  bottomRadius = 636e4;
-  topRadius = 642e4;
-  rayleighScattering = new Vector37(5802e-6, 0.013558, 0.0331);
-  mieScattering = new Vector37(3996e-6, 3996e-6, 3996e-6);
-  miePhaseFunctionG = 0.8;
-  muSMin = Math.cos(radians(120));
-  // Radiance to luminance conversion
-  // prettier-ignore
-  skyRadianceToLuminance = new Vector37(114974.916437, 71305.954816, 65310.548555);
-  sunRadianceToLuminance = new Vector37(98242.786222, 69954.398112, 66475.012354);
-  luminousEfficiency = new Vector37(0.2126, 0.7152, 0.0722);
-  skyRadianceToRelativeLuminance = new Vector37();
-  sunRadianceToRelativeLuminance = new Vector37();
   constructor(options) {
+    this.solarIrradiance = new Vector37(1.474, 1.8504, 1.91198);
+    this.sunAngularRadius = 4675e-6;
+    this.bottomRadius = 636e4;
+    this.topRadius = 642e4;
+    this.rayleighScattering = new Vector37(5802e-6, 0.013558, 0.0331);
+    this.mieScattering = new Vector37(3996e-6, 3996e-6, 3996e-6);
+    this.miePhaseFunctionG = 0.8;
+    this.muSMin = Math.cos(radians(120));
+    // Radiance to luminance conversion
+    // prettier-ignore
+    this.skyRadianceToLuminance = new Vector37(114974.916437, 71305.954816, 65310.548555);
+    this.sunRadianceToLuminance = new Vector37(98242.786222, 69954.398112, 66475.012354);
+    this.luminousEfficiency = new Vector37(0.2126, 0.7152, 0.0722);
+    this.skyRadianceToRelativeLuminance = new Vector37();
+    this.sunRadianceToRelativeLuminance = new Vector37();
     applyOptions(this, options);
     const luminance = this.luminousEfficiency.dot(this.skyRadianceToLuminance);
     this.skyRadianceToRelativeLuminance.copy(this.skyRadianceToLuminance).divideScalar(luminance);
     this.sunRadianceToRelativeLuminance.copy(this.sunRadianceToLuminance).divideScalar(luminance);
+  }
+  static {
+    this.DEFAULT = /* @__PURE__ */ new _AtmosphereParameters();
   }
 };
 
@@ -2014,8 +1997,7 @@ var aerialPerspectiveEffectOptionsDefaults = {
   // ≈ 15.5 arcminutes
   lunarRadianceScale: 1
 };
-var _shadowSampleCount_dec, _moon_dec, _sun_dec, _sky_dec, _inscatter_dec, _transmittance_dec, _skyIrradiance_dec, _sunIrradiance_dec, _photometric_dec, _correctGeometricError_dec, _reconstructNormal_dec, _octEncodedNormal_dec, _a, _init;
-var AerialPerspectiveEffect = class extends (_a = Effect, _octEncodedNormal_dec = [define("OCT_ENCODED_NORMAL")], _reconstructNormal_dec = [define("RECONSTRUCT_NORMAL")], _correctGeometricError_dec = [define("CORRECT_GEOMETRIC_ERROR")], _photometric_dec = [define("PHOTOMETRIC")], _sunIrradiance_dec = [define("SUN_IRRADIANCE")], _skyIrradiance_dec = [define("SKY_IRRADIANCE")], _transmittance_dec = [define("TRANSMITTANCE")], _inscatter_dec = [define("INSCATTER")], _sky_dec = [define("SKY")], _sun_dec = [define("SUN")], _moon_dec = [define("MOON")], _shadowSampleCount_dec = [defineInt("SHADOW_SAMPLE_COUNT", { min: 1, max: 16 })], _a) {
+var AerialPerspectiveEffect = class extends Effect {
   constructor(camera = new Camera(), options, atmosphere = AtmosphereParameters.DEFAULT) {
     const {
       blendFunction,
@@ -2136,25 +2118,12 @@ var AerialPerspectiveEffect = class extends (_a = Effect, _octEncodedNormal_dec 
     );
     this.camera = camera;
     this.atmosphere = atmosphere;
-    __publicField(this, "_ellipsoid");
-    __publicField(this, "ellipsoidMatrix", new Matrix43());
-    __publicField(this, "correctAltitude");
-    __publicField(this, "overlay", null);
-    __publicField(this, "shadow", null);
-    __publicField(this, "shadowLength", null);
-    __publicField(this, "irradianceMask", null);
-    __publicField(this, "octEncodedNormal", __runInitializers(_init, 8, this)), __runInitializers(_init, 11, this);
-    __publicField(this, "reconstructNormal", __runInitializers(_init, 12, this)), __runInitializers(_init, 15, this);
-    __publicField(this, "correctGeometricError", __runInitializers(_init, 16, this)), __runInitializers(_init, 19, this);
-    __publicField(this, "photometric", __runInitializers(_init, 20, this)), __runInitializers(_init, 23, this);
-    __publicField(this, "sunIrradiance", __runInitializers(_init, 24, this)), __runInitializers(_init, 27, this);
-    __publicField(this, "skyIrradiance", __runInitializers(_init, 28, this)), __runInitializers(_init, 31, this);
-    __publicField(this, "transmittance", __runInitializers(_init, 32, this)), __runInitializers(_init, 35, this);
-    __publicField(this, "inscatter", __runInitializers(_init, 36, this)), __runInitializers(_init, 39, this);
-    __publicField(this, "sky", __runInitializers(_init, 40, this)), __runInitializers(_init, 43, this);
-    __publicField(this, "sun", __runInitializers(_init, 44, this)), __runInitializers(_init, 47, this);
-    __publicField(this, "moon", __runInitializers(_init, 48, this)), __runInitializers(_init, 51, this);
-    __publicField(this, "shadowSampleCount", __runInitializers(_init, 52, this, 8)), __runInitializers(_init, 55, this);
+    this.ellipsoidMatrix = new Matrix43();
+    this.overlay = null;
+    this.shadow = null;
+    this.shadowLength = null;
+    this.irradianceMask = null;
+    this.shadowSampleCount = 8;
     this.octEncodedNormal = octEncodedNormal;
     this.reconstructNormal = reconstructNormal;
     this.ellipsoid = ellipsoid;
@@ -2395,20 +2364,42 @@ var AerialPerspectiveEffect = class extends (_a = Effect, _octEncodedNormal_dec 
     this.uniforms.get("shadowRadius").value = value;
   }
 };
-_init = __decoratorStart(_a);
-__decorateElement(_init, 5, "octEncodedNormal", _octEncodedNormal_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "reconstructNormal", _reconstructNormal_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "correctGeometricError", _correctGeometricError_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "photometric", _photometric_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "sunIrradiance", _sunIrradiance_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "skyIrradiance", _skyIrradiance_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "transmittance", _transmittance_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "inscatter", _inscatter_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "sky", _sky_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "sun", _sun_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "moon", _moon_dec, AerialPerspectiveEffect);
-__decorateElement(_init, 5, "shadowSampleCount", _shadowSampleCount_dec, AerialPerspectiveEffect);
-__decoratorMetadata(_init, AerialPerspectiveEffect);
+__decorateClass([
+  define("OCT_ENCODED_NORMAL")
+], AerialPerspectiveEffect.prototype, "octEncodedNormal", 2);
+__decorateClass([
+  define("RECONSTRUCT_NORMAL")
+], AerialPerspectiveEffect.prototype, "reconstructNormal", 2);
+__decorateClass([
+  define("CORRECT_GEOMETRIC_ERROR")
+], AerialPerspectiveEffect.prototype, "correctGeometricError", 2);
+__decorateClass([
+  define("PHOTOMETRIC")
+], AerialPerspectiveEffect.prototype, "photometric", 2);
+__decorateClass([
+  define("SUN_IRRADIANCE")
+], AerialPerspectiveEffect.prototype, "sunIrradiance", 2);
+__decorateClass([
+  define("SKY_IRRADIANCE")
+], AerialPerspectiveEffect.prototype, "skyIrradiance", 2);
+__decorateClass([
+  define("TRANSMITTANCE")
+], AerialPerspectiveEffect.prototype, "transmittance", 2);
+__decorateClass([
+  define("INSCATTER")
+], AerialPerspectiveEffect.prototype, "inscatter", 2);
+__decorateClass([
+  define("SKY")
+], AerialPerspectiveEffect.prototype, "sky", 2);
+__decorateClass([
+  define("SUN")
+], AerialPerspectiveEffect.prototype, "sun", 2);
+__decorateClass([
+  define("MOON")
+], AerialPerspectiveEffect.prototype, "moon", 2);
+__decorateClass([
+  defineInt("SHADOW_SAMPLE_COUNT", { min: 1, max: 16 })
+], AerialPerspectiveEffect.prototype, "shadowSampleCount", 2);
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/atmosphere/AtmosphereMaterialBase.ts
 import {
@@ -2435,8 +2426,7 @@ var atmosphereMaterialParametersBaseDefaults = {
   photometric: true,
   renderTargetCount: 1
 };
-var _photometric_dec2, _a2, _init2;
-var AtmosphereMaterialBase = class extends (_a2 = RawShaderMaterial, _photometric_dec2 = [define("PHOTOMETRIC")], _a2) {
+var AtmosphereMaterialBase = class extends RawShaderMaterial {
   constructor(params, atmosphere = AtmosphereParameters.DEFAULT) {
     const {
       irradianceTexture = null,
@@ -2496,11 +2486,7 @@ var AtmosphereMaterialBase = class extends (_a2 = RawShaderMaterial, _photometri
       }
     });
     this.atmosphere = atmosphere;
-    __publicField(this, "ellipsoid");
-    __publicField(this, "ellipsoidMatrix", new Matrix44());
-    __publicField(this, "correctAltitude");
-    __publicField(this, "_renderTargetCount");
-    __publicField(this, "photometric", __runInitializers(_init2, 8, this)), __runInitializers(_init2, 11, this);
+    this.ellipsoidMatrix = new Matrix44();
     this.atmosphere = atmosphere;
     this.ellipsoid = ellipsoid;
     this.correctAltitude = correctAltitude;
@@ -2578,9 +2564,9 @@ var AtmosphereMaterialBase = class extends (_a2 = RawShaderMaterial, _photometri
     }
   }
 };
-_init2 = __decoratorStart(_a2);
-__decorateElement(_init2, 5, "photometric", _photometric_dec2, AtmosphereMaterialBase);
-__decoratorMetadata(_init2, AtmosphereMaterialBase);
+__decorateClass([
+  define("PHOTOMETRIC")
+], AtmosphereMaterialBase.prototype, "photometric", 2);
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/atmosphere/blackBodyChromaticity.ts
 import { Color, Matrix3, Vector3 as Vector311 } from "https://esm.sh/three@0.185.1?external";
@@ -2670,8 +2656,7 @@ var skyMaterialParametersDefaults = {
   lunarRadianceScale: 1,
   groundAlbedo: new Color4(0)
 };
-var _moon_dec2, _sun_dec2, _a3, _init3;
-var SkyMaterial = class extends (_a3 = AtmosphereMaterialBase, _sun_dec2 = [define("SUN")], _moon_dec2 = [define("MOON")], _a3) {
+var SkyMaterial = class extends AtmosphereMaterialBase {
   constructor(params) {
     const {
       sun,
@@ -2710,9 +2695,7 @@ var SkyMaterial = class extends (_a3 = AtmosphereMaterialBase, _sun_dec2 = [defi
       },
       depthTest: true
     });
-    __publicField(this, "shadowLength", null);
-    __publicField(this, "sun", __runInitializers(_init3, 8, this)), __runInitializers(_init3, 11, this);
-    __publicField(this, "moon", __runInitializers(_init3, 12, this)), __runInitializers(_init3, 15, this);
+    this.shadowLength = null;
     this.sun = sun;
     this.moon = moon;
   }
@@ -2777,10 +2760,12 @@ var SkyMaterial = class extends (_a3 = AtmosphereMaterialBase, _sun_dec2 = [defi
     return this.uniforms.groundAlbedo.value;
   }
 };
-_init3 = __decoratorStart(_a3);
-__decorateElement(_init3, 5, "sun", _sun_dec2, SkyMaterial);
-__decorateElement(_init3, 5, "moon", _moon_dec2, SkyMaterial);
-__decoratorMetadata(_init3, SkyMaterial);
+__decorateClass([
+  define("SUN")
+], SkyMaterial.prototype, "sun", 2);
+__decorateClass([
+  define("MOON")
+], SkyMaterial.prototype, "moon", 2);
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/atmosphere/StarsGeometry.ts
 import {
@@ -2862,8 +2847,7 @@ var starsMaterialParametersDefaults = {
   radianceScale: 1,
   background: true
 };
-var _background_dec, _a4, _init4;
-var StarsMaterial = class extends (_a4 = AtmosphereMaterialBase, _background_dec = [define("BACKGROUND")], _a4) {
+var StarsMaterial = class extends AtmosphereMaterialBase {
   constructor(params) {
     const { pointSize, radianceScale, background, ...others } = {
       ...starsMaterialParametersDefaults,
@@ -2895,8 +2879,6 @@ var StarsMaterial = class extends (_a4 = AtmosphereMaterialBase, _background_dec
         PERSPECTIVE_CAMERA: "1"
       }
     });
-    __publicField(this, "pointSize");
-    __publicField(this, "background", __runInitializers(_init4, 8, this)), __runInitializers(_init4, 11, this);
     this.pointSize = pointSize;
     this.background = background;
   }
@@ -2929,9 +2911,9 @@ var StarsMaterial = class extends (_a4 = AtmosphereMaterialBase, _background_dec
     this.uniforms.radianceScale.value = value;
   }
 };
-_init4 = __decoratorStart(_a4);
-__decorateElement(_init4, 5, "background", _background_dec, StarsMaterial);
-__decoratorMetadata(_init4, StarsMaterial);
+__decorateClass([
+  define("BACKGROUND")
+], StarsMaterial.prototype, "background", 2);
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/atmosphere/SunDirectionalLight.ts
 import { DirectionalLight, Matrix4 as Matrix49, Vector3 as Vector318 } from "https://esm.sh/three@0.185.1?external";
@@ -4127,10 +4109,7 @@ var types_default = "struct GroundIrradiance {\n  vec3 sun;\n  vec3 sky;\n};\n\n
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/CloudsMaterial.ts
 var vectorScratch6 = /* @__PURE__ */ new Vector319();
 var geodeticScratch2 = /* @__PURE__ */ new Geodetic();
-var _scatterAnisotropyMix_dec, _scatterAnisotropy2_dec, _scatterAnisotropy1_dec, _shadowSampleCount_dec2, _shadowCascadeCount_dec, _accuratePhaseFunction_dec, _accurateSunSkyIrradiance_dec, _multiScatteringOctaves_dec, _haze_dec, _shadowLength_dec, _turbulence_dec, _shapeDetail_dec, _localWeatherChannels_dec, _depthPacking_dec, _a5, _init5;
-var CloudsMaterial = class extends (_a5 = AtmosphereMaterialBase, _depthPacking_dec = [defineInt("DEPTH_PACKING")], _localWeatherChannels_dec = [defineExpression("LOCAL_WEATHER_CHANNELS", {
-  validate: (value) => /^[rgba]{4}$/.test(value)
-})], _shapeDetail_dec = [define("SHAPE_DETAIL")], _turbulence_dec = [define("TURBULENCE")], _shadowLength_dec = [define("SHADOW_LENGTH")], _haze_dec = [define("HAZE")], _multiScatteringOctaves_dec = [defineInt("MULTI_SCATTERING_OCTAVES", { min: 1, max: 12 })], _accurateSunSkyIrradiance_dec = [define("ACCURATE_SUN_SKY_IRRADIANCE")], _accuratePhaseFunction_dec = [define("ACCURATE_PHASE_FUNCTION")], _shadowCascadeCount_dec = [defineInt("SHADOW_CASCADE_COUNT", { min: 1, max: 4 })], _shadowSampleCount_dec2 = [defineInt("SHADOW_SAMPLE_COUNT", { min: 1, max: 16 })], _scatterAnisotropy1_dec = [defineFloat("SCATTER_ANISOTROPY_1")], _scatterAnisotropy2_dec = [defineFloat("SCATTER_ANISOTROPY_2")], _scatterAnisotropyMix_dec = [defineFloat("SCATTER_ANISOTROPY_MIX")], _a5) {
+var CloudsMaterial = class extends AtmosphereMaterialBase {
   constructor({
     parameterUniforms,
     layerUniforms,
@@ -4234,23 +4213,21 @@ var CloudsMaterial = class extends (_a5 = AtmosphereMaterialBase, _depthPacking_
       },
       atmosphere
     );
-    __publicField(this, "temporalUpscale", true);
-    __publicField(this, "previousProjectionMatrix");
-    __publicField(this, "previousViewMatrix");
-    __publicField(this, "depthPacking", __runInitializers(_init5, 8, this, 0)), __runInitializers(_init5, 11, this);
-    __publicField(this, "localWeatherChannels", __runInitializers(_init5, 12, this, "rgba")), __runInitializers(_init5, 15, this);
-    __publicField(this, "shapeDetail", __runInitializers(_init5, 16, this, defaults.shapeDetail)), __runInitializers(_init5, 19, this);
-    __publicField(this, "turbulence", __runInitializers(_init5, 20, this, defaults.turbulence)), __runInitializers(_init5, 23, this);
-    __publicField(this, "shadowLength", __runInitializers(_init5, 24, this, defaults.lightShafts)), __runInitializers(_init5, 27, this);
-    __publicField(this, "haze", __runInitializers(_init5, 28, this, defaults.haze)), __runInitializers(_init5, 31, this);
-    __publicField(this, "multiScatteringOctaves", __runInitializers(_init5, 32, this, defaults.clouds.multiScatteringOctaves)), __runInitializers(_init5, 35, this);
-    __publicField(this, "accurateSunSkyIrradiance", __runInitializers(_init5, 36, this, defaults.clouds.accurateSunSkyIrradiance)), __runInitializers(_init5, 39, this);
-    __publicField(this, "accuratePhaseFunction", __runInitializers(_init5, 40, this, defaults.clouds.accuratePhaseFunction)), __runInitializers(_init5, 43, this);
-    __publicField(this, "shadowCascadeCount", __runInitializers(_init5, 44, this, defaults.shadow.cascadeCount)), __runInitializers(_init5, 47, this);
-    __publicField(this, "shadowSampleCount", __runInitializers(_init5, 48, this, 8)), __runInitializers(_init5, 51, this);
-    __publicField(this, "scatterAnisotropy1", __runInitializers(_init5, 52, this, 0.7)), __runInitializers(_init5, 55, this);
-    __publicField(this, "scatterAnisotropy2", __runInitializers(_init5, 56, this, -0.2)), __runInitializers(_init5, 59, this);
-    __publicField(this, "scatterAnisotropyMix", __runInitializers(_init5, 60, this, 0.5)), __runInitializers(_init5, 63, this);
+    this.temporalUpscale = true;
+    this.depthPacking = 0;
+    this.localWeatherChannels = "rgba";
+    this.shapeDetail = defaults.shapeDetail;
+    this.turbulence = defaults.turbulence;
+    this.shadowLength = defaults.lightShafts;
+    this.haze = defaults.haze;
+    this.multiScatteringOctaves = defaults.clouds.multiScatteringOctaves;
+    this.accurateSunSkyIrradiance = defaults.clouds.accurateSunSkyIrradiance;
+    this.accuratePhaseFunction = defaults.clouds.accuratePhaseFunction;
+    this.shadowCascadeCount = defaults.shadow.cascadeCount;
+    this.shadowSampleCount = 8;
+    this.scatterAnisotropy1 = 0.7;
+    this.scatterAnisotropy2 = -0.2;
+    this.scatterAnisotropyMix = 0.5;
   }
   onBeforeRender(renderer, scene, camera, geometry, object, group) {
     const prevLogarithmicDepthBuffer = this.defines.USE_LOGDEPTHBUF != null;
@@ -4367,22 +4344,50 @@ var CloudsMaterial = class extends (_a5 = AtmosphereMaterialBase, _depthPacking_
     this.uniforms.depthBuffer.value = value;
   }
 };
-_init5 = __decoratorStart(_a5);
-__decorateElement(_init5, 5, "depthPacking", _depthPacking_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "localWeatherChannels", _localWeatherChannels_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "shapeDetail", _shapeDetail_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "turbulence", _turbulence_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "shadowLength", _shadowLength_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "haze", _haze_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "multiScatteringOctaves", _multiScatteringOctaves_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "accurateSunSkyIrradiance", _accurateSunSkyIrradiance_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "accuratePhaseFunction", _accuratePhaseFunction_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "shadowCascadeCount", _shadowCascadeCount_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "shadowSampleCount", _shadowSampleCount_dec2, CloudsMaterial);
-__decorateElement(_init5, 5, "scatterAnisotropy1", _scatterAnisotropy1_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "scatterAnisotropy2", _scatterAnisotropy2_dec, CloudsMaterial);
-__decorateElement(_init5, 5, "scatterAnisotropyMix", _scatterAnisotropyMix_dec, CloudsMaterial);
-__decoratorMetadata(_init5, CloudsMaterial);
+__decorateClass([
+  defineInt("DEPTH_PACKING")
+], CloudsMaterial.prototype, "depthPacking", 2);
+__decorateClass([
+  defineExpression("LOCAL_WEATHER_CHANNELS", {
+    validate: (value) => /^[rgba]{4}$/.test(value)
+  })
+], CloudsMaterial.prototype, "localWeatherChannels", 2);
+__decorateClass([
+  define("SHAPE_DETAIL")
+], CloudsMaterial.prototype, "shapeDetail", 2);
+__decorateClass([
+  define("TURBULENCE")
+], CloudsMaterial.prototype, "turbulence", 2);
+__decorateClass([
+  define("SHADOW_LENGTH")
+], CloudsMaterial.prototype, "shadowLength", 2);
+__decorateClass([
+  define("HAZE")
+], CloudsMaterial.prototype, "haze", 2);
+__decorateClass([
+  defineInt("MULTI_SCATTERING_OCTAVES", { min: 1, max: 12 })
+], CloudsMaterial.prototype, "multiScatteringOctaves", 2);
+__decorateClass([
+  define("ACCURATE_SUN_SKY_IRRADIANCE")
+], CloudsMaterial.prototype, "accurateSunSkyIrradiance", 2);
+__decorateClass([
+  define("ACCURATE_PHASE_FUNCTION")
+], CloudsMaterial.prototype, "accuratePhaseFunction", 2);
+__decorateClass([
+  defineInt("SHADOW_CASCADE_COUNT", { min: 1, max: 4 })
+], CloudsMaterial.prototype, "shadowCascadeCount", 2);
+__decorateClass([
+  defineInt("SHADOW_SAMPLE_COUNT", { min: 1, max: 16 })
+], CloudsMaterial.prototype, "shadowSampleCount", 2);
+__decorateClass([
+  defineFloat("SCATTER_ANISOTROPY_1")
+], CloudsMaterial.prototype, "scatterAnisotropy1", 2);
+__decorateClass([
+  defineFloat("SCATTER_ANISOTROPY_2")
+], CloudsMaterial.prototype, "scatterAnisotropy2", 2);
+__decorateClass([
+  defineFloat("SCATTER_ANISOTROPY_MIX")
+], CloudsMaterial.prototype, "scatterAnisotropyMix", 2);
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/CloudsResolveMaterial.ts
 import {
@@ -4720,8 +4725,7 @@ var cloudsResolve_default2 = "precision highp float;\n\nlayout(location = 0) in 
 var varianceClipping_default = "#ifdef VARIANCE_9_SAMPLES\n#define VARIANCE_OFFSET_COUNT (8)\nconst ivec2 varianceOffsets[8] = ivec2[8](\n  ivec2(-1, -1),\n  ivec2(-1, 1),\n  ivec2(1, -1),\n  ivec2(1, 1),\n  ivec2(1, 0),\n  ivec2(0, -1),\n  ivec2(0, 1),\n  ivec2(-1, 0)\n);\n#else // VARIANCE_9_SAMPLES\n#define VARIANCE_OFFSET_COUNT (4)\nconst ivec2 varianceOffsets[4] = ivec2[4](ivec2(1, 0), ivec2(0, -1), ivec2(0, 1), ivec2(-1, 0));\n#endif // VARIANCE_9_SAMPLES\n\n// Reference: https://github.com/playdeadgames/temporal\nvec4 clipAABB(const vec4 current, const vec4 history, const vec4 minColor, const vec4 maxColor) {\n  vec3 pClip = 0.5 * (maxColor.rgb + minColor.rgb);\n  vec3 eClip = 0.5 * (maxColor.rgb - minColor.rgb) + 1e-7;\n  vec4 vClip = history - vec4(pClip, current.a);\n  vec3 vUnit = vClip.xyz / eClip;\n  vec3 aUnit = abs(vUnit);\n  float maUnit = max(aUnit.x, max(aUnit.y, aUnit.z));\n  if (maUnit > 1.0) {\n    return vec4(pClip, current.a) + vClip / maUnit;\n  }\n  return history;\n}\n\n#ifdef VARIANCE_SAMPLER_ARRAY\n#define VARIANCE_SAMPLER sampler2DArray\n#define VARIANCE_SAMPLER_COORD ivec3\n#else // VARIANCE_SAMPLER_ARRAY\n#define VARIANCE_SAMPLER sampler2D\n#define VARIANCE_SAMPLER_COORD ivec2\n#endif // VARIANCE_SAMPLER_ARRAY\n\n// Variance clipping\n// Reference: https://developer.download.nvidia.com/gameworks/events/GDC2016/msalvi_temporal_supersampling.pdf\nvec4 varianceClipping(\n  const VARIANCE_SAMPLER inputBuffer,\n  const VARIANCE_SAMPLER_COORD coord,\n  const vec4 current,\n  const vec4 history,\n  const float gamma\n) {\n  vec4 moment1 = current;\n  vec4 moment2 = current * current;\n  vec4 neighbor;\n  #pragma unroll_loop_start\n  for (int i = 0; i < 8; ++i) {\n    #if UNROLLED_LOOP_INDEX < VARIANCE_OFFSET_COUNT\n    neighbor = texelFetchOffset(inputBuffer, coord, 0, varianceOffsets[i]);\n    moment1 += neighbor;\n    moment2 += neighbor * neighbor;\n    #endif // UNROLLED_LOOP_INDEX < VARIANCE_OFFSET_COUNT\n  }\n  #pragma unroll_loop_end\n\n  const float N = float(VARIANCE_OFFSET_COUNT + 1);\n  vec4 mean = moment1 / N;\n  vec4 varianceGamma = sqrt(max(moment2 / N - mean * mean, 0.0)) * gamma;\n  vec4 minColor = mean - varianceGamma;\n  vec4 maxColor = mean + varianceGamma;\n  return clipAABB(clamp(mean, minColor, maxColor), history, minColor, maxColor);\n}\n\nvec4 varianceClipping(\n  const VARIANCE_SAMPLER inputBuffer,\n  const VARIANCE_SAMPLER_COORD coord,\n  const vec4 current,\n  const vec4 history\n) {\n  return varianceClipping(inputBuffer, coord, current, history, 1.0);\n}\n\nvec4 varianceClipping(\n  const sampler2D inputBuffer,\n  const vec2 coord,\n  const vec4 current,\n  const vec4 history,\n  const float gamma\n) {\n  vec4 moment1 = current;\n  vec4 moment2 = current * current;\n  vec4 neighbor;\n  #pragma unroll_loop_start\n  for (int i = 0; i < 8; ++i) {\n    #if UNROLLED_LOOP_INDEX < VARIANCE_OFFSET_COUNT\n    neighbor = textureOffset(inputBuffer, coord, varianceOffsets[i]);\n    moment1 += neighbor;\n    moment2 += neighbor * neighbor;\n    #endif // UNROLLED_LOOP_INDEX < VARIANCE_OFFSET_COUNT\n  }\n  #pragma unroll_loop_end\n\n  const float N = float(VARIANCE_OFFSET_COUNT + 1);\n  vec4 mean = moment1 / N;\n  vec4 varianceGamma = sqrt(max(moment2 / N - mean * mean, 0.0)) * gamma;\n  vec4 minColor = mean - varianceGamma;\n  vec4 maxColor = mean + varianceGamma;\n  return clipAABB(clamp(mean, minColor, maxColor), history, minColor, maxColor);\n}\n\nvec4 varianceClipping(\n  const sampler2D inputBuffer,\n  const vec2 coord,\n  const vec4 current,\n  const vec4 history\n) {\n  return varianceClipping(inputBuffer, coord, current, history, 1.0);\n}\n";
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/CloudsResolveMaterial.ts
-var _shadowLength_dec2, _temporalUpscale_dec, _a6, _init6;
-var CloudsResolveMaterial = class extends (_a6 = RawShaderMaterial2, _temporalUpscale_dec = [define("TEMPORAL_UPSCALE")], _shadowLength_dec2 = [define("SHADOW_LENGTH")], _a6) {
+var CloudsResolveMaterial = class extends RawShaderMaterial2 {
   constructor({
     colorBuffer = null,
     depthVelocityBuffer = null,
@@ -4753,8 +4757,8 @@ var CloudsResolveMaterial = class extends (_a6 = RawShaderMaterial2, _temporalUp
         temporalAlpha: new Uniform7(0.1)
       }
     });
-    __publicField(this, "temporalUpscale", __runInitializers(_init6, 8, this, true)), __runInitializers(_init6, 11, this);
-    __publicField(this, "shadowLength", __runInitializers(_init6, 12, this, true)), __runInitializers(_init6, 15, this);
+    this.temporalUpscale = true;
+    this.shadowLength = true;
   }
   setSize(width, height) {
     this.uniforms.texelSize.value.set(1 / width, 1 / height);
@@ -4768,19 +4772,20 @@ var CloudsResolveMaterial = class extends (_a6 = RawShaderMaterial2, _temporalUp
     this.uniforms.jitterOffset.value.set(dx, dy);
   }
 };
-_init6 = __decoratorStart(_a6);
-__decorateElement(_init6, 5, "temporalUpscale", _temporalUpscale_dec, CloudsResolveMaterial);
-__decorateElement(_init6, 5, "shadowLength", _shadowLength_dec2, CloudsResolveMaterial);
-__decoratorMetadata(_init6, CloudsResolveMaterial);
+__decorateClass([
+  define("TEMPORAL_UPSCALE")
+], CloudsResolveMaterial.prototype, "temporalUpscale", 2);
+__decorateClass([
+  define("SHADOW_LENGTH")
+], CloudsResolveMaterial.prototype, "shadowLength", 2);
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/PassBase.ts
 import { Pass as Pass2 } from "https://esm.sh/postprocessing@6.37.4?deps=three@0.185.1&external=three";
 import { Camera as Camera2 } from "https://esm.sh/three@0.185.1?external";
 var PassBase = class extends Pass2 {
-  shadow;
-  _mainCamera = new Camera2();
   constructor(name, options) {
     super(name);
+    this._mainCamera = new Camera2();
     const { shadow } = options;
     this.shadow = shadow;
   }
@@ -4831,6 +4836,8 @@ var CloudsPass = class extends PassBase {
   }, atmosphere) {
     super("CloudsPass", options);
     this.atmosphere = atmosphere;
+    this.width = 0;
+    this.height = 0;
     this.currentMaterial = new CloudsMaterial(
       {
         parameterUniforms,
@@ -4847,15 +4854,6 @@ var CloudsPass = class extends PassBase {
       shadowLength: defaults.lightShafts
     });
   }
-  currentRenderTarget;
-  currentMaterial;
-  currentPass;
-  resolveRenderTarget;
-  resolveMaterial;
-  resolvePass;
-  historyRenderTarget;
-  width = 0;
-  height = 0;
   copyCameraSettings(camera) {
     this.currentMaterial.copyCameraSettings(camera);
   }

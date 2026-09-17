@@ -17,9 +17,9 @@ function invariant(condition, message) {
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/helpers/FrustumCorners.ts
 import { Vector3 } from "https://esm.sh/three@0.185.1?external";
 var FrustumCorners = class _FrustumCorners {
-  near = [new Vector3(), new Vector3(), new Vector3(), new Vector3()];
-  far = [new Vector3(), new Vector3(), new Vector3(), new Vector3()];
   constructor(camera, far) {
+    this.near = [new Vector3(), new Vector3(), new Vector3(), new Vector3()];
+    this.far = [new Vector3(), new Vector3(), new Vector3(), new Vector3()];
     if (camera != null && far != null) {
       this.setFromCamera(camera, far);
     }
@@ -199,7 +199,10 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    parseTypedArray = parser;
+    constructor() {
+      super(...arguments);
+      this.parseTypedArray = parser;
+    }
   };
 }
 
@@ -215,7 +218,10 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  parameters = {};
+  constructor() {
+    super(...arguments);
+    this.parameters = {};
+  }
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -248,12 +254,15 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    Texture = Texture;
-    TypedArrayLoader = createTypedArrayLoaderClass(parser);
-    parameters = {
-      ...defaultDataTextureParameter,
-      ...parameters
-    };
+    constructor() {
+      super(...arguments);
+      this.Texture = Texture;
+      this.TypedArrayLoader = createTypedArrayLoaderClass(parser);
+      this.parameters = {
+        ...defaultDataTextureParameter,
+        ...parameters
+      };
+    }
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {
@@ -328,12 +337,13 @@ var vectorScratch1 = /* @__PURE__ */ new Vector34();
 var vectorScratch2 = /* @__PURE__ */ new Vector34();
 var vectorScratch3 = /* @__PURE__ */ new Vector34();
 var Ellipsoid = class _Ellipsoid {
-  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
-    6378137,
-    6378137,
-    6356752314245179e-9
-  );
-  radii;
+  static {
+    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
+      6378137,
+      6378137,
+      6356752314245179e-9
+    );
+  }
   constructor(x, y, z) {
     this.radii = new Vector34(x, y, z);
   }
@@ -444,10 +454,18 @@ var Geodetic = class _Geodetic {
     this.latitude = latitude;
     this.height = height;
   }
-  static MIN_LONGITUDE = -Math.PI;
-  static MAX_LONGITUDE = Math.PI;
-  static MIN_LATITUDE = -Math.PI / 2;
-  static MAX_LATITUDE = Math.PI / 2;
+  static {
+    this.MIN_LONGITUDE = -Math.PI;
+  }
+  static {
+    this.MAX_LONGITUDE = Math.PI;
+  }
+  static {
+    this.MIN_LATITUDE = -Math.PI / 2;
+  }
+  static {
+    this.MAX_LATITUDE = Math.PI / 2;
+  }
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -556,12 +574,14 @@ var Rectangle = class _Rectangle {
     this.east = east;
     this.north = north;
   }
-  static MAX = /* @__PURE__ */ new _Rectangle(
-    Geodetic.MIN_LONGITUDE,
-    Geodetic.MIN_LATITUDE,
-    Geodetic.MAX_LONGITUDE,
-    Geodetic.MAX_LATITUDE
-  );
+  static {
+    this.MAX = /* @__PURE__ */ new _Rectangle(
+      Geodetic.MIN_LONGITUDE,
+      Geodetic.MIN_LATITUDE,
+      Geodetic.MAX_LONGITUDE,
+      Geodetic.MAX_LATITUDE
+    );
+  }
   get width() {
     let east = this.east;
     if (east < this.west) {
@@ -689,19 +709,13 @@ var cascadedShadowMapsDefaults = {
   fade: true
 };
 var CascadedShadowMaps = class {
-  cascades = [];
-  mapSize = new Vector22();
-  maxFar;
-  farScale;
-  splitMode;
-  splitLambda;
-  margin;
-  fade;
-  cameraFrustum = new FrustumCorners();
-  frusta = [];
-  splits = [];
-  _far = 0;
   constructor(options) {
+    this.cascades = [];
+    this.mapSize = new Vector22();
+    this.cameraFrustum = new FrustumCorners();
+    this.frusta = [];
+    this.splits = [];
+    this._far = 0;
     const {
       cascadeCount,
       mapSize,

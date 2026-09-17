@@ -29,10 +29,8 @@ function createFrequencyTexture(n) {
   return tex;
 }
 var PackedIFFT = class {
-  stages = [];
-  /** Where the spatial result lives after horizontal + vertical passes. */
-  output;
   constructor(ping, pong, n) {
+    this.stages = [];
     const logN = Math.log2(n);
     if (!Number.isInteger(logN) || n > 256) {
       throw new Error(`PackedIFFT requires a power-of-two workgroup size up to 256; received ${n}`);

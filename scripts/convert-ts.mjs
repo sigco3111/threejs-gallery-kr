@@ -33,10 +33,10 @@ for (const tsPath of tsFiles) {
       target: "es2022",
       tsconfigRaw: {
         compilerOptions: {
-          // Disable TypeScript's legacy decorators AND TC39 native decorators
-          // — esbuild will pass decorator syntax through unchanged. The browser
-          // (Chrome 119+) executes them natively.
-          experimentalDecorators: false,
+          // Legacy decorator mode — emits simple __decorate helper that
+          // works across all browsers (no TC39 native runtime dependency).
+          experimentalDecorators: true,
+          useDefineForClassFields: false,
           target: "es2022",
           module: "esnext",
           moduleResolution: "bundler",

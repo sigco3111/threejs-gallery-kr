@@ -60,12 +60,13 @@ var vectorScratch1 = /* @__PURE__ */ new Vector32();
 var vectorScratch2 = /* @__PURE__ */ new Vector32();
 var vectorScratch3 = /* @__PURE__ */ new Vector32();
 var Ellipsoid = class _Ellipsoid {
-  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
-    6378137,
-    6378137,
-    6356752314245179e-9
-  );
-  radii;
+  static {
+    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
+      6378137,
+      6378137,
+      6356752314245179e-9
+    );
+  }
   constructor(x, y, z) {
     this.radii = new Vector32(x, y, z);
   }
@@ -185,15 +186,6 @@ var matrixScratch = /* @__PURE__ */ new Matrix42();
 var quaternionScratch = /* @__PURE__ */ new Quaternion();
 var rayScratch = /* @__PURE__ */ new Ray();
 var PointOfView = class _PointOfView {
-  // Distance from the target.
-  _distance;
-  // Radians from the local east direction relative from true north, measured
-  // clockwise (90 degrees is true north, and -90 is true south).
-  heading;
-  // Radians from the local horizon plane, measured with positive values looking
-  // up (90 degrees is straight up, -90 is straight down).
-  _pitch;
-  roll;
   constructor(distance = 0, heading = 0, pitch = 0, roll = 0) {
     this.distance = distance;
     this.heading = heading;

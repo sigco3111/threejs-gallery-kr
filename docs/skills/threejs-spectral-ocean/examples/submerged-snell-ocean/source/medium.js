@@ -244,16 +244,11 @@ var underwaterDebugModes = /* @__PURE__ */ new Map([
   ["depth", 5]
 ]);
 var UnderwaterMediumPipeline = class {
-  scenePass;
-  /** 0 = open sea, 1 = deep inside an enclosed interior: kills fog glow + rays. */
-  interior = uniform4(0);
-  pipeline;
-  debugMode = uniform4(0);
-  timeUniform = uniform4(0);
-  particulates;
-  scene;
-  causticSampler;
   constructor(renderer, scene, camera, caustics, options = {}) {
+    /** 0 = open sea, 1 = deep inside an enclosed interior: kills fog glow + rays. */
+    this.interior = uniform4(0);
+    this.debugMode = uniform4(0);
+    this.timeUniform = uniform4(0);
     this.scene = scene;
     renderer.toneMapping = NoToneMapping;
     const godraySteps = options.godraySteps ?? 14;
