@@ -33,6 +33,17 @@ for (const tsPath of tsFiles) {
       target: "es2020",
       write: false,
       sourcemap: false,
+      // Critical: alias to esm.sh URLs so esbuild pulls packages that share
+      // the SAME three.js instance as the rest of the page (avoids
+      // "Multiple instances of Three.js" + Object.defineProperty crashes).
+      alias: {
+        "postprocessing": "https://esm.sh/postprocessing@6.37.4?deps=three@0.185.1&external=three",
+        "three": "https://esm.sh/three@0.185.1?external",
+        "three-mesh-bvh": "https://esm.sh/three-mesh-bvh@0.9.10?deps=three@0.185.1&external=three",
+        "@petamoriken/float16": "https://esm.sh/@petamoriken/float16@3.9.2?external",
+        "fflate": "https://esm.sh/fflate@0.8.2?external",
+        "astronomy-engine": "https://esm.sh/astronomy-engine@2.1.19?external",
+      },
       loader: {
         ".frag": "text",
         ".vert": "text",
