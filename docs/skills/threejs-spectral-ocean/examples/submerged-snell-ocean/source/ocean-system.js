@@ -908,16 +908,20 @@ function clipGeometryAboveY(source, minimumY) {
   return result;
 }
 var InterfaceStructureLayer = class {
+  nodes;
+  target;
+  scene = new Scene();
+  activeUniform = uniform4(0);
+  structures = [];
+  size = new Vector2();
+  clearColor = new Color2();
+  rootInverse = new Matrix4();
+  relativeMatrix = new Matrix4();
+  sim;
+  submerged;
+  warmed = false;
+  active = false;
   constructor(sim, submerged) {
-    this.scene = new Scene();
-    this.activeUniform = uniform4(0);
-    this.structures = [];
-    this.size = new Vector2();
-    this.clearColor = new Color2();
-    this.rootInverse = new Matrix4();
-    this.relativeMatrix = new Matrix4();
-    this.warmed = false;
-    this.active = false;
     this.sim = sim;
     this.submerged = submerged;
     const depthTexture = new DepthTexture(1, 1);
@@ -1424,8 +1428,10 @@ function createFrequencyTexture(n) {
   return tex;
 }
 var PackedIFFT = class {
+  stages = [];
+  /** Where the spatial result lives after horizontal + vertical passes. */
+  output;
   constructor(ping, pong, n) {
-    this.stages = [];
     const logN = Math.log2(n);
     if (!Number.isInteger(logN) || n > 256) {
       throw new Error(`PackedIFFT requires a power-of-two workgroup size up to 256; received ${n}`);
@@ -1612,11 +1618,19 @@ function createMapTexture(n) {
   return tex;
 }
 var WaveSim = class {
+  patchLengths;
+  /** The sea state these cascades were built from — consumers that need the
+   * wind axis (foam windrows) must read it here, never re-import a default. */
+  sea;
+  /** TSL texture nodes — .value is repointed after each ping-pong swap. */
+  displacementNodes;
+  derivativeNodes;
+  cascades;
+  timeUniform = uniform5(0);
+  dtUniform = uniform5(1 / 60);
+  current = 0;
+  initialized = false;
   constructor(rng, sea = DEFAULT_SEA_STATE) {
-    this.timeUniform = uniform5(0);
-    this.dtUniform = uniform5(1 / 60);
-    this.current = 0;
-    this.initialized = false;
     const { resolution: n, patchLengths, boundaryFactor, choppiness, foamRecovery, amplitude } = OCEAN_PRESET;
     this.patchLengths = patchLengths;
     this.sea = sea;
@@ -1759,8 +1773,15 @@ var WaveSim = class {
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/ocean-system.ts
 var INNER_SIZE = OCEAN_INNER_HALF_SIZE * 2;
 var SubmergedOcean = class {
+  simulation;
+  interfaceStructures;
+  /** Camera-medium authority shared by the surface, medium, and particulates. */
+  submerged;
+  inner;
+  outer;
+  timeUniform = uniform6(0);
+  followStep;
   constructor(scene, rng, options = {}) {
-    this.timeUniform = uniform6(0);
     const segments = options.segments ?? 384;
     this.followStep = INNER_SIZE / segments;
     this.simulation = new WaveSim(rng);

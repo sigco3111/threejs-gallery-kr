@@ -1,9 +1,10 @@
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/EllipsoidGeometry.ts
 import { BufferAttribute, BufferGeometry, Vector3 } from "https://esm.sh/three@0.185.1?external";
 var EllipsoidGeometry = class extends BufferGeometry {
+  type = "EllipsoidGeometry";
+  parameters;
   constructor(radii = new Vector3(1, 1, 1), longitudeSegments = 32, latitudeSegments = 16) {
     super();
-    this.type = "EllipsoidGeometry";
     this.parameters = {
       radii,
       longitudeSegments,

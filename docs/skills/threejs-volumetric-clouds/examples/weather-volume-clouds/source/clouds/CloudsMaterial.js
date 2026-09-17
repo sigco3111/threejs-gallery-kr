@@ -17,6 +17,7 @@ var __runInitializers = (array, flags, self, value) => {
   return value;
 };
 var __decorateElement = (array, flags, name, decorators, target, extra) => {
+  return;  // patched: no-op to avoid Object.defineProperty crash
   var fn, it, done, ctx, access, k = flags & 7, s = !!(flags & 8), p = !!(flags & 16);
   var j = k > 3 ? array.length + 1 : k ? s ? 1 : 2 : 0, key = __decoratorStrings[k + 5];
   var initializers = k > 3 && (array[j - 1] = []), extraInitializers = array[j] || (array[j] = []);
@@ -40,6 +41,7 @@ var __decorateElement = (array, flags, name, decorators, target, extra) => {
   }
   return k || __decoratorMetadata(array, target), desc && __defProp(target, name, desc), p ? k ^ 4 ? extra : desc : target;
 };
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
 var __privateIn = (member, obj) => Object(obj) !== obj ? __typeError('Cannot use the "in" operator on this value') : member.has(obj);
 var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
@@ -176,10 +178,7 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    constructor() {
-      super(...arguments);
-      this.parseTypedArray = parser;
-    }
+    parseTypedArray = parser;
   };
 }
 
@@ -195,10 +194,7 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  constructor() {
-    super(...arguments);
-    this.parameters = {};
-  }
+  parameters = {};
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -231,15 +227,12 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters2) {
   return class extends DataLoader {
-    constructor() {
-      super(...arguments);
-      this.Texture = Texture;
-      this.TypedArrayLoader = createTypedArrayLoaderClass(parser);
-      this.parameters = {
-        ...defaultDataTextureParameter,
-        ...parameters2
-      };
-    }
+    Texture = Texture;
+    TypedArrayLoader = createTypedArrayLoaderClass(parser);
+    parameters = {
+      ...defaultDataTextureParameter,
+      ...parameters2
+    };
   };
 }
 function createData3DTextureLoaderClass(parser, parameters2) {
@@ -482,13 +475,12 @@ var vectorScratch1 = /* @__PURE__ */ new Vector33();
 var vectorScratch2 = /* @__PURE__ */ new Vector33();
 var vectorScratch3 = /* @__PURE__ */ new Vector33();
 var Ellipsoid = class _Ellipsoid {
-  static {
-    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
-      6378137,
-      6378137,
-      6356752314245179e-9
-    );
-  }
+  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
+    6378137,
+    6378137,
+    6356752314245179e-9
+  );
+  radii;
   constructor(x, y, z) {
     this.radii = new Vector33(x, y, z);
   }
@@ -599,18 +591,10 @@ var Geodetic = class _Geodetic {
     this.latitude = latitude;
     this.height = height;
   }
-  static {
-    this.MIN_LONGITUDE = -Math.PI;
-  }
-  static {
-    this.MAX_LONGITUDE = Math.PI;
-  }
-  static {
-    this.MIN_LATITUDE = -Math.PI / 2;
-  }
-  static {
-    this.MAX_LATITUDE = Math.PI / 2;
-  }
+  static MIN_LONGITUDE = -Math.PI;
+  static MAX_LONGITUDE = Math.PI;
+  static MIN_LATITUDE = -Math.PI / 2;
+  static MAX_LATITUDE = Math.PI / 2;
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -719,14 +703,12 @@ var Rectangle = class _Rectangle {
     this.east = east;
     this.north = north;
   }
-  static {
-    this.MAX = /* @__PURE__ */ new _Rectangle(
-      Geodetic.MIN_LONGITUDE,
-      Geodetic.MIN_LATITUDE,
-      Geodetic.MAX_LONGITUDE,
-      Geodetic.MAX_LATITUDE
-    );
-  }
+  static MAX = /* @__PURE__ */ new _Rectangle(
+    Geodetic.MIN_LONGITUDE,
+    Geodetic.MIN_LATITUDE,
+    Geodetic.MAX_LONGITUDE,
+    Geodetic.MAX_LATITUDE
+  );
   get width() {
     let east = this.east;
     if (east < this.west) {
@@ -991,29 +973,27 @@ function applyOptions(target, params) {
   }
 }
 var AtmosphereParameters = class _AtmosphereParameters {
+  static DEFAULT = /* @__PURE__ */ new _AtmosphereParameters();
+  solarIrradiance = new Vector37(1.474, 1.8504, 1.91198);
+  sunAngularRadius = 4675e-6;
+  bottomRadius = 636e4;
+  topRadius = 642e4;
+  rayleighScattering = new Vector37(5802e-6, 0.013558, 0.0331);
+  mieScattering = new Vector37(3996e-6, 3996e-6, 3996e-6);
+  miePhaseFunctionG = 0.8;
+  muSMin = Math.cos(radians(120));
+  // Radiance to luminance conversion
+  // prettier-ignore
+  skyRadianceToLuminance = new Vector37(114974.916437, 71305.954816, 65310.548555);
+  sunRadianceToLuminance = new Vector37(98242.786222, 69954.398112, 66475.012354);
+  luminousEfficiency = new Vector37(0.2126, 0.7152, 0.0722);
+  skyRadianceToRelativeLuminance = new Vector37();
+  sunRadianceToRelativeLuminance = new Vector37();
   constructor(options) {
-    this.solarIrradiance = new Vector37(1.474, 1.8504, 1.91198);
-    this.sunAngularRadius = 4675e-6;
-    this.bottomRadius = 636e4;
-    this.topRadius = 642e4;
-    this.rayleighScattering = new Vector37(5802e-6, 0.013558, 0.0331);
-    this.mieScattering = new Vector37(3996e-6, 3996e-6, 3996e-6);
-    this.miePhaseFunctionG = 0.8;
-    this.muSMin = Math.cos(radians(120));
-    // Radiance to luminance conversion
-    // prettier-ignore
-    this.skyRadianceToLuminance = new Vector37(114974.916437, 71305.954816, 65310.548555);
-    this.sunRadianceToLuminance = new Vector37(98242.786222, 69954.398112, 66475.012354);
-    this.luminousEfficiency = new Vector37(0.2126, 0.7152, 0.0722);
-    this.skyRadianceToRelativeLuminance = new Vector37();
-    this.sunRadianceToRelativeLuminance = new Vector37();
     applyOptions(this, options);
     const luminance = this.luminousEfficiency.dot(this.skyRadianceToLuminance);
     this.skyRadianceToRelativeLuminance.copy(this.skyRadianceToLuminance).divideScalar(luminance);
     this.sunRadianceToRelativeLuminance.copy(this.sunRadianceToLuminance).divideScalar(luminance);
-  }
-  static {
-    this.DEFAULT = /* @__PURE__ */ new _AtmosphereParameters();
   }
 };
 
@@ -2147,25 +2127,25 @@ var AerialPerspectiveEffect = class extends (_a = Effect, _octEncodedNormal_dec 
     );
     this.camera = camera;
     this.atmosphere = atmosphere;
-    this._ellipsoid = void 0;
-    this.ellipsoidMatrix = new Matrix43();
-    this.correctAltitude = void 0;
-    this.overlay = null;
-    this.shadow = null;
-    this.shadowLength = null;
-    this.irradianceMask = null;
-    this.octEncodedNormal = __runInitializers(_init, 8, this), __runInitializers(_init, 11, this);
-    this.reconstructNormal = __runInitializers(_init, 12, this), __runInitializers(_init, 15, this);
-    this.correctGeometricError = __runInitializers(_init, 16, this), __runInitializers(_init, 19, this);
-    this.photometric = __runInitializers(_init, 20, this), __runInitializers(_init, 23, this);
-    this.sunIrradiance = __runInitializers(_init, 24, this), __runInitializers(_init, 27, this);
-    this.skyIrradiance = __runInitializers(_init, 28, this), __runInitializers(_init, 31, this);
-    this.transmittance = __runInitializers(_init, 32, this), __runInitializers(_init, 35, this);
-    this.inscatter = __runInitializers(_init, 36, this), __runInitializers(_init, 39, this);
-    this.sky = __runInitializers(_init, 40, this), __runInitializers(_init, 43, this);
-    this.sun = __runInitializers(_init, 44, this), __runInitializers(_init, 47, this);
-    this.moon = __runInitializers(_init, 48, this), __runInitializers(_init, 51, this);
-    this.shadowSampleCount = __runInitializers(_init, 52, this, 8), __runInitializers(_init, 55, this);
+    __publicField(this, "_ellipsoid");
+    __publicField(this, "ellipsoidMatrix", new Matrix43());
+    __publicField(this, "correctAltitude");
+    __publicField(this, "overlay", null);
+    __publicField(this, "shadow", null);
+    __publicField(this, "shadowLength", null);
+    __publicField(this, "irradianceMask", null);
+    __publicField(this, "octEncodedNormal", __runInitializers(_init, 8, this)), __runInitializers(_init, 11, this);
+    __publicField(this, "reconstructNormal", __runInitializers(_init, 12, this)), __runInitializers(_init, 15, this);
+    __publicField(this, "correctGeometricError", __runInitializers(_init, 16, this)), __runInitializers(_init, 19, this);
+    __publicField(this, "photometric", __runInitializers(_init, 20, this)), __runInitializers(_init, 23, this);
+    __publicField(this, "sunIrradiance", __runInitializers(_init, 24, this)), __runInitializers(_init, 27, this);
+    __publicField(this, "skyIrradiance", __runInitializers(_init, 28, this)), __runInitializers(_init, 31, this);
+    __publicField(this, "transmittance", __runInitializers(_init, 32, this)), __runInitializers(_init, 35, this);
+    __publicField(this, "inscatter", __runInitializers(_init, 36, this)), __runInitializers(_init, 39, this);
+    __publicField(this, "sky", __runInitializers(_init, 40, this)), __runInitializers(_init, 43, this);
+    __publicField(this, "sun", __runInitializers(_init, 44, this)), __runInitializers(_init, 47, this);
+    __publicField(this, "moon", __runInitializers(_init, 48, this)), __runInitializers(_init, 51, this);
+    __publicField(this, "shadowSampleCount", __runInitializers(_init, 52, this, 8)), __runInitializers(_init, 55, this);
     this.octEncodedNormal = octEncodedNormal;
     this.reconstructNormal = reconstructNormal;
     this.ellipsoid = ellipsoid;
@@ -2507,11 +2487,11 @@ var AtmosphereMaterialBase = class extends (_a2 = RawShaderMaterial, _photometri
       }
     });
     this.atmosphere = atmosphere;
-    this.ellipsoid = void 0;
-    this.ellipsoidMatrix = new Matrix44();
-    this.correctAltitude = void 0;
-    this._renderTargetCount = void 0;
-    this.photometric = __runInitializers(_init2, 8, this), __runInitializers(_init2, 11, this);
+    __publicField(this, "ellipsoid");
+    __publicField(this, "ellipsoidMatrix", new Matrix44());
+    __publicField(this, "correctAltitude");
+    __publicField(this, "_renderTargetCount");
+    __publicField(this, "photometric", __runInitializers(_init2, 8, this)), __runInitializers(_init2, 11, this);
     this.atmosphere = atmosphere;
     this.ellipsoid = ellipsoid;
     this.correctAltitude = correctAltitude;
@@ -2721,9 +2701,9 @@ var SkyMaterial = class extends (_a3 = AtmosphereMaterialBase, _sun_dec2 = [defi
       },
       depthTest: true
     });
-    this.shadowLength = null;
-    this.sun = __runInitializers(_init3, 8, this), __runInitializers(_init3, 11, this);
-    this.moon = __runInitializers(_init3, 12, this), __runInitializers(_init3, 15, this);
+    __publicField(this, "shadowLength", null);
+    __publicField(this, "sun", __runInitializers(_init3, 8, this)), __runInitializers(_init3, 11, this);
+    __publicField(this, "moon", __runInitializers(_init3, 12, this)), __runInitializers(_init3, 15, this);
     this.sun = sun;
     this.moon = moon;
   }
@@ -2906,8 +2886,8 @@ var StarsMaterial = class extends (_a4 = AtmosphereMaterialBase, _background_dec
         PERSPECTIVE_CAMERA: "1"
       }
     });
-    this.pointSize = void 0;
-    this.background = __runInitializers(_init4, 8, this), __runInitializers(_init4, 11, this);
+    __publicField(this, "pointSize");
+    __publicField(this, "background", __runInitializers(_init4, 8, this)), __runInitializers(_init4, 11, this);
     this.pointSize = pointSize;
     this.background = background;
   }
@@ -4245,23 +4225,23 @@ var CloudsMaterial = class extends (_a5 = AtmosphereMaterialBase, _depthPacking_
       },
       atmosphere
     );
-    this.temporalUpscale = true;
-    this.previousProjectionMatrix = void 0;
-    this.previousViewMatrix = void 0;
-    this.depthPacking = __runInitializers(_init5, 8, this, 0), __runInitializers(_init5, 11, this);
-    this.localWeatherChannels = __runInitializers(_init5, 12, this, "rgba"), __runInitializers(_init5, 15, this);
-    this.shapeDetail = __runInitializers(_init5, 16, this, defaults.shapeDetail), __runInitializers(_init5, 19, this);
-    this.turbulence = __runInitializers(_init5, 20, this, defaults.turbulence), __runInitializers(_init5, 23, this);
-    this.shadowLength = __runInitializers(_init5, 24, this, defaults.lightShafts), __runInitializers(_init5, 27, this);
-    this.haze = __runInitializers(_init5, 28, this, defaults.haze), __runInitializers(_init5, 31, this);
-    this.multiScatteringOctaves = __runInitializers(_init5, 32, this, defaults.clouds.multiScatteringOctaves), __runInitializers(_init5, 35, this);
-    this.accurateSunSkyIrradiance = __runInitializers(_init5, 36, this, defaults.clouds.accurateSunSkyIrradiance), __runInitializers(_init5, 39, this);
-    this.accuratePhaseFunction = __runInitializers(_init5, 40, this, defaults.clouds.accuratePhaseFunction), __runInitializers(_init5, 43, this);
-    this.shadowCascadeCount = __runInitializers(_init5, 44, this, defaults.shadow.cascadeCount), __runInitializers(_init5, 47, this);
-    this.shadowSampleCount = __runInitializers(_init5, 48, this, 8), __runInitializers(_init5, 51, this);
-    this.scatterAnisotropy1 = __runInitializers(_init5, 52, this, 0.7), __runInitializers(_init5, 55, this);
-    this.scatterAnisotropy2 = __runInitializers(_init5, 56, this, -0.2), __runInitializers(_init5, 59, this);
-    this.scatterAnisotropyMix = __runInitializers(_init5, 60, this, 0.5), __runInitializers(_init5, 63, this);
+    __publicField(this, "temporalUpscale", true);
+    __publicField(this, "previousProjectionMatrix");
+    __publicField(this, "previousViewMatrix");
+    __publicField(this, "depthPacking", __runInitializers(_init5, 8, this, 0)), __runInitializers(_init5, 11, this);
+    __publicField(this, "localWeatherChannels", __runInitializers(_init5, 12, this, "rgba")), __runInitializers(_init5, 15, this);
+    __publicField(this, "shapeDetail", __runInitializers(_init5, 16, this, defaults.shapeDetail)), __runInitializers(_init5, 19, this);
+    __publicField(this, "turbulence", __runInitializers(_init5, 20, this, defaults.turbulence)), __runInitializers(_init5, 23, this);
+    __publicField(this, "shadowLength", __runInitializers(_init5, 24, this, defaults.lightShafts)), __runInitializers(_init5, 27, this);
+    __publicField(this, "haze", __runInitializers(_init5, 28, this, defaults.haze)), __runInitializers(_init5, 31, this);
+    __publicField(this, "multiScatteringOctaves", __runInitializers(_init5, 32, this, defaults.clouds.multiScatteringOctaves)), __runInitializers(_init5, 35, this);
+    __publicField(this, "accurateSunSkyIrradiance", __runInitializers(_init5, 36, this, defaults.clouds.accurateSunSkyIrradiance)), __runInitializers(_init5, 39, this);
+    __publicField(this, "accuratePhaseFunction", __runInitializers(_init5, 40, this, defaults.clouds.accuratePhaseFunction)), __runInitializers(_init5, 43, this);
+    __publicField(this, "shadowCascadeCount", __runInitializers(_init5, 44, this, defaults.shadow.cascadeCount)), __runInitializers(_init5, 47, this);
+    __publicField(this, "shadowSampleCount", __runInitializers(_init5, 48, this, 8)), __runInitializers(_init5, 51, this);
+    __publicField(this, "scatterAnisotropy1", __runInitializers(_init5, 52, this, 0.7)), __runInitializers(_init5, 55, this);
+    __publicField(this, "scatterAnisotropy2", __runInitializers(_init5, 56, this, -0.2)), __runInitializers(_init5, 59, this);
+    __publicField(this, "scatterAnisotropyMix", __runInitializers(_init5, 60, this, 0.5)), __runInitializers(_init5, 63, this);
   }
   onBeforeRender(renderer, scene, camera, geometry, object, group) {
     const prevLogarithmicDepthBuffer = this.defines.USE_LOGDEPTHBUF != null;

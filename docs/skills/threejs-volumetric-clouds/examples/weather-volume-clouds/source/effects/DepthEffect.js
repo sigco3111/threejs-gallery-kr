@@ -17,6 +17,7 @@ var __runInitializers = (array, flags, self, value) => {
   return value;
 };
 var __decorateElement = (array, flags, name, decorators, target, extra) => {
+  return;  // patched: no-op to avoid Object.defineProperty crash
   var fn, it, done, ctx, access, k = flags & 7, s = !!(flags & 8), p = !!(flags & 16);
   var j = k > 3 ? array.length + 1 : k ? s ? 1 : 2 : 0, key = __decoratorStrings[k + 5];
   var initializers = k > 3 && (array[j - 1] = []), extraInitializers = array[j] || (array[j] = []);
@@ -40,6 +41,7 @@ var __decorateElement = (array, flags, name, decorators, target, extra) => {
   }
   return k || __decoratorMetadata(array, target), desc && __defProp(target, name, desc), p ? k ^ 4 ? extra : desc : target;
 };
+var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
 var __privateIn = (member, obj) => Object(obj) !== obj ? __typeError('Cannot use the "in" operator on this value') : member.has(obj);
 var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
@@ -156,10 +158,7 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    constructor() {
-      super(...arguments);
-      this.parseTypedArray = parser;
-    }
+    parseTypedArray = parser;
   };
 }
 
@@ -175,10 +174,7 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  constructor() {
-    super(...arguments);
-    this.parameters = {};
-  }
+  parameters = {};
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -211,15 +207,12 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    constructor() {
-      super(...arguments);
-      this.Texture = Texture;
-      this.TypedArrayLoader = createTypedArrayLoaderClass(parser);
-      this.parameters = {
-        ...defaultDataTextureParameter,
-        ...parameters
-      };
-    }
+    Texture = Texture;
+    TypedArrayLoader = createTypedArrayLoaderClass(parser);
+    parameters = {
+      ...defaultDataTextureParameter,
+      ...parameters
+    };
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {
@@ -337,13 +330,12 @@ var vectorScratch1 = /* @__PURE__ */ new Vector33();
 var vectorScratch2 = /* @__PURE__ */ new Vector33();
 var vectorScratch3 = /* @__PURE__ */ new Vector33();
 var Ellipsoid = class _Ellipsoid {
-  static {
-    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
-      6378137,
-      6378137,
-      6356752314245179e-9
-    );
-  }
+  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
+    6378137,
+    6378137,
+    6356752314245179e-9
+  );
+  radii;
   constructor(x, y, z) {
     this.radii = new Vector33(x, y, z);
   }
@@ -454,18 +446,10 @@ var Geodetic = class _Geodetic {
     this.latitude = latitude;
     this.height = height;
   }
-  static {
-    this.MIN_LONGITUDE = -Math.PI;
-  }
-  static {
-    this.MAX_LONGITUDE = Math.PI;
-  }
-  static {
-    this.MIN_LATITUDE = -Math.PI / 2;
-  }
-  static {
-    this.MAX_LATITUDE = Math.PI / 2;
-  }
+  static MIN_LONGITUDE = -Math.PI;
+  static MAX_LONGITUDE = Math.PI;
+  static MIN_LATITUDE = -Math.PI / 2;
+  static MAX_LATITUDE = Math.PI / 2;
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -574,14 +558,12 @@ var Rectangle = class _Rectangle {
     this.east = east;
     this.north = north;
   }
-  static {
-    this.MAX = /* @__PURE__ */ new _Rectangle(
-      Geodetic.MIN_LONGITUDE,
-      Geodetic.MIN_LATITUDE,
-      Geodetic.MAX_LONGITUDE,
-      Geodetic.MAX_LATITUDE
-    );
-  }
+  static MAX = /* @__PURE__ */ new _Rectangle(
+    Geodetic.MIN_LONGITUDE,
+    Geodetic.MIN_LATITUDE,
+    Geodetic.MAX_LONGITUDE,
+    Geodetic.MAX_LATITUDE
+  );
   get width() {
     let east = this.east;
     if (east < this.west) {
@@ -722,7 +704,7 @@ var DepthEffect = class extends (_a = Effect, _useTurbo_dec = [define("USE_TURBO
         )
       }
     );
-    this.useTurbo = __runInitializers(_init, 8, this), __runInitializers(_init, 11, this);
+    __publicField(this, "useTurbo", __runInitializers(_init, 8, this)), __runInitializers(_init, 11, this);
     this.useTurbo = useTurbo;
   }
   get near() {

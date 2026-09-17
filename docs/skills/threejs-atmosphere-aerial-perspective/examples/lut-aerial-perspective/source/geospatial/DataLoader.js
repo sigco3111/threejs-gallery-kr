@@ -88,10 +88,7 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    constructor() {
-      super(...arguments);
-      this.parseTypedArray = parser;
-    }
+    parseTypedArray = parser;
   };
 }
 
@@ -107,10 +104,7 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  constructor() {
-    super(...arguments);
-    this.parameters = {};
-  }
+  parameters = {};
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -143,15 +137,12 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    constructor() {
-      super(...arguments);
-      this.Texture = Texture;
-      this.TypedArrayLoader = createTypedArrayLoaderClass(parser);
-      this.parameters = {
-        ...defaultDataTextureParameter,
-        ...parameters
-      };
-    }
+    Texture = Texture;
+    TypedArrayLoader = createTypedArrayLoaderClass(parser);
+    parameters = {
+      ...defaultDataTextureParameter,
+      ...parameters
+    };
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {

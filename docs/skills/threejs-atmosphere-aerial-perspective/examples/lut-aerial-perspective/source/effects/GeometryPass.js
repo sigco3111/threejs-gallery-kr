@@ -140,6 +140,7 @@ function setupMaterialsForGeometryPass() {
 
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/effects/GeometryPass.ts
 var GeometryPass = class extends RenderPass {
+  geometryTexture;
   constructor(inputBuffer, scene, camera, overrideMaterial) {
     super(scene, camera, overrideMaterial);
     this.geometryTexture = inputBuffer.texture.clone();

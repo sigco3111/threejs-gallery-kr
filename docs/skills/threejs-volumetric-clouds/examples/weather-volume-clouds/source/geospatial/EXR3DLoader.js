@@ -1362,6 +1362,7 @@ var EXRLoader = class extends DataTextureLoader {
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/EXR3DLoader.ts
 var EXR3DLoader = class extends Loader {
+  depth;
   setDepth(value) {
     this.depth = value;
     return this;

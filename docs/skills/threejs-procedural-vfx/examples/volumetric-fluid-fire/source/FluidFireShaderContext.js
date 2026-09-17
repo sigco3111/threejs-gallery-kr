@@ -67,52 +67,75 @@ function makeDataTexture(name, size, config) {
   };
 }
 var FluidFireShaderContext = class {
+  /**
+   * Size of 1 voxel in physical meters
+   */
+  dyeVoxelSizeWorld;
+  // /**
+  //  *  Radius in integer voxel count (CPU calculation)
+  //  */
+  // readonly emitKernelRadius: number;
+  uTime = uniform(0);
+  uCurlNoiseMultiplier = uniform(5);
+  /**
+   * noise force frequency
+   */
+  uTurbFrequency = uniform(4);
+  /**
+   *  turbulence decay rate over age
+   */
+  uTurbulenceDecay = uniform(0.51);
+  /**
+   * noise force strength
+   */
+  uTurbulence = uniform(0.9);
+  /**
+   * smoke dissipation /s (default for 2.5s lifespan)
+   */
+  uDissipation = uniform(0.2);
+  /**
+   * temperature cooling /s (default for 1.0s lifespan)
+   */
+  uCooling = uniform(0.21);
+  uEmitDensity = uniform(20);
+  uEmitTemperature = uniform(15.5);
+  /**
+   * velocity dissipation /s
+   */
+  uVelDamping = uniform(0.25);
+  uVolumeWorldSize;
+  /**
+   * Simulation's delta time
+   */
+  uDt = uniform(0.016);
+  /**
+   * hot air rises
+   */
+  uBuoyancy = uniform(6.1);
+  uVorticityConfinementStrength = uniform(0.1);
+  /**
+   * smoke weight (pulls down)
+   */
+  uWeight = uniform(0.15);
+  noiseTextureConfig;
+  /**
+   * offsets in dye grid units for when a vertex will splat data on dye grid
+   * This is calculated once on CPU before calling the emitObjectsPass to speed up the process
+   *
+   * xyz offset + w fallof factor
+   */
+  uVertexSplatBrushOffsets;
+  uVertexSplatBrushOffsetsCount;
+  uEmitRadiusWorld;
+  /**
+   * to turn world space coord to local space of our bounding box
+   */
+  invWorldMatrix;
+  worldMatrix;
+  grid;
+  texture;
+  collisions;
   constructor(config) {
-    // /**
-    //  *  Radius in integer voxel count (CPU calculation)
-    //  */
-    // readonly emitKernelRadius: number;
-    this.uTime = uniform(0);
-    this.uCurlNoiseMultiplier = uniform(5);
-    /**
-     * noise force frequency
-     */
-    this.uTurbFrequency = uniform(4);
-    /**
-     *  turbulence decay rate over age
-     */
-    this.uTurbulenceDecay = uniform(0.51);
-    /**
-     * noise force strength
-     */
-    this.uTurbulence = uniform(0.9);
-    /**
-     * smoke dissipation /s (default for 2.5s lifespan)
-     */
-    this.uDissipation = uniform(0.2);
-    /**
-     * temperature cooling /s (default for 1.0s lifespan)
-     */
-    this.uCooling = uniform(0.21);
-    this.uEmitDensity = uniform(20);
-    this.uEmitTemperature = uniform(15.5);
-    /**
-     * velocity dissipation /s
-     */
-    this.uVelDamping = uniform(0.25);
-    /**
-     * Simulation's delta time
-     */
-    this.uDt = uniform(0.016);
-    /**
-     * hot air rises
-     */
-    this.uBuoyancy = uniform(6.1);
-    this.uVorticityConfinementStrength = uniform(0.1);
-    /**
-     * smoke weight (pulls down)
-     */
-    this.uWeight = uniform(0.15);
     this.noiseTextureConfig = config.noiseTextureConfig;
     this.collisions = config.collisions;
     this.worldMatrix = uniform(config.world.matrixWorld);

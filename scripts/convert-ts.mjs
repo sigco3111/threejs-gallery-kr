@@ -30,20 +30,20 @@ for (const tsPath of tsFiles) {
       entryPoints: [tsPath],
       bundle: true,
       format: "esm",
-      // TS5 standard decorators are processed natively by esbuild when
-      // target is omitted (defaults to esnext). Helper functions like
-      // __decorateElement are NOT emitted; the browser interprets them.
+      target: "es2022",
       tsconfigRaw: {
         compilerOptions: {
+          // Disable TypeScript's legacy decorators AND TC39 native decorators
+          // — esbuild will pass decorator syntax through unchanged. The browser
+          // (Chrome 119+) executes them natively.
           experimentalDecorators: false,
-          useDefineForClassFields: false,
-          target: "esnext",
+          target: "es2022",
           module: "esnext",
           moduleResolution: "bundler",
         },
       },
       supported: {
-        "decorators": true,
+        "decorators": false,
       },
       write: false,
       sourcemap: false,

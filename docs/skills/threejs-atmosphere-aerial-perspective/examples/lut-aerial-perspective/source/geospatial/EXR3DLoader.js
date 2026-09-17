@@ -1362,6 +1362,7 @@ var EXRLoader = class extends DataTextureLoader {
 
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/EXR3DLoader.ts
 var EXR3DLoader = class extends Loader {
+  depth;
   setDepth(value) {
     this.depth = value;
     return this;

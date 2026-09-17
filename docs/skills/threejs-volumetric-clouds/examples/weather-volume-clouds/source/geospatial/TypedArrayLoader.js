@@ -68,10 +68,7 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    constructor() {
-      super(...arguments);
-      this.parseTypedArray = parser;
-    }
+    parseTypedArray = parser;
   };
 }
 function createTypedArrayLoader(parser) {

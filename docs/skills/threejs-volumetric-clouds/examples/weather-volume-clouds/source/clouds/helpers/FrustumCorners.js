@@ -1,9 +1,9 @@
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/helpers/FrustumCorners.ts
 import { Vector3 } from "https://esm.sh/three@0.185.1?external";
 var FrustumCorners = class _FrustumCorners {
+  near = [new Vector3(), new Vector3(), new Vector3(), new Vector3()];
+  far = [new Vector3(), new Vector3(), new Vector3(), new Vector3()];
   constructor(camera, far) {
-    this.near = [new Vector3(), new Vector3(), new Vector3(), new Vector3()];
-    this.far = [new Vector3(), new Vector3(), new Vector3(), new Vector3()];
     if (camera != null && far != null) {
       this.setFromCamera(camera, far);
     }

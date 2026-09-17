@@ -60,13 +60,12 @@ var vectorScratch1 = /* @__PURE__ */ new Vector32();
 var vectorScratch2 = /* @__PURE__ */ new Vector32();
 var vectorScratch3 = /* @__PURE__ */ new Vector32();
 var Ellipsoid = class _Ellipsoid {
-  static {
-    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
-      6378137,
-      6378137,
-      6356752314245179e-9
-    );
-  }
+  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
+    6378137,
+    6378137,
+    6356752314245179e-9
+  );
+  radii;
   constructor(x, y, z) {
     this.radii = new Vector32(x, y, z);
   }
@@ -170,18 +169,10 @@ var Geodetic = class _Geodetic {
     this.latitude = latitude;
     this.height = height;
   }
-  static {
-    this.MIN_LONGITUDE = -Math.PI;
-  }
-  static {
-    this.MAX_LONGITUDE = Math.PI;
-  }
-  static {
-    this.MIN_LATITUDE = -Math.PI / 2;
-  }
-  static {
-    this.MAX_LATITUDE = Math.PI / 2;
-  }
+  static MIN_LONGITUDE = -Math.PI;
+  static MAX_LONGITUDE = Math.PI;
+  static MIN_LATITUDE = -Math.PI / 2;
+  static MAX_LATITUDE = Math.PI / 2;
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;

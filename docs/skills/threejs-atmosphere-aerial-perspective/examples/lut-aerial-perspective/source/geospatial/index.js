@@ -155,10 +155,7 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    constructor() {
-      super(...arguments);
-      this.parseTypedArray = parser;
-    }
+    parseTypedArray = parser;
   };
 }
 function createTypedArrayLoader(parser) {
@@ -177,10 +174,7 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  constructor() {
-    super(...arguments);
-    this.parameters = {};
-  }
+  parameters = {};
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -213,15 +207,12 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    constructor() {
-      super(...arguments);
-      this.Texture = Texture;
-      this.TypedArrayLoader = createTypedArrayLoaderClass(parser);
-      this.parameters = {
-        ...defaultDataTextureParameter,
-        ...parameters
-      };
-    }
+    Texture = Texture;
+    TypedArrayLoader = createTypedArrayLoaderClass(parser);
+    parameters = {
+      ...defaultDataTextureParameter,
+      ...parameters
+    };
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {
@@ -524,13 +515,12 @@ var vectorScratch1 = /* @__PURE__ */ new Vector33();
 var vectorScratch2 = /* @__PURE__ */ new Vector33();
 var vectorScratch3 = /* @__PURE__ */ new Vector33();
 var Ellipsoid = class _Ellipsoid {
-  static {
-    this.WGS84 = /* @__PURE__ */ new _Ellipsoid(
-      6378137,
-      6378137,
-      6356752314245179e-9
-    );
-  }
+  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
+    6378137,
+    6378137,
+    6356752314245179e-9
+  );
+  radii;
   constructor(x, y, z) {
     this.radii = new Vector33(x, y, z);
   }
@@ -628,9 +618,10 @@ var Ellipsoid = class _Ellipsoid {
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/EllipsoidGeometry.ts
 import { BufferAttribute as BufferAttribute2, BufferGeometry as BufferGeometry2, Vector3 as Vector34 } from "https://esm.sh/three@0.185.1?external";
 var EllipsoidGeometry = class extends BufferGeometry2 {
+  type = "EllipsoidGeometry";
+  parameters;
   constructor(radii = new Vector34(1, 1, 1), longitudeSegments = 32, latitudeSegments = 16) {
     super();
-    this.type = "EllipsoidGeometry";
     this.parameters = {
       radii,
       longitudeSegments,
@@ -2065,6 +2056,7 @@ var EXRLoader = class extends DataTextureLoader {
 
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/EXR3DLoader.ts
 var EXR3DLoader = class extends Loader4 {
+  depth;
   setDepth(value) {
     this.depth = value;
     return this;
@@ -2111,18 +2103,10 @@ var Geodetic = class _Geodetic {
     this.latitude = latitude;
     this.height = height;
   }
-  static {
-    this.MIN_LONGITUDE = -Math.PI;
-  }
-  static {
-    this.MAX_LONGITUDE = Math.PI;
-  }
-  static {
-    this.MIN_LATITUDE = -Math.PI / 2;
-  }
-  static {
-    this.MAX_LATITUDE = Math.PI / 2;
-  }
+  static MIN_LONGITUDE = -Math.PI;
+  static MAX_LONGITUDE = Math.PI;
+  static MIN_LATITUDE = -Math.PI / 2;
+  static MAX_LATITUDE = Math.PI / 2;
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -2233,6 +2217,15 @@ var matrixScratch = /* @__PURE__ */ new Matrix42();
 var quaternionScratch = /* @__PURE__ */ new Quaternion();
 var rayScratch = /* @__PURE__ */ new Ray();
 var PointOfView = class _PointOfView {
+  // Distance from the target.
+  _distance;
+  // Radians from the local east direction relative from true north, measured
+  // clockwise (90 degrees is true north, and -90 is true south).
+  heading;
+  // Radians from the local horizon plane, measured with positive values looking
+  // up (90 degrees is straight up, -90 is straight down).
+  _pitch;
+  roll;
   constructor(distance = 0, heading = 0, pitch = 0, roll = 0) {
     this.distance = distance;
     this.heading = heading;
@@ -2332,14 +2325,12 @@ var Rectangle = class _Rectangle {
     this.east = east;
     this.north = north;
   }
-  static {
-    this.MAX = /* @__PURE__ */ new _Rectangle(
-      Geodetic.MIN_LONGITUDE,
-      Geodetic.MIN_LATITUDE,
-      Geodetic.MAX_LONGITUDE,
-      Geodetic.MAX_LATITUDE
-    );
-  }
+  static MAX = /* @__PURE__ */ new _Rectangle(
+    Geodetic.MIN_LONGITUDE,
+    Geodetic.MIN_LATITUDE,
+    Geodetic.MAX_LONGITUDE,
+    Geodetic.MAX_LATITUDE
+  );
   get width() {
     let east = this.east;
     if (east < this.west) {

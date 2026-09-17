@@ -6,12 +6,13 @@ var SDFShape = class {
   constructor(maxCount, name) {
     this.maxCount = maxCount;
     this.name = name;
-    this.shapeTypeIndex = ++ShapeIndex;
     this.uDataIndex = uniformArray(
       Array.from({ length: maxCount }, () => 0),
       "uint"
     );
   }
+  shapeTypeIndex = ++ShapeIndex;
+  uDataIndex;
   /**
    * creates a collider on the given object. You can override this (but you must call this too super.createColliderOn ) to configure
    * custom uniforms that your implementation may require. This must be called since it provides basic function.

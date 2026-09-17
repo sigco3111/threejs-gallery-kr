@@ -44,9 +44,38 @@ import {
 import { Fn, If, instanceIndex, Return, storage, vec4 } from "https://esm.sh/three@0.185.1?external/tsl";
 import * as THREE from "https://esm.sh/three@0.185.1?external/webgpu";
 var EmitterManager = class {
+  maxObjects;
+  emitters = [];
+  objectMap;
+  defPools = /* @__PURE__ */ new Map();
+  // CPU Arrays
+  matrixData;
+  propData;
+  // (r, g, b, emitMultiplier)
+  velData;
+  // (vx, vy, vz, speed)
+  /**
+   * for each vertex for each instance: [ vertexPositionOffset, instanceIndex, 0, 0 ]
+   */
+  instanceInfoData;
+  // Storage Attributes
+  matrixAttr;
+  propAttr;
+  velAttr;
+  instanceInfoAttr;
+  // NEW
+  // TSL Storage Nodes
+  matricesStorageNode;
+  propsStorageNode;
+  velocitiesStorageNode;
+  instanceInfoStorageNode;
+  // NEW
+  combinedVertexAttr;
+  verticesStorageNode;
+  totalUniqueVertexCount;
+  uploadAllThreshold;
+  totalInstancesVertices;
   constructor(emitterBuffer) {
-    this.emitters = [];
-    this.defPools = /* @__PURE__ */ new Map();
     this.maxObjects = emitterBuffer.reduce((acc, obj) => acc + obj.maxCount, 0);
     this.emitters = [];
     this.objectMap = /* @__PURE__ */ new WeakMap();
@@ -340,52 +369,75 @@ function makeDataTexture(name, size, config) {
   };
 }
 var FluidFireShaderContext = class {
+  /**
+   * Size of 1 voxel in physical meters
+   */
+  dyeVoxelSizeWorld;
+  // /**
+  //  *  Radius in integer voxel count (CPU calculation)
+  //  */
+  // readonly emitKernelRadius: number;
+  uTime = uniform(0);
+  uCurlNoiseMultiplier = uniform(5);
+  /**
+   * noise force frequency
+   */
+  uTurbFrequency = uniform(4);
+  /**
+   *  turbulence decay rate over age
+   */
+  uTurbulenceDecay = uniform(0.51);
+  /**
+   * noise force strength
+   */
+  uTurbulence = uniform(0.9);
+  /**
+   * smoke dissipation /s (default for 2.5s lifespan)
+   */
+  uDissipation = uniform(0.2);
+  /**
+   * temperature cooling /s (default for 1.0s lifespan)
+   */
+  uCooling = uniform(0.21);
+  uEmitDensity = uniform(20);
+  uEmitTemperature = uniform(15.5);
+  /**
+   * velocity dissipation /s
+   */
+  uVelDamping = uniform(0.25);
+  uVolumeWorldSize;
+  /**
+   * Simulation's delta time
+   */
+  uDt = uniform(0.016);
+  /**
+   * hot air rises
+   */
+  uBuoyancy = uniform(6.1);
+  uVorticityConfinementStrength = uniform(0.1);
+  /**
+   * smoke weight (pulls down)
+   */
+  uWeight = uniform(0.15);
+  noiseTextureConfig;
+  /**
+   * offsets in dye grid units for when a vertex will splat data on dye grid
+   * This is calculated once on CPU before calling the emitObjectsPass to speed up the process
+   *
+   * xyz offset + w fallof factor
+   */
+  uVertexSplatBrushOffsets;
+  uVertexSplatBrushOffsetsCount;
+  uEmitRadiusWorld;
+  /**
+   * to turn world space coord to local space of our bounding box
+   */
+  invWorldMatrix;
+  worldMatrix;
+  grid;
+  texture;
+  collisions;
   constructor(config) {
-    // /**
-    //  *  Radius in integer voxel count (CPU calculation)
-    //  */
-    // readonly emitKernelRadius: number;
-    this.uTime = uniform(0);
-    this.uCurlNoiseMultiplier = uniform(5);
-    /**
-     * noise force frequency
-     */
-    this.uTurbFrequency = uniform(4);
-    /**
-     *  turbulence decay rate over age
-     */
-    this.uTurbulenceDecay = uniform(0.51);
-    /**
-     * noise force strength
-     */
-    this.uTurbulence = uniform(0.9);
-    /**
-     * smoke dissipation /s (default for 2.5s lifespan)
-     */
-    this.uDissipation = uniform(0.2);
-    /**
-     * temperature cooling /s (default for 1.0s lifespan)
-     */
-    this.uCooling = uniform(0.21);
-    this.uEmitDensity = uniform(20);
-    this.uEmitTemperature = uniform(15.5);
-    /**
-     * velocity dissipation /s
-     */
-    this.uVelDamping = uniform(0.25);
-    /**
-     * Simulation's delta time
-     */
-    this.uDt = uniform(0.016);
-    /**
-     * hot air rises
-     */
-    this.uBuoyancy = uniform(6.1);
-    this.uVorticityConfinementStrength = uniform(0.1);
-    /**
-     * smoke weight (pulls down)
-     */
-    this.uWeight = uniform(0.15);
     this.noiseTextureConfig = config.noiseTextureConfig;
     this.collisions = config.collisions;
     this.worldMatrix = uniform(config.world.matrixWorld);
@@ -851,12 +903,13 @@ var SDFShape = class {
   constructor(maxCount, name) {
     this.maxCount = maxCount;
     this.name = name;
-    this.shapeTypeIndex = ++ShapeIndex;
     this.uDataIndex = uniformArray2(
       Array.from({ length: maxCount }, () => 0),
       "uint"
     );
   }
+  shapeTypeIndex = ++ShapeIndex;
+  uDataIndex;
   /**
    * creates a collider on the given object. You can override this (but you must call this too super.createColliderOn ) to configure
    * custom uniforms that your implementation may require. This must be called since it provides basic function.
@@ -927,20 +980,39 @@ var invertedQ = new Quaternion();
 var UNIFORM_SCALE = new Vector33(1, 1, 1);
 var tempScale = new Vector33();
 var CollisionHandler = class {
+  /**
+   * Uniforms used to store data relative to the colliders such as their position, velocity, inverse matrix, etc...
+   */
+  context;
+  uCollisionMargin;
+  get collisionMargin() {
+    return this.uCollisionMargin.value;
+  }
+  set collisionMargin(v2) {
+    this.uCollisionMargin.value = v2;
+  }
+  // private uBoxes: UniformArrayNode<"uint">; // [ dataIndex]
+  // private uBoxCount: UniformNode<"uint", number>;
+  /**
+   * Base Surface friction coefficient of surfaces
+   */
+  uFriction = uniform3(0.8, "float");
+  /**
+   * Inverse matrices
+   */
+  dataBindings = [];
+  config;
+  obj2Collider = /* @__PURE__ */ new WeakMap();
+  removeCollider = /* @__PURE__ */ new Map();
+  /**
+   * scans all the colliding sdf shapes and returns the distance
+   */
+  mapSDF;
+  bakeTexture;
+  // [ vec3(normal), distance(float) ]
+  bakeVelocityTexture;
   // [ vec3(vx,vy,vz), --- ]
   constructor(config = {}) {
-    // private uBoxes: UniformArrayNode<"uint">; // [ dataIndex]
-    // private uBoxCount: UniformNode<"uint", number>;
-    /**
-     * Base Surface friction coefficient of surfaces
-     */
-    this.uFriction = uniform3(0.8, "float");
-    /**
-     * Inverse matrices
-     */
-    this.dataBindings = [];
-    this.obj2Collider = /* @__PURE__ */ new WeakMap();
-    this.removeCollider = /* @__PURE__ */ new Map();
     const customShapes = config.sdfShapes ?? [];
     delete config.sdfShapes;
     const cfg = {
@@ -1072,12 +1144,6 @@ var CollisionHandler = class {
       outNormal.assign(closestNormal);
       return minDistance;
     });
-  }
-  get collisionMargin() {
-    return this.uCollisionMargin.value;
-  }
-  set collisionMargin(v2) {
-    this.uCollisionMargin.value = v2;
   }
   /**
    * Use the object as a proxy to control a collider in the simulation.
@@ -1285,25 +1351,60 @@ var DEBUG_MODE_IDS = {
   colliders: 4
 };
 var VolumetricFluidFire = class extends Object3D4 {
+  /**
+   * User for post-processing this is the node that will contain the volumetric lighting.
+   * Usually you would "add" this on top of your sceneNode
+   */
+  getRenderPass;
+  /**
+   * Returns a proxy objects that will "contain" the fire for that particular emitter's ID.
+   */
+  getFireFor;
+  objectsManager;
+  /**
+   * Must be called AFTER `initialize` otherwise it will be `undefined`.
+   * This will keep the position of the objects and other data in sync with the data on the GPU.
+   */
+  update;
+  /**
+   * Call this se we can compute some shaders ( like the to create the noise texture )
+   */
+  initialize;
+  /**
+   * Data relevant to the compute shaders so they can do their thing...
+   */
+  shaderContext;
+  simulate = true;
+  simulationSpeed = 2;
+  volumetricPass;
+  config;
+  volumetricMaterial;
+  _curlNoiseUpdated = false;
+  _keyLightPosition = new Vector34();
+  uKeyLightPosition = uniform4(this._keyLightPosition);
+  /**
+   * Colors to be used in the fire, base color, tier1,2,3 and special color.
+   */
+  uTemperatureColors;
+  /**
+   * Smoothstep steps for each tier color ( tier 1, 2, 3 )
+   */
+  uTemperatureColorStops;
+  uTemperatureAtMaxColor = uniform4(0);
+  //set in the constructor
+  // --- New Aesthetic Control Uniforms ---
+  uRadianceMultiplier = uniform4(15);
+  // Controls bloom/core intensity
+  uSpecialColorMultiplier = uniform4(8);
+  // Overall volumetric opacity scale
+  uShadowAbsorption = uniform4(2);
+  // Controls how fast light is blocked by smoke
+  uTintBlendRange = uniform4(new Vector2(0.01, 0.1));
+  // Smooth transition range for colorMass/special tints
+  uDebugMode = uniform4(0, "int");
+  collisions;
   constructor(renderer, config = {}) {
     super();
-    this.simulate = true;
-    this.simulationSpeed = 2;
-    this._curlNoiseUpdated = false;
-    this._keyLightPosition = new Vector34();
-    this.uKeyLightPosition = uniform4(this._keyLightPosition);
-    this.uTemperatureAtMaxColor = uniform4(0);
-    //set in the constructor
-    // --- New Aesthetic Control Uniforms ---
-    this.uRadianceMultiplier = uniform4(15);
-    // Controls bloom/core intensity
-    this.uSpecialColorMultiplier = uniform4(8);
-    // Overall volumetric opacity scale
-    this.uShadowAbsorption = uniform4(2);
-    // Controls how fast light is blocked by smoke
-    this.uTintBlendRange = uniform4(new Vector2(0.01, 0.1));
-    // Smooth transition range for colorMass/special tints
-    this.uDebugMode = uniform4(0, "int");
     const cfg = {
       debug: { renderColliders: false, renderVolumeBox: false, noise: false },
       renderLayer: 10,

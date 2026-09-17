@@ -2,9 +2,38 @@
 import { Fn, If, instanceIndex, Return, storage, vec4 } from "https://esm.sh/three@0.185.1?external/tsl";
 import * as THREE from "https://esm.sh/three@0.185.1?external/webgpu";
 var EmitterManager = class {
+  maxObjects;
+  emitters = [];
+  objectMap;
+  defPools = /* @__PURE__ */ new Map();
+  // CPU Arrays
+  matrixData;
+  propData;
+  // (r, g, b, emitMultiplier)
+  velData;
+  // (vx, vy, vz, speed)
+  /**
+   * for each vertex for each instance: [ vertexPositionOffset, instanceIndex, 0, 0 ]
+   */
+  instanceInfoData;
+  // Storage Attributes
+  matrixAttr;
+  propAttr;
+  velAttr;
+  instanceInfoAttr;
+  // NEW
+  // TSL Storage Nodes
+  matricesStorageNode;
+  propsStorageNode;
+  velocitiesStorageNode;
+  instanceInfoStorageNode;
+  // NEW
+  combinedVertexAttr;
+  verticesStorageNode;
+  totalUniqueVertexCount;
+  uploadAllThreshold;
+  totalInstancesVertices;
   constructor(emitterBuffer) {
-    this.emitters = [];
-    this.defPools = /* @__PURE__ */ new Map();
     this.maxObjects = emitterBuffer.reduce((acc, obj) => acc + obj.maxCount, 0);
     this.emitters = [];
     this.objectMap = /* @__PURE__ */ new WeakMap();
