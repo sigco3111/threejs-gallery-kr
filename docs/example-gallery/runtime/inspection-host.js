@@ -157,10 +157,12 @@ const context = {
   camera,
   controls,
   runtime: exampleRuntime,
-  moduleUrl: new URL(modulePath, window.location.origin + REPO_PREFIX + "/"),
+  moduleUrl: new URL(resolvedModulePath, window.location.origin + "/"),
   resolveAsset(relativePath) {
-    const baseUrl = new URL(modulePath, window.location.origin + REPO_PREFIX + "/").href;
-    return new URL(relativePath, baseUrl).href;
+    // resolvedModulePath is the fully-qualified URL the adapter module was
+    // loaded from — use it as the base so relative paths like "assets/foo.hdr"
+    // resolve under the same repo path the adapter itself lives in.
+    return new URL(relativePath, resolvedModulePath).href;
   },
 };
 
