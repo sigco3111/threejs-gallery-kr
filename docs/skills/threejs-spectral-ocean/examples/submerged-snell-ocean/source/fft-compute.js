@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/fft-compute.ts
 import { DataTexture, FloatType, NearestFilter, RGBAFormat } from "https://esm.sh/three@0.185.1?external";
 import { StorageBufferAttribute, StorageTexture } from "https://esm.sh/three@0.185.1?external/webgpu";
@@ -33,10 +29,10 @@ function createFrequencyTexture(n) {
   return tex;
 }
 var PackedIFFT = class {
+  stages = [];
+  /** Where the spatial result lives after horizontal + vertical passes. */
+  output;
   constructor(ping, pong, n) {
-    __publicField(this, "stages", []);
-    /** Where the spatial result lives after horizontal + vertical passes. */
-    __publicField(this, "output");
     const logN = Math.log2(n);
     if (!Number.isInteger(logN) || n > 256) {
       throw new Error(`PackedIFFT requires a power-of-two workgroup size up to 256; received ${n}`);

@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/caustics.ts
 import {
   AdditiveBlending,
@@ -57,11 +53,11 @@ var CAUSTIC_TILE = 17;
 var GRID = 256;
 var PROJECT_DEPTH = 24;
 var CausticsPass = class {
+  renderTarget;
+  textureNode;
+  scene = new Scene();
+  camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
   constructor(sim, resolution) {
-    __publicField(this, "renderTarget");
-    __publicField(this, "textureNode");
-    __publicField(this, "scene", new Scene());
-    __publicField(this, "camera", new OrthographicCamera(-1, 1, 1, -1, 0, 1));
     this.renderTarget = new RenderTarget(resolution, resolution, {
       type: HalfFloatType,
       depthBuffer: false
@@ -201,10 +197,10 @@ function createFrequencyTexture(n) {
   return tex;
 }
 var PackedIFFT = class {
+  stages = [];
+  /** Where the spatial result lives after horizontal + vertical passes. */
+  output;
   constructor(ping, pong, n) {
-    __publicField(this, "stages", []);
-    /** Where the spatial result lives after horizontal + vertical passes. */
-    __publicField(this, "output");
     const logN = Math.log2(n);
     if (!Number.isInteger(logN) || n > 256) {
       throw new Error(`PackedIFFT requires a power-of-two workgroup size up to 256; received ${n}`);
@@ -543,20 +539,20 @@ function clipGeometryAboveY(source, minimumY) {
   return result;
 }
 var InterfaceStructureLayer = class {
+  nodes;
+  target;
+  scene = new Scene2();
+  activeUniform = uniform4(0);
+  structures = [];
+  size = new Vector2();
+  clearColor = new Color3();
+  rootInverse = new Matrix4();
+  relativeMatrix = new Matrix4();
+  sim;
+  submerged;
+  warmed = false;
+  active = false;
   constructor(sim, submerged) {
-    __publicField(this, "nodes");
-    __publicField(this, "target");
-    __publicField(this, "scene", new Scene2());
-    __publicField(this, "activeUniform", uniform4(0));
-    __publicField(this, "structures", []);
-    __publicField(this, "size", new Vector2());
-    __publicField(this, "clearColor", new Color3());
-    __publicField(this, "rootInverse", new Matrix4());
-    __publicField(this, "relativeMatrix", new Matrix4());
-    __publicField(this, "sim");
-    __publicField(this, "submerged");
-    __publicField(this, "warmed", false);
-    __publicField(this, "active", false);
     this.sim = sim;
     this.submerged = submerged;
     const depthTexture = new DepthTexture(1, 1);
@@ -939,7 +935,7 @@ var InterfaceStructureLayer = class {
         proxy.matrixWorldNeedsUpdate = true;
         proxy.visible = visible || !this.warmed;
       }
-      active || (active = visible);
+      active ||= visible;
     }
     this.active = active;
     this.activeUniform.value = active ? 1 : 0;
@@ -1070,16 +1066,16 @@ var underwaterDebugModes = /* @__PURE__ */ new Map([
   ["depth", 5]
 ]);
 var UnderwaterMediumPipeline = class {
+  scenePass;
+  /** 0 = open sea, 1 = deep inside an enclosed interior: kills fog glow + rays. */
+  interior = uniform5(0);
+  pipeline;
+  debugMode = uniform5(0);
+  timeUniform = uniform5(0);
+  particulates;
+  scene;
+  causticSampler;
   constructor(renderer, scene, camera, caustics, options = {}) {
-    __publicField(this, "scenePass");
-    /** 0 = open sea, 1 = deep inside an enclosed interior: kills fog glow + rays. */
-    __publicField(this, "interior", uniform5(0));
-    __publicField(this, "pipeline");
-    __publicField(this, "debugMode", uniform5(0));
-    __publicField(this, "timeUniform", uniform5(0));
-    __publicField(this, "particulates");
-    __publicField(this, "scene");
-    __publicField(this, "causticSampler");
     this.scene = scene;
     renderer.toneMapping = NoToneMapping;
     const godraySteps = options.godraySteps ?? 14;
@@ -1326,27 +1322,27 @@ var DIFFUSE_RATE = 1.1;
 var BLEED_RATE = 4e-3;
 var QUIET_AFTER = 35;
 var WakeFoamMap = class {
+  /** Stable texture node for the surface material — repointed after swaps. */
+  foamNode;
+  maps;
+  steps;
+  clears;
+  splatShapes = uniformArray(
+    Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 1, 0))
+  );
+  splatPowers = uniformArray(
+    Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 0, 0))
+  );
+  freshKeep = uniform6(1);
+  residueKeep = uniform6(1);
+  diffuse = uniform6(0);
+  bleed = uniform6(0);
+  pendingCount = 0;
+  hasPending = false;
+  activeUntil = -Infinity;
+  current = 0;
+  initialized = false;
   constructor() {
-    /** Stable texture node for the surface material — repointed after swaps. */
-    __publicField(this, "foamNode");
-    __publicField(this, "maps");
-    __publicField(this, "steps");
-    __publicField(this, "clears");
-    __publicField(this, "splatShapes", uniformArray(
-      Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 1, 0))
-    ));
-    __publicField(this, "splatPowers", uniformArray(
-      Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 0, 0))
-    ));
-    __publicField(this, "freshKeep", uniform6(1));
-    __publicField(this, "residueKeep", uniform6(1));
-    __publicField(this, "diffuse", uniform6(0));
-    __publicField(this, "bleed", uniform6(0));
-    __publicField(this, "pendingCount", 0);
-    __publicField(this, "hasPending", false);
-    __publicField(this, "activeUntil", -Infinity);
-    __publicField(this, "current", 0);
-    __publicField(this, "initialized", false);
     const make = () => {
       const map = new StorageTexture2(RESOLUTION, RESOLUTION);
       map.type = HalfFloatType3;
@@ -2343,19 +2339,19 @@ function createMapTexture(n) {
   return tex;
 }
 var WaveSim = class {
+  patchLengths;
+  /** The sea state these cascades were built from — consumers that need the
+   * wind axis (foam windrows) must read it here, never re-import a default. */
+  sea;
+  /** TSL texture nodes — .value is repointed after each ping-pong swap. */
+  displacementNodes;
+  derivativeNodes;
+  cascades;
+  timeUniform = uniform8(0);
+  dtUniform = uniform8(1 / 60);
+  current = 0;
+  initialized = false;
   constructor(rng, sea = DEFAULT_SEA_STATE) {
-    __publicField(this, "patchLengths");
-    /** The sea state these cascades were built from — consumers that need the
-     * wind axis (foam windrows) must read it here, never re-import a default. */
-    __publicField(this, "sea");
-    /** TSL texture nodes — .value is repointed after each ping-pong swap. */
-    __publicField(this, "displacementNodes");
-    __publicField(this, "derivativeNodes");
-    __publicField(this, "cascades");
-    __publicField(this, "timeUniform", uniform8(0));
-    __publicField(this, "dtUniform", uniform8(1 / 60));
-    __publicField(this, "current", 0);
-    __publicField(this, "initialized", false);
     const { resolution: n, patchLengths, boundaryFactor, choppiness, foamRecovery, amplitude } = OCEAN_PRESET;
     this.patchLengths = patchLengths;
     this.sea = sea;
@@ -2498,15 +2494,15 @@ var WaveSim = class {
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/ocean-system.ts
 var INNER_SIZE = OCEAN_INNER_HALF_SIZE * 2;
 var SubmergedOcean = class {
+  simulation;
+  interfaceStructures;
+  /** Camera-medium authority shared by the surface, medium, and particulates. */
+  submerged;
+  inner;
+  outer;
+  timeUniform = uniform9(0);
+  followStep;
   constructor(scene, rng, options = {}) {
-    __publicField(this, "simulation");
-    __publicField(this, "interfaceStructures");
-    /** Camera-medium authority shared by the surface, medium, and particulates. */
-    __publicField(this, "submerged");
-    __publicField(this, "inner");
-    __publicField(this, "outer");
-    __publicField(this, "timeUniform", uniform9(0));
-    __publicField(this, "followStep");
     const segments = options.segments ?? 384;
     this.followStep = INNER_SIZE / segments;
     this.simulation = new WaveSim(rng);
@@ -2584,9 +2580,9 @@ function hashLabel(str) {
   return (h ^ h >>> 16) >>> 0;
 }
 var Rng = class _Rng {
+  seed;
+  s;
   constructor(seed) {
-    __publicField(this, "seed");
-    __publicField(this, "s");
     this.seed = seed >>> 0;
     this.s = this.seed === 0 ? 2654435769 : this.seed;
   }

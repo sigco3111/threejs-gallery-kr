@@ -1,43 +1,39 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/EmitterManager.ts
 import { Fn, If, instanceIndex, Return, storage, vec4 } from "https://esm.sh/three@0.185.1?external/tsl";
 import * as THREE from "https://esm.sh/three@0.185.1?external/webgpu";
 var EmitterManager = class {
+  maxObjects;
+  emitters = [];
+  objectMap;
+  defPools = /* @__PURE__ */ new Map();
+  // CPU Arrays
+  matrixData;
+  propData;
+  // (r, g, b, emitMultiplier)
+  velData;
+  // (vx, vy, vz, speed)
+  /**
+   * for each vertex for each instance: [ vertexPositionOffset, instanceIndex, 0, 0 ]
+   */
+  instanceInfoData;
+  // Storage Attributes
+  matrixAttr;
+  propAttr;
+  velAttr;
+  instanceInfoAttr;
+  // NEW
+  // TSL Storage Nodes
+  matricesStorageNode;
+  propsStorageNode;
+  velocitiesStorageNode;
+  instanceInfoStorageNode;
+  // NEW
+  combinedVertexAttr;
+  verticesStorageNode;
+  totalUniqueVertexCount;
+  uploadAllThreshold;
+  totalInstancesVertices;
   constructor(emitterBuffer) {
-    __publicField(this, "maxObjects");
-    __publicField(this, "emitters", []);
-    __publicField(this, "objectMap");
-    __publicField(this, "defPools", /* @__PURE__ */ new Map());
-    // CPU Arrays
-    __publicField(this, "matrixData");
-    __publicField(this, "propData");
-    // (r, g, b, emitMultiplier)
-    __publicField(this, "velData");
-    // (vx, vy, vz, speed)
-    /**
-     * for each vertex for each instance: [ vertexPositionOffset, instanceIndex, 0, 0 ]
-     */
-    __publicField(this, "instanceInfoData");
-    // Storage Attributes
-    __publicField(this, "matrixAttr");
-    __publicField(this, "propAttr");
-    __publicField(this, "velAttr");
-    __publicField(this, "instanceInfoAttr");
-    // NEW
-    // TSL Storage Nodes
-    __publicField(this, "matricesStorageNode");
-    __publicField(this, "propsStorageNode");
-    __publicField(this, "velocitiesStorageNode");
-    __publicField(this, "instanceInfoStorageNode");
-    // NEW
-    __publicField(this, "combinedVertexAttr");
-    __publicField(this, "verticesStorageNode");
-    __publicField(this, "totalUniqueVertexCount");
-    __publicField(this, "uploadAllThreshold");
-    __publicField(this, "totalInstancesVertices");
     this.maxObjects = emitterBuffer.reduce((acc, obj) => acc + obj.maxCount, 0);
     this.emitters = [];
     this.objectMap = /* @__PURE__ */ new WeakMap();

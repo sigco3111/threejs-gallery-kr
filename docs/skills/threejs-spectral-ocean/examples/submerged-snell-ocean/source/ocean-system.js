@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/ocean-system.ts
 import { Mesh as Mesh2, PlaneGeometry } from "https://esm.sh/three@0.185.1?external";
 import { uniform as uniform6 } from "https://esm.sh/three@0.185.1?external/tsl";
@@ -912,20 +908,20 @@ function clipGeometryAboveY(source, minimumY) {
   return result;
 }
 var InterfaceStructureLayer = class {
+  nodes;
+  target;
+  scene = new Scene();
+  activeUniform = uniform4(0);
+  structures = [];
+  size = new Vector2();
+  clearColor = new Color2();
+  rootInverse = new Matrix4();
+  relativeMatrix = new Matrix4();
+  sim;
+  submerged;
+  warmed = false;
+  active = false;
   constructor(sim, submerged) {
-    __publicField(this, "nodes");
-    __publicField(this, "target");
-    __publicField(this, "scene", new Scene());
-    __publicField(this, "activeUniform", uniform4(0));
-    __publicField(this, "structures", []);
-    __publicField(this, "size", new Vector2());
-    __publicField(this, "clearColor", new Color2());
-    __publicField(this, "rootInverse", new Matrix4());
-    __publicField(this, "relativeMatrix", new Matrix4());
-    __publicField(this, "sim");
-    __publicField(this, "submerged");
-    __publicField(this, "warmed", false);
-    __publicField(this, "active", false);
     this.sim = sim;
     this.submerged = submerged;
     const depthTexture = new DepthTexture(1, 1);
@@ -1308,7 +1304,7 @@ var InterfaceStructureLayer = class {
         proxy.matrixWorldNeedsUpdate = true;
         proxy.visible = visible || !this.warmed;
       }
-      active || (active = visible);
+      active ||= visible;
     }
     this.active = active;
     this.activeUniform.value = active ? 1 : 0;
@@ -1432,10 +1428,10 @@ function createFrequencyTexture(n) {
   return tex;
 }
 var PackedIFFT = class {
+  stages = [];
+  /** Where the spatial result lives after horizontal + vertical passes. */
+  output;
   constructor(ping, pong, n) {
-    __publicField(this, "stages", []);
-    /** Where the spatial result lives after horizontal + vertical passes. */
-    __publicField(this, "output");
     const logN = Math.log2(n);
     if (!Number.isInteger(logN) || n > 256) {
       throw new Error(`PackedIFFT requires a power-of-two workgroup size up to 256; received ${n}`);
@@ -1622,19 +1618,19 @@ function createMapTexture(n) {
   return tex;
 }
 var WaveSim = class {
+  patchLengths;
+  /** The sea state these cascades were built from — consumers that need the
+   * wind axis (foam windrows) must read it here, never re-import a default. */
+  sea;
+  /** TSL texture nodes — .value is repointed after each ping-pong swap. */
+  displacementNodes;
+  derivativeNodes;
+  cascades;
+  timeUniform = uniform5(0);
+  dtUniform = uniform5(1 / 60);
+  current = 0;
+  initialized = false;
   constructor(rng, sea = DEFAULT_SEA_STATE) {
-    __publicField(this, "patchLengths");
-    /** The sea state these cascades were built from — consumers that need the
-     * wind axis (foam windrows) must read it here, never re-import a default. */
-    __publicField(this, "sea");
-    /** TSL texture nodes — .value is repointed after each ping-pong swap. */
-    __publicField(this, "displacementNodes");
-    __publicField(this, "derivativeNodes");
-    __publicField(this, "cascades");
-    __publicField(this, "timeUniform", uniform5(0));
-    __publicField(this, "dtUniform", uniform5(1 / 60));
-    __publicField(this, "current", 0);
-    __publicField(this, "initialized", false);
     const { resolution: n, patchLengths, boundaryFactor, choppiness, foamRecovery, amplitude } = OCEAN_PRESET;
     this.patchLengths = patchLengths;
     this.sea = sea;
@@ -1777,15 +1773,15 @@ var WaveSim = class {
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/ocean-system.ts
 var INNER_SIZE = OCEAN_INNER_HALF_SIZE * 2;
 var SubmergedOcean = class {
+  simulation;
+  interfaceStructures;
+  /** Camera-medium authority shared by the surface, medium, and particulates. */
+  submerged;
+  inner;
+  outer;
+  timeUniform = uniform6(0);
+  followStep;
   constructor(scene, rng, options = {}) {
-    __publicField(this, "simulation");
-    __publicField(this, "interfaceStructures");
-    /** Camera-medium authority shared by the surface, medium, and particulates. */
-    __publicField(this, "submerged");
-    __publicField(this, "inner");
-    __publicField(this, "outer");
-    __publicField(this, "timeUniform", uniform6(0));
-    __publicField(this, "followStep");
     const segments = options.segments ?? 384;
     this.followStep = INNER_SIZE / segments;
     this.simulation = new WaveSim(rng);

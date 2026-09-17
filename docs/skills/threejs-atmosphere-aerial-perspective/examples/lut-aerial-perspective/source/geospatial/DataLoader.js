@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/DataLoader.ts
 import {
   ByteType,
@@ -92,10 +88,7 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    constructor() {
-      super(...arguments);
-      __publicField(this, "parseTypedArray", parser);
-    }
+    parseTypedArray = parser;
   };
 }
 
@@ -111,10 +104,7 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  constructor() {
-    super(...arguments);
-    __publicField(this, "parameters", {});
-  }
+  parameters = {};
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -147,15 +137,12 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    constructor() {
-      super(...arguments);
-      __publicField(this, "Texture", Texture);
-      __publicField(this, "TypedArrayLoader", createTypedArrayLoaderClass(parser));
-      __publicField(this, "parameters", {
-        ...defaultDataTextureParameter,
-        ...parameters
-      });
-    }
+    Texture = Texture;
+    TypedArrayLoader = createTypedArrayLoaderClass(parser);
+    parameters = {
+      ...defaultDataTextureParameter,
+      ...parameters
+    };
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {

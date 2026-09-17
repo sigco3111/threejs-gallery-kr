@@ -1,14 +1,10 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/EllipsoidGeometry.ts
 import { BufferAttribute, BufferGeometry, Vector3 } from "https://esm.sh/three@0.185.1?external";
 var EllipsoidGeometry = class extends BufferGeometry {
+  type = "EllipsoidGeometry";
+  parameters;
   constructor(radii = new Vector3(1, 1, 1), longitudeSegments = 32, latitudeSegments = 16) {
     super();
-    __publicField(this, "type", "EllipsoidGeometry");
-    __publicField(this, "parameters");
     this.parameters = {
       radii,
       longitudeSegments,

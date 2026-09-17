@@ -30,7 +30,7 @@ for (const tsPath of tsFiles) {
       entryPoints: [tsPath],
       bundle: true,
       format: "esm",
-      target: "es2020",
+      target: "esnext",
       write: false,
       sourcemap: false,
       // Critical: alias to esm.sh URLs so esbuild pulls packages that share

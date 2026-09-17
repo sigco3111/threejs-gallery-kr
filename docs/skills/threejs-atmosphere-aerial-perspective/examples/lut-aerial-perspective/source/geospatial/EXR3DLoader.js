@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/EXR3DLoader.ts
 import { Data3DTexture, Loader } from "https://esm.sh/three@0.185.1?external";
 
@@ -1366,10 +1362,7 @@ var EXRLoader = class extends DataTextureLoader {
 
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/EXR3DLoader.ts
 var EXR3DLoader = class extends Loader {
-  constructor() {
-    super(...arguments);
-    __publicField(this, "depth");
-  }
+  depth;
   setDepth(value) {
     this.depth = value;
     return this;

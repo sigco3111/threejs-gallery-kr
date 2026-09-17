@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/effects/LensFlareEffect.ts
 import {
   BlendFunction,
@@ -181,6 +177,15 @@ var lensFlareEffectOptionsDefaults = {
   intensity: 5e-3
 };
 var LensFlareEffect = class extends Effect {
+  resolution;
+  renderTarget1;
+  renderTarget2;
+  thresholdMaterial;
+  thresholdPass;
+  blurPass;
+  preBlurPass;
+  featuresMaterial;
+  featuresPass;
   constructor(options) {
     const {
       blendFunction,
@@ -204,18 +209,6 @@ var LensFlareEffect = class extends Effect {
           intensity: new Uniform3(1)
         })
       )
-    });
-    __publicField(this, "resolution");
-    __publicField(this, "renderTarget1");
-    __publicField(this, "renderTarget2");
-    __publicField(this, "thresholdMaterial");
-    __publicField(this, "thresholdPass");
-    __publicField(this, "blurPass");
-    __publicField(this, "preBlurPass");
-    __publicField(this, "featuresMaterial");
-    __publicField(this, "featuresPass");
-    __publicField(this, "onResolutionChange", () => {
-      this.setSize(this.resolution.baseWidth, this.resolution.baseHeight);
     });
     this.renderTarget1 = new WebGLRenderTarget(1, 1, {
       depthBuffer: false,
@@ -249,6 +242,9 @@ var LensFlareEffect = class extends Effect {
     this.resolution.addEventListener("change", this.onResolutionChange);
     this.intensity = intensity;
   }
+  onResolutionChange = () => {
+    this.setSize(this.resolution.baseWidth, this.resolution.baseHeight);
+  };
   initialize(renderer, alpha, frameBufferType) {
     this.thresholdPass.initialize(renderer, alpha, frameBufferType);
     this.blurPass.initialize(renderer, alpha, frameBufferType);

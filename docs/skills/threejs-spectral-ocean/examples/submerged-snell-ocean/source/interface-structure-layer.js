@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/interface-structure-layer.ts
 import {
   BufferGeometry,
@@ -158,20 +154,20 @@ function clipGeometryAboveY(source, minimumY) {
   return result;
 }
 var InterfaceStructureLayer = class {
+  nodes;
+  target;
+  scene = new Scene();
+  activeUniform = uniform2(0);
+  structures = [];
+  size = new Vector2();
+  clearColor = new Color2();
+  rootInverse = new Matrix4();
+  relativeMatrix = new Matrix4();
+  sim;
+  submerged;
+  warmed = false;
+  active = false;
   constructor(sim, submerged) {
-    __publicField(this, "nodes");
-    __publicField(this, "target");
-    __publicField(this, "scene", new Scene());
-    __publicField(this, "activeUniform", uniform2(0));
-    __publicField(this, "structures", []);
-    __publicField(this, "size", new Vector2());
-    __publicField(this, "clearColor", new Color2());
-    __publicField(this, "rootInverse", new Matrix4());
-    __publicField(this, "relativeMatrix", new Matrix4());
-    __publicField(this, "sim");
-    __publicField(this, "submerged");
-    __publicField(this, "warmed", false);
-    __publicField(this, "active", false);
     this.sim = sim;
     this.submerged = submerged;
     const depthTexture = new DepthTexture(1, 1);
@@ -554,7 +550,7 @@ var InterfaceStructureLayer = class {
         proxy.matrixWorldNeedsUpdate = true;
         proxy.visible = visible || !this.warmed;
       }
-      active || (active = visible);
+      active ||= visible;
     }
     this.active = active;
     this.activeUniform.value = active ? 1 : 0;

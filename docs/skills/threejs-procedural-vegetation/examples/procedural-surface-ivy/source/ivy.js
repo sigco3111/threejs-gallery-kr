@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-procedural-vegetation/examples/procedural-surface-ivy/source/ivy.ts
 import * as THREE4 from "https://esm.sh/three@0.185.1?external";
 
@@ -192,19 +188,19 @@ function buildBudBall(quality) {
   return mergeParts(parts);
 }
 function getUmbelGeometry(quality) {
-  if (quality === "high") return highGeo ?? (highGeo = buildUmbel("high"));
-  return lowGeo ?? (lowGeo = buildUmbel("low"));
+  if (quality === "high") return highGeo ??= buildUmbel("high");
+  return lowGeo ??= buildUmbel("low");
 }
 function getBudBallGeometry(quality) {
-  if (quality === "high") return highBudGeo ?? (highBudGeo = buildBudBall("high"));
-  return lowBudGeo ?? (lowBudGeo = buildBudBall("low"));
+  if (quality === "high") return highBudGeo ??= buildBudBall("high");
+  return lowBudGeo ??= buildBudBall("low");
 }
 function getUmbelMaterial(quality) {
   if (quality === "high") {
-    highMat ?? (highMat = new THREE3.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }));
+    highMat ??= new THREE3.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 });
     return highMat;
   }
-  lowMat ?? (lowMat = new THREE3.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0, flatShading: true }));
+  lowMat ??= new THREE3.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0, flatShading: true });
   return lowMat;
 }
 
@@ -306,30 +302,30 @@ function getLowLeafGeometry() {
   return g;
 }
 function getHighLeafMaterial() {
-  highLeafMat ?? (highLeafMat = new THREE4.MeshStandardMaterial({
-    map: leafTexture ?? (leafTexture = createIvyLeafTexture()),
+  highLeafMat ??= new THREE4.MeshStandardMaterial({
+    map: leafTexture ??= createIvyLeafTexture(),
     alphaTest: 0.45,
     side: THREE4.DoubleSide,
     roughness: 0.65,
     metalness: 0
-  }));
+  });
   return highLeafMat;
 }
 function getLowLeafMaterial() {
-  lowLeafMat ?? (lowLeafMat = new THREE4.MeshStandardMaterial({
+  lowLeafMat ??= new THREE4.MeshStandardMaterial({
     side: THREE4.DoubleSide,
     flatShading: true,
     roughness: 0.9,
     metalness: 0
-  }));
+  });
   return lowLeafMat;
 }
 function getHighStemMaterial() {
-  highStemMat ?? (highStemMat = new THREE4.MeshStandardMaterial({ color: 6116920, roughness: 0.85 }));
+  highStemMat ??= new THREE4.MeshStandardMaterial({ color: 6116920, roughness: 0.85 });
   return highStemMat;
 }
 function getLowStemMaterial() {
-  lowStemMat ?? (lowStemMat = new THREE4.MeshStandardMaterial({ color: 6116920, roughness: 0.9, flatShading: true }));
+  lowStemMat ??= new THREE4.MeshStandardMaterial({ color: 6116920, roughness: 0.9, flatShading: true });
   return lowStemMat;
 }
 function buildStemGeometry(stem, radial) {
@@ -387,32 +383,32 @@ var IvyPlant = class {
   constructor(samples, seed, settings, targets) {
     this.settings = settings;
     this.targets = targets;
-    __publicField(this, "group", new THREE4.Group());
-    __publicField(this, "stems", []);
-    __publicField(this, "leaves", []);
-    __publicField(this, "leafMesh", null);
-    __publicField(this, "leafCount", 0);
-    // instances currently revealed
-    __publicField(this, "restApplied", false);
-    // matrices already written for still air + finished growth
-    __publicField(this, "flowers", []);
-    __publicField(this, "flowerMesh", null);
-    // open umbels (bloom > 0)
-    __publicField(this, "budMesh", null);
-    // closed bud-balls (bloom < 1)
-    __publicField(this, "bloomAnim", false);
-    // any bloom spring currently moving
-    __publicField(this, "flowersRested", false);
-    __publicField(this, "progress", 0);
-    __publicField(this, "total", 0);
-    __publicField(this, "done", false);
-    // Hundreds of surface-projection rays run per rebuild — BVH + first-hit keeps them cheap.
-    __publicField(this, "raycaster", firstHitOnly(new THREE4.Raycaster()));
     const rnd = mulberry32(seed);
     const stems = this.generateSkeleton(samples, rnd);
     this.buildMeshes(stems);
     this.group.name = "ivy";
   }
+  group = new THREE4.Group();
+  stems = [];
+  leaves = [];
+  leafMesh = null;
+  leafCount = 0;
+  // instances currently revealed
+  restApplied = false;
+  // matrices already written for still air + finished growth
+  flowers = [];
+  flowerMesh = null;
+  // open umbels (bloom > 0)
+  budMesh = null;
+  // closed bud-balls (bloom < 1)
+  bloomAnim = false;
+  // any bloom spring currently moving
+  flowersRested = false;
+  progress = 0;
+  total = 0;
+  done = false;
+  // Hundreds of surface-projection rays run per rebuild — BVH + first-hit keeps them cheap.
+  raycaster = firstHitOnly(new THREE4.Raycaster());
   get finished() {
     return this.done;
   }

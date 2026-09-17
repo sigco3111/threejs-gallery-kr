@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/wake-foam-map.ts
 import { HalfFloatType, LinearFilter, Vector4 } from "https://esm.sh/three@0.185.1?external";
 import { StorageTexture } from "https://esm.sh/three@0.185.1?external/webgpu";
@@ -33,27 +29,27 @@ var DIFFUSE_RATE = 1.1;
 var BLEED_RATE = 4e-3;
 var QUIET_AFTER = 35;
 var WakeFoamMap = class {
+  /** Stable texture node for the surface material — repointed after swaps. */
+  foamNode;
+  maps;
+  steps;
+  clears;
+  splatShapes = uniformArray(
+    Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 1, 0))
+  );
+  splatPowers = uniformArray(
+    Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 0, 0))
+  );
+  freshKeep = uniform(1);
+  residueKeep = uniform(1);
+  diffuse = uniform(0);
+  bleed = uniform(0);
+  pendingCount = 0;
+  hasPending = false;
+  activeUntil = -Infinity;
+  current = 0;
+  initialized = false;
   constructor() {
-    /** Stable texture node for the surface material — repointed after swaps. */
-    __publicField(this, "foamNode");
-    __publicField(this, "maps");
-    __publicField(this, "steps");
-    __publicField(this, "clears");
-    __publicField(this, "splatShapes", uniformArray(
-      Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 1, 0))
-    ));
-    __publicField(this, "splatPowers", uniformArray(
-      Array.from({ length: MAX_SPLATS }, () => new Vector4(0, 0, 0, 0))
-    ));
-    __publicField(this, "freshKeep", uniform(1));
-    __publicField(this, "residueKeep", uniform(1));
-    __publicField(this, "diffuse", uniform(0));
-    __publicField(this, "bleed", uniform(0));
-    __publicField(this, "pendingCount", 0);
-    __publicField(this, "hasPending", false);
-    __publicField(this, "activeUntil", -Infinity);
-    __publicField(this, "current", 0);
-    __publicField(this, "initialized", false);
     const make = () => {
       const map = new StorageTexture(RESOLUTION, RESOLUTION);
       map.type = HalfFloatType;

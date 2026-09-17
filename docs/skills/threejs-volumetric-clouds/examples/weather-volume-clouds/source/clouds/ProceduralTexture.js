@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/ProceduralTexture.ts
 import {
   Camera,
@@ -18,13 +14,13 @@ import {
   WebGLRenderTarget
 } from "https://esm.sh/three@0.185.1?external";
 var ProceduralTextureBase = class {
+  size;
+  needsRender = true;
+  material;
+  mesh;
+  renderTarget;
+  camera = new Camera();
   constructor({ size, fragmentShader }) {
-    __publicField(this, "size");
-    __publicField(this, "needsRender", true);
-    __publicField(this, "material");
-    __publicField(this, "mesh");
-    __publicField(this, "renderTarget");
-    __publicField(this, "camera", new Camera());
     this.size = size;
     this.material = new RawShaderMaterial({
       glslVersion: GLSL3,

@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/atmosphere/PrecomputedTexturesLoader.ts
 import {
   FloatType as FloatType3,
@@ -1499,10 +1495,7 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    constructor() {
-      super(...arguments);
-      __publicField(this, "parseTypedArray", parser);
-    }
+    parseTypedArray = parser;
   };
 }
 
@@ -1518,10 +1511,7 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter2
 };
 var DataLoader = class extends Loader3 {
-  constructor() {
-    super(...arguments);
-    __publicField(this, "parameters", {});
-  }
+  parameters = {};
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -1554,15 +1544,12 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    constructor() {
-      super(...arguments);
-      __publicField(this, "Texture", Texture);
-      __publicField(this, "TypedArrayLoader", createTypedArrayLoaderClass(parser));
-      __publicField(this, "parameters", {
-        ...defaultDataTextureParameter,
-        ...parameters
-      });
-    }
+    Texture = Texture;
+    TypedArrayLoader = createTypedArrayLoaderClass(parser);
+    parameters = {
+      ...defaultDataTextureParameter,
+      ...parameters
+    };
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {
@@ -1645,9 +1632,14 @@ function projectOnEllipsoidSurface(position, reciprocalRadiiSquared, result = ne
 var vectorScratch1 = /* @__PURE__ */ new Vector33();
 var vectorScratch2 = /* @__PURE__ */ new Vector33();
 var vectorScratch3 = /* @__PURE__ */ new Vector33();
-var _Ellipsoid = class _Ellipsoid {
+var Ellipsoid = class _Ellipsoid {
+  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
+    6378137,
+    6378137,
+    6356752314245179e-9
+  );
+  radii;
   constructor(x, y, z) {
-    __publicField(this, "radii");
     this.radii = new Vector33(x, y, z);
   }
   get minimumRadius() {
@@ -1740,12 +1732,6 @@ var _Ellipsoid = class _Ellipsoid {
     return result.set(q.x / a2, q.y / a2, q.z / b2).normalize();
   }
 };
-__publicField(_Ellipsoid, "WGS84", /* @__PURE__ */ new _Ellipsoid(
-  6378137,
-  6378137,
-  6356752314245179e-9
-));
-var Ellipsoid = _Ellipsoid;
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/EllipsoidGeometry.ts
 import { BufferAttribute as BufferAttribute2, BufferGeometry as BufferGeometry2, Vector3 as Vector34 } from "https://esm.sh/three@0.185.1?external";
@@ -1753,10 +1739,7 @@ import { BufferAttribute as BufferAttribute2, BufferGeometry as BufferGeometry2,
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/EXR3DLoader.ts
 import { Data3DTexture as Data3DTexture2, Loader as Loader4 } from "https://esm.sh/three@0.185.1?external";
 var EXR3DLoader = class extends Loader4 {
-  constructor() {
-    super(...arguments);
-    __publicField(this, "depth");
-  }
+  depth;
   setDepth(value) {
     this.depth = value;
     return this;
@@ -1797,12 +1780,16 @@ var EXR3DLoader = class extends Loader4 {
 import { Vector3 as Vector35 } from "https://esm.sh/three@0.185.1?external";
 var vectorScratch12 = /* @__PURE__ */ new Vector35();
 var vectorScratch22 = /* @__PURE__ */ new Vector35();
-var _Geodetic = class _Geodetic {
+var Geodetic = class _Geodetic {
   constructor(longitude = 0, latitude = 0, height = 0) {
     this.longitude = longitude;
     this.latitude = latitude;
     this.height = height;
   }
+  static MIN_LONGITUDE = -Math.PI;
+  static MAX_LONGITUDE = Math.PI;
+  static MIN_LATITUDE = -Math.PI / 2;
+  static MAX_LATITUDE = Math.PI / 2;
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -1899,23 +1886,24 @@ var _Geodetic = class _Geodetic {
     yield this.height;
   }
 };
-__publicField(_Geodetic, "MIN_LONGITUDE", -Math.PI);
-__publicField(_Geodetic, "MAX_LONGITUDE", Math.PI);
-__publicField(_Geodetic, "MIN_LATITUDE", -Math.PI / 2);
-__publicField(_Geodetic, "MAX_LATITUDE", Math.PI / 2);
-var Geodetic = _Geodetic;
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/PointOfView.ts
 import { Matrix4 as Matrix42, Quaternion, Ray, Vector3 as Vector36 } from "https://esm.sh/three@0.185.1?external";
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/Rectangle.ts
-var _Rectangle = class _Rectangle {
+var Rectangle = class _Rectangle {
   constructor(west = 0, south = 0, east = 0, north = 0) {
     this.west = west;
     this.south = south;
     this.east = east;
     this.north = north;
   }
+  static MAX = /* @__PURE__ */ new _Rectangle(
+    Geodetic.MIN_LONGITUDE,
+    Geodetic.MIN_LATITUDE,
+    Geodetic.MAX_LONGITUDE,
+    Geodetic.MAX_LATITUDE
+  );
   get width() {
     let east = this.east;
     if (east < this.west) {
@@ -1973,13 +1961,6 @@ var _Rectangle = class _Rectangle {
     yield this.north;
   }
 };
-__publicField(_Rectangle, "MAX", /* @__PURE__ */ new _Rectangle(
-  Geodetic.MIN_LONGITUDE,
-  Geodetic.MIN_LATITUDE,
-  Geodetic.MAX_LONGITUDE,
-  Geodetic.MAX_LATITUDE
-));
-var Rectangle = _Rectangle;
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/STBNLoader.ts
 import { NearestFilter, RedFormat as RedFormat2, RepeatWrapping } from "https://esm.sh/three@0.185.1?external";
@@ -2049,11 +2030,8 @@ var DEFAULT_STARS_DATA_URL = `https://media.githubusercontent.com/media/takram-d
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/atmosphere/PrecomputedTexturesLoader.ts
 var PrecomputedTexturesLoader = class extends Loader5 {
-  constructor() {
-    super(...arguments);
-    __publicField(this, "format", "exr");
-    __publicField(this, "type", HalfFloatType3);
-  }
+  format = "exr";
+  type = HalfFloatType3;
   setTypeFromRenderer(renderer) {
     this.type = renderer.getContext().getExtension("OES_texture_float_linear") == null ? HalfFloatType3 : FloatType3;
     return this;

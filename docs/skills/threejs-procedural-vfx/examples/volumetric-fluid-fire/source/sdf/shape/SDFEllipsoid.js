@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/shape/SDFShape.ts
 import { uniformArray } from "https://esm.sh/three@0.185.1?external/tsl";
 var ShapeIndex = 0;
@@ -10,13 +6,13 @@ var SDFShape = class {
   constructor(maxCount, name) {
     this.maxCount = maxCount;
     this.name = name;
-    __publicField(this, "shapeTypeIndex", ++ShapeIndex);
-    __publicField(this, "uDataIndex");
     this.uDataIndex = uniformArray(
       Array.from({ length: maxCount }, () => 0),
       "uint"
     );
   }
+  shapeTypeIndex = ++ShapeIndex;
+  uDataIndex;
   /**
    * creates a collider on the given object. You can override this (but you must call this too super.createColliderOn ) to configure
    * custom uniforms that your implementation may require. This must be called since it provides basic function.

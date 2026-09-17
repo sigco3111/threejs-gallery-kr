@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/random.ts
 function hashLabel(str) {
   let h = 1779033703 ^ str.length;
@@ -14,9 +10,9 @@ function hashLabel(str) {
   return (h ^ h >>> 16) >>> 0;
 }
 var Rng = class _Rng {
+  seed;
+  s;
   constructor(seed) {
-    __publicField(this, "seed");
-    __publicField(this, "s");
     this.seed = seed >>> 0;
     this.s = this.seed === 0 ? 2654435769 : this.seed;
   }

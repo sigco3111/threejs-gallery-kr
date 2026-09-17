@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/DensityProfile.ts
 var DensityProfile = class _DensityProfile {
   constructor(expTerm = 0, exponent = 0, linearTerm = 0, constantTerm = 0) {
@@ -65,19 +61,20 @@ function applyOptions(target, params) {
     }
   }
 }
-var _CloudLayer = class _CloudLayer {
+var CloudLayer = class _CloudLayer {
+  static DEFAULT = /* @__PURE__ */ new _CloudLayer();
+  channel = "r";
+  altitude = 0;
+  height = 0;
+  densityScale = 0.2;
+  shapeAmount = 1;
+  shapeDetailAmount = 1;
+  weatherExponent = 1;
+  shapeAlteringBias = 0.35;
+  coverageFilterWidth = 0.6;
+  densityProfile = new DensityProfile(0, 0, 0.75, 0.25);
+  shadow = false;
   constructor(options) {
-    __publicField(this, "channel", "r");
-    __publicField(this, "altitude", 0);
-    __publicField(this, "height", 0);
-    __publicField(this, "densityScale", 0.2);
-    __publicField(this, "shapeAmount", 1);
-    __publicField(this, "shapeDetailAmount", 1);
-    __publicField(this, "weatherExponent", 1);
-    __publicField(this, "shapeAlteringBias", 0.35);
-    __publicField(this, "coverageFilterWidth", 0.6);
-    __publicField(this, "densityProfile", new DensityProfile(0, 0, 0.75, 0.25));
-    __publicField(this, "shadow", false);
     this.set(options);
   }
   set(options) {
@@ -102,8 +99,6 @@ var _CloudLayer = class _CloudLayer {
     return this;
   }
 };
-__publicField(_CloudLayer, "DEFAULT", /* @__PURE__ */ new _CloudLayer());
-var CloudLayer = _CloudLayer;
 
 // docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/CloudLayers.ts
 var entriesScratch = /* @__PURE__ */ Array.from(
@@ -117,7 +112,45 @@ var intervalsScratch = /* @__PURE__ */ Array.from(
 function compareEntries(a, b) {
   return a.value !== b.value ? a.value - b.value : a.flag - b.flag;
 }
-var _CloudLayers = class _CloudLayers extends Array {
+var CloudLayers = class _CloudLayers extends Array {
+  static DEFAULT = /* @__PURE__ */ new _CloudLayers([
+    {
+      channel: "r",
+      altitude: 750,
+      height: 650,
+      densityScale: 0.2,
+      shapeAmount: 1,
+      shapeDetailAmount: 1,
+      weatherExponent: 1,
+      shapeAlteringBias: 0.35,
+      coverageFilterWidth: 0.6,
+      shadow: true
+    },
+    {
+      channel: "g",
+      altitude: 1e3,
+      height: 1200,
+      densityScale: 0.2,
+      shapeAmount: 1,
+      shapeDetailAmount: 1,
+      weatherExponent: 1,
+      shapeAlteringBias: 0.35,
+      coverageFilterWidth: 0.6,
+      shadow: true
+    },
+    {
+      channel: "b",
+      altitude: 7500,
+      height: 500,
+      densityScale: 3e-3,
+      shapeAmount: 0.4,
+      shapeDetailAmount: 0,
+      weatherExponent: 1,
+      shapeAlteringBias: 0.35,
+      coverageFilterWidth: 0.5
+    },
+    { channel: "a" }
+  ]);
   constructor(options) {
     super(
       new CloudLayer(options?.[0]),
@@ -211,45 +244,6 @@ var _CloudLayers = class _CloudLayers extends Array {
     maxIntervals.z = interval.max;
   }
 };
-__publicField(_CloudLayers, "DEFAULT", /* @__PURE__ */ new _CloudLayers([
-  {
-    channel: "r",
-    altitude: 750,
-    height: 650,
-    densityScale: 0.2,
-    shapeAmount: 1,
-    shapeDetailAmount: 1,
-    weatherExponent: 1,
-    shapeAlteringBias: 0.35,
-    coverageFilterWidth: 0.6,
-    shadow: true
-  },
-  {
-    channel: "g",
-    altitude: 1e3,
-    height: 1200,
-    densityScale: 0.2,
-    shapeAmount: 1,
-    shapeDetailAmount: 1,
-    weatherExponent: 1,
-    shapeAlteringBias: 0.35,
-    coverageFilterWidth: 0.6,
-    shadow: true
-  },
-  {
-    channel: "b",
-    altitude: 7500,
-    height: 500,
-    densityScale: 3e-3,
-    shapeAmount: 0.4,
-    shapeDetailAmount: 0,
-    weatherExponent: 1,
-    shapeAlteringBias: 0.35,
-    coverageFilterWidth: 0.5
-  },
-  { channel: "a" }
-]));
-var CloudLayers = _CloudLayers;
 export {
   CloudLayers
 };

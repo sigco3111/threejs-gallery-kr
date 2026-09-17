@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/atmosphere/getSunLightColor.ts
 import { Color, Vector2 as Vector22, Vector3 as Vector39 } from "https://esm.sh/three@0.185.1?external";
 
@@ -114,10 +110,7 @@ var TypedArrayLoader = class extends Loader2 {
 };
 function createTypedArrayLoaderClass(parser) {
   return class extends TypedArrayLoader {
-    constructor() {
-      super(...arguments);
-      __publicField(this, "parseTypedArray", parser);
-    }
+    parseTypedArray = parser;
   };
 }
 
@@ -133,10 +126,7 @@ var defaultDataTextureParameter = {
   magFilter: LinearFilter
 };
 var DataLoader = class extends Loader3 {
-  constructor() {
-    super(...arguments);
-    __publicField(this, "parameters", {});
-  }
+  parameters = {};
   load(url, onLoad, onProgress, onError) {
     const texture = new this.Texture();
     const loader = new this.TypedArrayLoader(this.manager);
@@ -169,15 +159,12 @@ var DataLoader = class extends Loader3 {
 };
 function createDataLoaderClass(Texture, parser, parameters) {
   return class extends DataLoader {
-    constructor() {
-      super(...arguments);
-      __publicField(this, "Texture", Texture);
-      __publicField(this, "TypedArrayLoader", createTypedArrayLoaderClass(parser));
-      __publicField(this, "parameters", {
-        ...defaultDataTextureParameter,
-        ...parameters
-      });
-    }
+    Texture = Texture;
+    TypedArrayLoader = createTypedArrayLoaderClass(parser);
+    parameters = {
+      ...defaultDataTextureParameter,
+      ...parameters
+    };
   };
 }
 function createData3DTextureLoaderClass(parser, parameters) {
@@ -251,9 +238,14 @@ function projectOnEllipsoidSurface(position, reciprocalRadiiSquared, result = ne
 var vectorScratch1 = /* @__PURE__ */ new Vector33();
 var vectorScratch2 = /* @__PURE__ */ new Vector33();
 var vectorScratch3 = /* @__PURE__ */ new Vector33();
-var _Ellipsoid = class _Ellipsoid {
+var Ellipsoid = class _Ellipsoid {
+  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
+    6378137,
+    6378137,
+    6356752314245179e-9
+  );
+  radii;
   constructor(x, y, z) {
-    __publicField(this, "radii");
     this.radii = new Vector33(x, y, z);
   }
   get minimumRadius() {
@@ -346,12 +338,6 @@ var _Ellipsoid = class _Ellipsoid {
     return result.set(q.x / a2, q.y / a2, q.z / b2).normalize();
   }
 };
-__publicField(_Ellipsoid, "WGS84", /* @__PURE__ */ new _Ellipsoid(
-  6378137,
-  6378137,
-  6356752314245179e-9
-));
-var Ellipsoid = _Ellipsoid;
 
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/EllipsoidGeometry.ts
 import { BufferAttribute as BufferAttribute2, BufferGeometry as BufferGeometry2, Vector3 as Vector34 } from "https://esm.sh/three@0.185.1?external";
@@ -363,12 +349,16 @@ import { Data3DTexture as Data3DTexture2, Loader as Loader4 } from "https://esm.
 import { Vector3 as Vector35 } from "https://esm.sh/three@0.185.1?external";
 var vectorScratch12 = /* @__PURE__ */ new Vector35();
 var vectorScratch22 = /* @__PURE__ */ new Vector35();
-var _Geodetic = class _Geodetic {
+var Geodetic = class _Geodetic {
   constructor(longitude = 0, latitude = 0, height = 0) {
     this.longitude = longitude;
     this.latitude = latitude;
     this.height = height;
   }
+  static MIN_LONGITUDE = -Math.PI;
+  static MAX_LONGITUDE = Math.PI;
+  static MIN_LATITUDE = -Math.PI / 2;
+  static MAX_LATITUDE = Math.PI / 2;
   set(longitude, latitude, height) {
     this.longitude = longitude;
     this.latitude = latitude;
@@ -465,23 +455,24 @@ var _Geodetic = class _Geodetic {
     yield this.height;
   }
 };
-__publicField(_Geodetic, "MIN_LONGITUDE", -Math.PI);
-__publicField(_Geodetic, "MAX_LONGITUDE", Math.PI);
-__publicField(_Geodetic, "MIN_LATITUDE", -Math.PI / 2);
-__publicField(_Geodetic, "MAX_LATITUDE", Math.PI / 2);
-var Geodetic = _Geodetic;
 
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/PointOfView.ts
 import { Matrix4 as Matrix42, Quaternion, Ray, Vector3 as Vector36 } from "https://esm.sh/three@0.185.1?external";
 
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/Rectangle.ts
-var _Rectangle = class _Rectangle {
+var Rectangle = class _Rectangle {
   constructor(west = 0, south = 0, east = 0, north = 0) {
     this.west = west;
     this.south = south;
     this.east = east;
     this.north = north;
   }
+  static MAX = /* @__PURE__ */ new _Rectangle(
+    Geodetic.MIN_LONGITUDE,
+    Geodetic.MIN_LATITUDE,
+    Geodetic.MAX_LONGITUDE,
+    Geodetic.MAX_LATITUDE
+  );
   get width() {
     let east = this.east;
     if (east < this.west) {
@@ -539,13 +530,6 @@ var _Rectangle = class _Rectangle {
     yield this.north;
   }
 };
-__publicField(_Rectangle, "MAX", /* @__PURE__ */ new _Rectangle(
-  Geodetic.MIN_LONGITUDE,
-  Geodetic.MIN_LATITUDE,
-  Geodetic.MAX_LONGITUDE,
-  Geodetic.MAX_LATITUDE
-));
-var Rectangle = _Rectangle;
 
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/STBNLoader.ts
 import { NearestFilter, RedFormat, RepeatWrapping } from "https://esm.sh/three@0.185.1?external";
@@ -602,31 +586,30 @@ function applyOptions(target, params) {
     }
   }
 }
-var _AtmosphereParameters = class _AtmosphereParameters {
+var AtmosphereParameters = class _AtmosphereParameters {
+  static DEFAULT = /* @__PURE__ */ new _AtmosphereParameters();
+  solarIrradiance = new Vector37(1.474, 1.8504, 1.91198);
+  sunAngularRadius = 4675e-6;
+  bottomRadius = 636e4;
+  topRadius = 642e4;
+  rayleighScattering = new Vector37(5802e-6, 0.013558, 0.0331);
+  mieScattering = new Vector37(3996e-6, 3996e-6, 3996e-6);
+  miePhaseFunctionG = 0.8;
+  muSMin = Math.cos(radians(120));
+  // Radiance to luminance conversion
+  // prettier-ignore
+  skyRadianceToLuminance = new Vector37(114974.916437, 71305.954816, 65310.548555);
+  sunRadianceToLuminance = new Vector37(98242.786222, 69954.398112, 66475.012354);
+  luminousEfficiency = new Vector37(0.2126, 0.7152, 0.0722);
+  skyRadianceToRelativeLuminance = new Vector37();
+  sunRadianceToRelativeLuminance = new Vector37();
   constructor(options) {
-    __publicField(this, "solarIrradiance", new Vector37(1.474, 1.8504, 1.91198));
-    __publicField(this, "sunAngularRadius", 4675e-6);
-    __publicField(this, "bottomRadius", 636e4);
-    __publicField(this, "topRadius", 642e4);
-    __publicField(this, "rayleighScattering", new Vector37(5802e-6, 0.013558, 0.0331));
-    __publicField(this, "mieScattering", new Vector37(3996e-6, 3996e-6, 3996e-6));
-    __publicField(this, "miePhaseFunctionG", 0.8);
-    __publicField(this, "muSMin", Math.cos(radians(120)));
-    // Radiance to luminance conversion
-    // prettier-ignore
-    __publicField(this, "skyRadianceToLuminance", new Vector37(114974.916437, 71305.954816, 65310.548555));
-    __publicField(this, "sunRadianceToLuminance", new Vector37(98242.786222, 69954.398112, 66475.012354));
-    __publicField(this, "luminousEfficiency", new Vector37(0.2126, 0.7152, 0.0722));
-    __publicField(this, "skyRadianceToRelativeLuminance", new Vector37());
-    __publicField(this, "sunRadianceToRelativeLuminance", new Vector37());
     applyOptions(this, options);
     const luminance = this.luminousEfficiency.dot(this.skyRadianceToLuminance);
     this.skyRadianceToRelativeLuminance.copy(this.skyRadianceToLuminance).divideScalar(luminance);
     this.sunRadianceToRelativeLuminance.copy(this.sunRadianceToLuminance).divideScalar(luminance);
   }
 };
-__publicField(_AtmosphereParameters, "DEFAULT", /* @__PURE__ */ new _AtmosphereParameters());
-var AtmosphereParameters = _AtmosphereParameters;
 
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/atmosphere/constants.ts
 var SCATTERING_TEXTURE_MU_S_SIZE = 32;

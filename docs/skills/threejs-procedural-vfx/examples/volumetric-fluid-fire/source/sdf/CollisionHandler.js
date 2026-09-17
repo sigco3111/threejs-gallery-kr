@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/sdf/CollisionHandler.ts
 import { Matrix4, Quaternion, Vector3 } from "https://esm.sh/three@0.185.1?external/webgpu";
 import { cross, dot, float, If, Loop, mat4, uint, uniform as uniform2, uniformArray as uniformArray2, vec3 as vec32, vec4, normalize, mix } from "https://esm.sh/three@0.185.1?external/tsl";
@@ -25,13 +21,13 @@ var SDFShape = class {
   constructor(maxCount, name) {
     this.maxCount = maxCount;
     this.name = name;
-    __publicField(this, "shapeTypeIndex", ++ShapeIndex);
-    __publicField(this, "uDataIndex");
     this.uDataIndex = uniformArray(
       Array.from({ length: maxCount }, () => 0),
       "uint"
     );
   }
+  shapeTypeIndex = ++ShapeIndex;
+  uDataIndex;
   /**
    * creates a collider on the given object. You can override this (but you must call this too super.createColliderOn ) to configure
    * custom uniforms that your implementation may require. This must be called since it provides basic function.
@@ -102,33 +98,39 @@ var invertedQ = new Quaternion();
 var UNIFORM_SCALE = new Vector3(1, 1, 1);
 var tempScale = new Vector3();
 var CollisionHandler = class {
+  /**
+   * Uniforms used to store data relative to the colliders such as their position, velocity, inverse matrix, etc...
+   */
+  context;
+  uCollisionMargin;
+  get collisionMargin() {
+    return this.uCollisionMargin.value;
+  }
+  set collisionMargin(v2) {
+    this.uCollisionMargin.value = v2;
+  }
+  // private uBoxes: UniformArrayNode<"uint">; // [ dataIndex]
+  // private uBoxCount: UniformNode<"uint", number>;
+  /**
+   * Base Surface friction coefficient of surfaces
+   */
+  uFriction = uniform2(0.8, "float");
+  /**
+   * Inverse matrices
+   */
+  dataBindings = [];
+  config;
+  obj2Collider = /* @__PURE__ */ new WeakMap();
+  removeCollider = /* @__PURE__ */ new Map();
+  /**
+   * scans all the colliding sdf shapes and returns the distance
+   */
+  mapSDF;
+  bakeTexture;
+  // [ vec3(normal), distance(float) ]
+  bakeVelocityTexture;
   // [ vec3(vx,vy,vz), --- ]
   constructor(config = {}) {
-    /**
-     * Uniforms used to store data relative to the colliders such as their position, velocity, inverse matrix, etc...
-     */
-    __publicField(this, "context");
-    __publicField(this, "uCollisionMargin");
-    // private uBoxes: UniformArrayNode<"uint">; // [ dataIndex]
-    // private uBoxCount: UniformNode<"uint", number>;
-    /**
-     * Base Surface friction coefficient of surfaces
-     */
-    __publicField(this, "uFriction", uniform2(0.8, "float"));
-    /**
-     * Inverse matrices
-     */
-    __publicField(this, "dataBindings", []);
-    __publicField(this, "config");
-    __publicField(this, "obj2Collider", /* @__PURE__ */ new WeakMap());
-    __publicField(this, "removeCollider", /* @__PURE__ */ new Map());
-    /**
-     * scans all the colliding sdf shapes and returns the distance
-     */
-    __publicField(this, "mapSDF");
-    __publicField(this, "bakeTexture");
-    // [ vec3(normal), distance(float) ]
-    __publicField(this, "bakeVelocityTexture");
     const customShapes = config.sdfShapes ?? [];
     delete config.sdfShapes;
     const cfg = {
@@ -260,12 +262,6 @@ var CollisionHandler = class {
       outNormal.assign(closestNormal);
       return minDistance;
     });
-  }
-  get collisionMargin() {
-    return this.uCollisionMargin.value;
-  }
-  set collisionMargin(v2) {
-    this.uCollisionMargin.value = v2;
   }
   /**
    * Use the object as a proxy to control a collider in the simulation.

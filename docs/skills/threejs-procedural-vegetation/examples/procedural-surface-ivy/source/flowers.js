@@ -96,19 +96,19 @@ function buildBudBall(quality) {
   return mergeParts(parts);
 }
 function getUmbelGeometry(quality) {
-  if (quality === "high") return highGeo ?? (highGeo = buildUmbel("high"));
-  return lowGeo ?? (lowGeo = buildUmbel("low"));
+  if (quality === "high") return highGeo ??= buildUmbel("high");
+  return lowGeo ??= buildUmbel("low");
 }
 function getBudBallGeometry(quality) {
-  if (quality === "high") return highBudGeo ?? (highBudGeo = buildBudBall("high"));
-  return lowBudGeo ?? (lowBudGeo = buildBudBall("low"));
+  if (quality === "high") return highBudGeo ??= buildBudBall("high");
+  return lowBudGeo ??= buildBudBall("low");
 }
 function getUmbelMaterial(quality) {
   if (quality === "high") {
-    highMat ?? (highMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 }));
+    highMat ??= new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0 });
     return highMat;
   }
-  lowMat ?? (lowMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0, flatShading: true }));
+  lowMat ??= new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, metalness: 0, flatShading: true });
   return lowMat;
 }
 export {

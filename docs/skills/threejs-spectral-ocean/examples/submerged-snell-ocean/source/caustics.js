@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/caustics.ts
 import {
   AdditiveBlending,
@@ -56,11 +52,11 @@ var CAUSTIC_TILE = 17;
 var GRID = 256;
 var PROJECT_DEPTH = 24;
 var CausticsPass = class {
+  renderTarget;
+  textureNode;
+  scene = new Scene();
+  camera = new OrthographicCamera(-1, 1, 1, -1, 0, 1);
   constructor(sim, resolution) {
-    __publicField(this, "renderTarget");
-    __publicField(this, "textureNode");
-    __publicField(this, "scene", new Scene());
-    __publicField(this, "camera", new OrthographicCamera(-1, 1, 1, -1, 0, 1));
     this.renderTarget = new RenderTarget(resolution, resolution, {
       type: HalfFloatType,
       depthBuffer: false

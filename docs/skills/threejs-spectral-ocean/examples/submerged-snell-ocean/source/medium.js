@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/medium.ts
 import {
   AdditiveBlending as AdditiveBlending2,
@@ -248,16 +244,16 @@ var underwaterDebugModes = /* @__PURE__ */ new Map([
   ["depth", 5]
 ]);
 var UnderwaterMediumPipeline = class {
+  scenePass;
+  /** 0 = open sea, 1 = deep inside an enclosed interior: kills fog glow + rays. */
+  interior = uniform4(0);
+  pipeline;
+  debugMode = uniform4(0);
+  timeUniform = uniform4(0);
+  particulates;
+  scene;
+  causticSampler;
   constructor(renderer, scene, camera, caustics, options = {}) {
-    __publicField(this, "scenePass");
-    /** 0 = open sea, 1 = deep inside an enclosed interior: kills fog glow + rays. */
-    __publicField(this, "interior", uniform4(0));
-    __publicField(this, "pipeline");
-    __publicField(this, "debugMode", uniform4(0));
-    __publicField(this, "timeUniform", uniform4(0));
-    __publicField(this, "particulates");
-    __publicField(this, "scene");
-    __publicField(this, "causticSampler");
     this.scene = scene;
     renderer.toneMapping = NoToneMapping;
     const godraySteps = options.godraySteps ?? 14;

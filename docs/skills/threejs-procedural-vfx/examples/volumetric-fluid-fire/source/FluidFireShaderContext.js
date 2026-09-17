@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/FluidFireShaderContext.ts
 import {
   RedFormat as RedFormat2,
@@ -71,75 +67,75 @@ function makeDataTexture(name, size, config) {
   };
 }
 var FluidFireShaderContext = class {
+  /**
+   * Size of 1 voxel in physical meters
+   */
+  dyeVoxelSizeWorld;
+  // /**
+  //  *  Radius in integer voxel count (CPU calculation)
+  //  */
+  // readonly emitKernelRadius: number;
+  uTime = uniform(0);
+  uCurlNoiseMultiplier = uniform(5);
+  /**
+   * noise force frequency
+   */
+  uTurbFrequency = uniform(4);
+  /**
+   *  turbulence decay rate over age
+   */
+  uTurbulenceDecay = uniform(0.51);
+  /**
+   * noise force strength
+   */
+  uTurbulence = uniform(0.9);
+  /**
+   * smoke dissipation /s (default for 2.5s lifespan)
+   */
+  uDissipation = uniform(0.2);
+  /**
+   * temperature cooling /s (default for 1.0s lifespan)
+   */
+  uCooling = uniform(0.21);
+  uEmitDensity = uniform(20);
+  uEmitTemperature = uniform(15.5);
+  /**
+   * velocity dissipation /s
+   */
+  uVelDamping = uniform(0.25);
+  uVolumeWorldSize;
+  /**
+   * Simulation's delta time
+   */
+  uDt = uniform(0.016);
+  /**
+   * hot air rises
+   */
+  uBuoyancy = uniform(6.1);
+  uVorticityConfinementStrength = uniform(0.1);
+  /**
+   * smoke weight (pulls down)
+   */
+  uWeight = uniform(0.15);
+  noiseTextureConfig;
+  /**
+   * offsets in dye grid units for when a vertex will splat data on dye grid
+   * This is calculated once on CPU before calling the emitObjectsPass to speed up the process
+   *
+   * xyz offset + w fallof factor
+   */
+  uVertexSplatBrushOffsets;
+  uVertexSplatBrushOffsetsCount;
+  uEmitRadiusWorld;
+  /**
+   * to turn world space coord to local space of our bounding box
+   */
+  invWorldMatrix;
+  worldMatrix;
+  grid;
+  texture;
+  collisions;
   constructor(config) {
-    /**
-     * Size of 1 voxel in physical meters
-     */
-    __publicField(this, "dyeVoxelSizeWorld");
-    // /**
-    //  *  Radius in integer voxel count (CPU calculation)
-    //  */
-    // readonly emitKernelRadius: number;
-    __publicField(this, "uTime", uniform(0));
-    __publicField(this, "uCurlNoiseMultiplier", uniform(5));
-    /**
-     * noise force frequency
-     */
-    __publicField(this, "uTurbFrequency", uniform(4));
-    /**
-     *  turbulence decay rate over age
-     */
-    __publicField(this, "uTurbulenceDecay", uniform(0.51));
-    /**
-     * noise force strength
-     */
-    __publicField(this, "uTurbulence", uniform(0.9));
-    /**
-     * smoke dissipation /s (default for 2.5s lifespan)
-     */
-    __publicField(this, "uDissipation", uniform(0.2));
-    /**
-     * temperature cooling /s (default for 1.0s lifespan)
-     */
-    __publicField(this, "uCooling", uniform(0.21));
-    __publicField(this, "uEmitDensity", uniform(20));
-    __publicField(this, "uEmitTemperature", uniform(15.5));
-    /**
-     * velocity dissipation /s
-     */
-    __publicField(this, "uVelDamping", uniform(0.25));
-    __publicField(this, "uVolumeWorldSize");
-    /**
-     * Simulation's delta time
-     */
-    __publicField(this, "uDt", uniform(0.016));
-    /**
-     * hot air rises
-     */
-    __publicField(this, "uBuoyancy", uniform(6.1));
-    __publicField(this, "uVorticityConfinementStrength", uniform(0.1));
-    /**
-     * smoke weight (pulls down)
-     */
-    __publicField(this, "uWeight", uniform(0.15));
-    __publicField(this, "noiseTextureConfig");
-    /**
-     * offsets in dye grid units for when a vertex will splat data on dye grid
-     * This is calculated once on CPU before calling the emitObjectsPass to speed up the process
-     *
-     * xyz offset + w fallof factor
-     */
-    __publicField(this, "uVertexSplatBrushOffsets");
-    __publicField(this, "uVertexSplatBrushOffsetsCount");
-    __publicField(this, "uEmitRadiusWorld");
-    /**
-     * to turn world space coord to local space of our bounding box
-     */
-    __publicField(this, "invWorldMatrix");
-    __publicField(this, "worldMatrix");
-    __publicField(this, "grid");
-    __publicField(this, "texture");
-    __publicField(this, "collisions");
     this.noiseTextureConfig = config.noiseTextureConfig;
     this.collisions = config.collisions;
     this.worldMatrix = uniform(config.world.matrixWorld);

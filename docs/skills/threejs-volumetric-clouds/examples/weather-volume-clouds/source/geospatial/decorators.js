@@ -26,7 +26,7 @@ function define(name) {
         set(value) {
           if (value !== this[propertyKey]) {
             if (value) {
-              this.defines ?? (this.defines = {});
+              this.defines ??= {};
               this.defines[name] = "1";
             } else {
               delete this.defines?.[name];
@@ -71,7 +71,7 @@ function defineInt(name, {
         set(value) {
           const prevValue = this[propertyKey];
           if (value !== prevValue) {
-            this.defines ?? (this.defines = {});
+            this.defines ??= {};
             this.defines[name] = clamp(value, min, max).toFixed(0);
             this.needsUpdate = true;
           }
@@ -111,7 +111,7 @@ function defineFloat(name, {
         set(value) {
           const prevValue = this[propertyKey];
           if (value !== prevValue) {
-            this.defines ?? (this.defines = {});
+            this.defines ??= {};
             this.defines[name] = clamp(value, min, max).toFixed(precision);
             this.needsUpdate = true;
           }
@@ -149,7 +149,7 @@ function defineExpression(name, { validate } = {}) {
               console.error(`Expression validation failed: ${value}`);
               return;
             }
-            this.defines ?? (this.defines = {});
+            this.defines ??= {};
             this.defines[name] = value;
             this.needsUpdate = true;
           }

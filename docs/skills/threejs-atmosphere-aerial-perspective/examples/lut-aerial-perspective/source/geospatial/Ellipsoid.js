@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/Ellipsoid.ts
 import { Matrix4, Vector3 as Vector32 } from "https://esm.sh/three@0.185.1?external";
 
@@ -60,9 +56,14 @@ function projectOnEllipsoidSurface(position, reciprocalRadiiSquared, result = ne
 var vectorScratch1 = /* @__PURE__ */ new Vector32();
 var vectorScratch2 = /* @__PURE__ */ new Vector32();
 var vectorScratch3 = /* @__PURE__ */ new Vector32();
-var _Ellipsoid = class _Ellipsoid {
+var Ellipsoid = class _Ellipsoid {
+  static WGS84 = /* @__PURE__ */ new _Ellipsoid(
+    6378137,
+    6378137,
+    6356752314245179e-9
+  );
+  radii;
   constructor(x, y, z) {
-    __publicField(this, "radii");
     this.radii = new Vector32(x, y, z);
   }
   get minimumRadius() {
@@ -155,12 +156,6 @@ var _Ellipsoid = class _Ellipsoid {
     return result.set(q.x / a2, q.y / a2, q.z / b2).normalize();
   }
 };
-__publicField(_Ellipsoid, "WGS84", /* @__PURE__ */ new _Ellipsoid(
-  6378137,
-  6378137,
-  6356752314245179e-9
-));
-var Ellipsoid = _Ellipsoid;
 export {
   Ellipsoid
 };

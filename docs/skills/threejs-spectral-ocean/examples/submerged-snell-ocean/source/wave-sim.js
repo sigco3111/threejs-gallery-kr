@@ -1,7 +1,3 @@
-var __defProp = Object.defineProperty;
-var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
-var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/wave-sim.ts
 import { HalfFloatType, LinearFilter, RepeatWrapping } from "https://esm.sh/three@0.185.1?external";
 import { StorageTexture as StorageTexture2 } from "https://esm.sh/three@0.185.1?external/webgpu";
@@ -53,10 +49,10 @@ function createFrequencyTexture(n) {
   return tex;
 }
 var PackedIFFT = class {
+  stages = [];
+  /** Where the spatial result lives after horizontal + vertical passes. */
+  output;
   constructor(ping, pong, n) {
-    __publicField(this, "stages", []);
-    /** Where the spatial result lives after horizontal + vertical passes. */
-    __publicField(this, "output");
     const logN = Math.log2(n);
     if (!Number.isInteger(logN) || n > 256) {
       throw new Error(`PackedIFFT requires a power-of-two workgroup size up to 256; received ${n}`);
@@ -243,19 +239,19 @@ function createMapTexture(n) {
   return tex;
 }
 var WaveSim = class {
+  patchLengths;
+  /** The sea state these cascades were built from — consumers that need the
+   * wind axis (foam windrows) must read it here, never re-import a default. */
+  sea;
+  /** TSL texture nodes — .value is repointed after each ping-pong swap. */
+  displacementNodes;
+  derivativeNodes;
+  cascades;
+  timeUniform = uniform(0);
+  dtUniform = uniform(1 / 60);
+  current = 0;
+  initialized = false;
   constructor(rng, sea = DEFAULT_SEA_STATE) {
-    __publicField(this, "patchLengths");
-    /** The sea state these cascades were built from — consumers that need the
-     * wind axis (foam windrows) must read it here, never re-import a default. */
-    __publicField(this, "sea");
-    /** TSL texture nodes — .value is repointed after each ping-pong swap. */
-    __publicField(this, "displacementNodes");
-    __publicField(this, "derivativeNodes");
-    __publicField(this, "cascades");
-    __publicField(this, "timeUniform", uniform(0));
-    __publicField(this, "dtUniform", uniform(1 / 60));
-    __publicField(this, "current", 0);
-    __publicField(this, "initialized", false);
     const { resolution: n, patchLengths, boundaryFactor, choppiness, foamRecovery, amplitude } = OCEAN_PRESET;
     this.patchLengths = patchLengths;
     this.sea = sea;
