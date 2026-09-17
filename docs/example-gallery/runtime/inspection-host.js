@@ -11,9 +11,13 @@ if (!modulePath?.startsWith("/examples/")) {
 
 // GitHub Pages lives under /<repo>/ — modulePath comes in as absolute /examples/...
 // but the browser resolves it against window.location.origin (no repo prefix).
-// Prepend the current directory's prefix so /examples/... hits the real path under /<repo>/.
-const basePrefix = window.location.pathname.replace(/\/[^/]*$/, "");
-const resolvedModulePath = basePrefix + modulePath;
+// Detect the repo prefix (everything before /example-gallery/ in the current path)
+// and prepend it so /examples/... hits the real path under /<repo>/.
+const repoPrefix = (() => {
+  const m = window.location.pathname.match(/^(\/[^/]+)?\/example-gallery\//);
+  return m ? (m[1] || "") : "";
+})();
+const resolvedModulePath = repoPrefix + modulePath;
 
 const adapterModule = await import(resolvedModulePath);
 const adapter = adapterModule.default;
