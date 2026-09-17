@@ -24,7 +24,6 @@ function makeStroke() {
 }
 
 export default {
-  backend: "webgpu",
   renderer: { options: { antialias: true }, exposure: 1 },
   camera: { fov: 45, near: 0.1, far: 30, position: [2.05, 1.15, 3.35] },
   controls: {
