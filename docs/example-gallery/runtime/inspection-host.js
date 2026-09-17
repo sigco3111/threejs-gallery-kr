@@ -8,7 +8,6 @@
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { exampleRuntime } from "./example-runtime.js";
-import { TextureLoader } from "three/addons/loaders/TextureLoader.js";
 import { CubeTextureLoader } from "three/addons/loaders/CubeTextureLoader.js";
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { EXRLoader } from "three/addons/loaders/EXRLoader.js";
@@ -54,11 +53,11 @@ const rawWebGpu = adapter.backend === "raw-webgpu";
 const THREE = adapter.backend === "webgpu"
   ? await import("three/webgpu")
   : await import("three");
-wrapLoaderLoad(TextureLoader);
 wrapLoaderLoad(CubeTextureLoader);
 wrapLoaderLoad(RGBELoader);
 wrapLoaderLoad(EXRLoader);
 wrapLoaderLoad(GLTFLoader);
+wrapLoaderLoad(THREE.TextureLoader);
 const canvas = document.querySelector("canvas");
 const rendererOptions = {
   canvas,
