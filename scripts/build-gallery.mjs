@@ -304,6 +304,9 @@ async function main() {
   await writeFile(path.join(DST, "example-gallery", "runtime", "index.html"), runtimeHtml);
 
   // 5. Patch inspection-host.js module path check + base-aware resolution for GitHub Pages
+  // NOTE: This must stay in sync with the REPO_PREFIX-hardcoded runtime patch
+  // below (fetch shim + wrapLoaderLoad + resolvedModulePath). That runtime is
+  // the production Pages code — any change here must be validated against it.
   const ihPath = path.join(DST, "example-gallery", "runtime", "inspection-host.js");
   let ih = await readFile(ihPath, "utf8");
   ih = ih.replace(
@@ -340,18 +343,21 @@ async function main() {
         '// dynamic import resolves against window.location.origin (not <base>),',
         '// so we must prepend the repo prefix manually using document.baseURI',
         '// (which respects the injected <base> tag).',
-        'const resolvedModulePath = new URL(modulePath, document.baseURI).href;',
+        '// NOTE: modulePath starts with "/" — new URL() would discard the base,',
+        '// so use string concatenation to preserve the repo prefix.',
+        'const repoPrefix = window.__repoPrefix || "";',
+        'const resolvedModulePath = window.location.origin + repoPrefix + modulePath;',
         'const adapterModule = await import(resolvedModulePath);',
         'const adapter = adapterModule.default;',
-      ].join("\\n")
+      ].join("\n")
     );
   ih = ih.replace(
     'moduleUrl: new URL(modulePath, window.location.origin),',
-    'moduleUrl: new URL(modulePath, window.location.href),'
+    'moduleUrl: new URL(resolvedModulePath),'
   );
   ih = ih.replace(
     'return new URL(relativePath, new URL(modulePath, window.location.origin))\n      .href;',
-    'return new URL(relativePath, new URL(modulePath, window.location.href))\n      .href;'
+    'return new URL(relativePath, resolvedModulePath)\n      .href;'
   );
   await writeFile(ihPath, ih);
 

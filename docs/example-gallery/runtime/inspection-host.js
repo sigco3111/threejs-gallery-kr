@@ -29,6 +29,10 @@ function wrapLoaderLoad(LoaderCtor) {
         // Absolute path — prepend repo prefix by string concatenation
         // (new URL() ignores the base when the spec is an absolute path).
         redirected = window.location.origin + REPO_PREFIX + url;
+      } else if (url.startsWith(window.location.origin + "/") && !url.startsWith(window.location.origin + REPO_PREFIX + "/")) {
+        // Fully-qualified URL missing the repo prefix (e.g. resolveAsset()
+        // built on a prefix-less base) — splice the prefix back in.
+        redirected = window.location.origin + REPO_PREFIX + url.slice(window.location.origin.length);
       } else if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) {
         // Already absolute URL or data URI — leave as-is.
       } else {
@@ -51,7 +55,9 @@ if (!modulePath?.startsWith("/examples/")) {
 
 // dynamic import resolves against window.location.origin (not <base>),
 // so we must prepend the repo prefix manually.
-const resolvedModulePath = new URL(modulePath, window.location.origin + REPO_PREFIX + "/").href;
+// NOTE: modulePath starts with "/" — new URL() would discard the base,
+// so use string concatenation to preserve the repo prefix.
+const resolvedModulePath = window.location.origin + REPO_PREFIX + modulePath;
 const adapterModule = await import(resolvedModulePath);
 const adapter = adapterModule.default;
 
@@ -158,7 +164,7 @@ const context = {
   camera,
   controls,
   runtime: exampleRuntime,
-  moduleUrl: new URL(resolvedModulePath, window.location.origin + "/"),
+  moduleUrl: new URL(resolvedModulePath),
   resolveAsset(relativePath) {
     // resolvedModulePath is the fully-qualified URL the adapter module was
     // loaded from — use it as the base so relative paths like "assets/foo.hdr"
