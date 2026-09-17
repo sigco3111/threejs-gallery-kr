@@ -24,9 +24,10 @@ if (!modulePath?.startsWith("/examples/")) {
   throw new Error("Inspection runtime requires a dev example module.");
 }
 
-// dynamic import also resolves against window.location.origin (not <base>),
-// so we must prepend the repo prefix manually.
-const resolvedModulePath = (window.__repoPrefix || "") + modulePath;
+// dynamic import resolves against window.location.origin (not <base>),
+// so we must prepend the repo prefix manually using document.baseURI
+// (which respects the injected <base> tag).
+const resolvedModulePath = new URL(modulePath, document.baseURI).href;
 const adapterModule = await import(resolvedModulePath);
 const adapter = adapterModule.default;
 
@@ -128,9 +129,9 @@ const context = {
   camera,
   controls,
   runtime: exampleRuntime,
-  moduleUrl: new URL(modulePath, window.location.href),
+  moduleUrl: new URL(modulePath, document.baseURI),
   resolveAsset(relativePath) {
-    return new URL(relativePath, new URL(modulePath, window.location.href))
+    return new URL(relativePath, new URL(modulePath, document.baseURI))
       .href;
   },
 };

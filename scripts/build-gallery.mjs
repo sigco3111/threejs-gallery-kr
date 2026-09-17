@@ -335,15 +335,16 @@ async function main() {
     ].join("\n")
   );
   ih = ih.replace(
-    'const adapterModule = await import(modulePath);\nconst adapter = adapterModule.default;',
-    [
-      '// dynamic import resolves against window.location.origin (not <base>),',
-      '// so we must prepend the repo prefix manually.',
-      'const resolvedModulePath = (window.__repoPrefix || "") + modulePath;',
-      'const adapterModule = await import(resolvedModulePath);',
-      'const adapter = adapterModule.default;',
-    ].join("\n")
-  );
+      'const adapterModule = await import(modulePath);\nconst adapter = adapterModule.default;',
+      [
+        '// dynamic import resolves against window.location.origin (not <base>),',
+        '// so we must prepend the repo prefix manually using document.baseURI',
+        '// (which respects the injected <base> tag).',
+        'const resolvedModulePath = new URL(modulePath, document.baseURI).href;',
+        'const adapterModule = await import(resolvedModulePath);',
+        'const adapter = adapterModule.default;',
+      ].join("\\n")
+    );
   ih = ih.replace(
     'moduleUrl: new URL(modulePath, window.location.origin),',
     'moduleUrl: new URL(modulePath, window.location.href),'
