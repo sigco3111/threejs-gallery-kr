@@ -5,6 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
     <title>Three.js Example Inspection</title>
+    <!-- Pre-module fetch shim: redirect absolute-path fetches through
+         document.baseURI so scene-internal fetch("/skills/foo.webp") and
+         dynamic imports resolve under the GitHub Pages repo path.
+         Must run before any module code. -->
+    <script>
+      (function () {
+        // Inject <base> as early as possible so importmap prefix mappings
+        // (declared just below) see the repo prefix.
+        var m = window.location.pathname.match(/^(\/[^/]+)?\/example-gallery\//);
+        if (m && m[1]) {
+          var base = document.createElement("base");
+          base.href = m[1] + "/";
+          document.head.prepend(base);
+        }
+
+        var originalFetch = window.fetch.bind(window);
+        function redirect(input) {
+          if (typeof input === "string" && input.charAt(0) === "/") {
+            return new URL(input, document.baseURI).href;
+          }
+          if (input instanceof Request && input.url.charAt(0) === "/") {
+            return new Request(
+              new URL(input.url, document.baseURI).href,
+              input
+            );
+          }
+          return input;
+        }
+        window.fetch = function (input, init) {
+          return originalFetch(redirect(input), init);
+        };
+
+        // Also patch XMLHttpRequest — some loaders (e.g. older patterns)
+        // still use XHR for asset loading.
+        var OriginalXHR = window.XMLHttpRequest;
+        function PatchedXHR() {
+          var xhr = new OriginalXHR();
+          var origOpen = xhr.open;
+          xhr.open = function (method, url) {
+            if (typeof url === "string" && url.charAt(0) === "/") {
+              arguments[1] = new URL(url, document.baseURI).href;
+            }
+            return origOpen.apply(xhr, arguments);
+          };
+          return xhr;
+        }
+        PatchedXHR.prototype = OriginalXHR.prototype;
+        window.XMLHttpRequest = PatchedXHR;
+      })();
+    </script>
     <style>
       * { box-sizing: border-box; }
       html, body, canvas { width: 100%; height: 100%; margin: 0; display: block; }

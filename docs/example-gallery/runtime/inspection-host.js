@@ -1,36 +1,13 @@
-// GitHub Pages lives under /<repo>/ — every absolute path import in the
-// downstream example code (e.g. "/skills/...", "/example-gallery/...") needs
-// the repo prefix prepended. We do two things:
-//   1. Inject a <base> tag — handles static module imports via importmap prefix
-//      mappings already declared in the page HTML.
-//   2. Wrap global fetch() to redirect any "/absolute/path" request through
-//      document.baseURI so scene-internal fetch("/skills/foo.webp") resolves
-//      under the repo path.
-{
-  const m = window.location.pathname.match(/^(\/[^/]+)?\/example-gallery\//);
-  const repoPrefix = m ? (m[1] || "") : "";
-  if (repoPrefix) {
-    const base = document.createElement("base");
-    base.href = repoPrefix + "/";
-    document.head.prepend(base);
-  }
-}
+// GitHub Pages lives under /<repo>/ — see the inline shim at the top of
+// runtime/index.html. It runs *before* any module code and:
+//   - prepends <base href="/<repo>/"> so importmap prefix mappings (declared
+//     just below) see the repo prefix.
+//   - wraps global fetch() + XMLHttpRequest.open() to redirect absolute-path
+//     URLs through document.baseURI.
+// Nothing to do here for those; just consume document.baseURI below.
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { exampleRuntime } from "./example-runtime.js";
-
-// Patch global fetch to redirect "/absolute" requests through document.baseURI.
-const originalFetch = window.fetch.bind(window);
-window.fetch = function patchedFetch(input, init) {
-  if (typeof input === "string" && input.startsWith("/")) {
-    input = new URL(input, document.baseURI).href;
-  } else if (input instanceof Request && input.url.startsWith("/")) {
-    input = new Request(new URL(input.url, document.baseURI).href, input);
-  } else if (input instanceof URL && input.pathname.startsWith("/")) {
-    input = new URL(input.href.replace(input.origin + input.pathname, new URL(input.pathname, document.baseURI).href));
-  }
-  return originalFetch(input, init);
-};
 
 // THREE.TextureLoader / RGBELoader / GLTFLoader / EXRLoader / CubeTextureLoader
 // can call fetch via three.js's image-loading pipeline. Wrapping their .load()
