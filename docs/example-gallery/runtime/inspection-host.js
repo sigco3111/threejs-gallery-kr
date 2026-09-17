@@ -1,24 +1,27 @@
 // GitHub Pages lives under /<repo>/ — see the inline shim at the top of
-// runtime/index.html. It runs *before* any module code and:
-//   - prepends <base href="/<repo>/"> so importmap prefix mappings (declared
-//     just below) see the repo prefix.
-//   - wraps global fetch() + XMLHttpRequest.open() to redirect absolute-path
-//     URLs through document.baseURI.
-// Nothing to do here for those; just consume document.baseURI below.
+// runtime/index.html. It runs *before* any module code and wraps global
+// fetch() + XMLHttpRequest.open() to redirect absolute-path URLs through
+// the repo prefix (hardcoded because we can't use <base> — that would also
+// rewrite our own relative <script src>).
+// Here we only need to handle the dynamic import of scene.js: prepend the
+// repo prefix manually.
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { exampleRuntime } from "./example-runtime.js";
 
+const REPO_PREFIX = "/threejs-gallery-kr";
+
 // THREE.TextureLoader / RGBELoader / GLTFLoader / EXRLoader / CubeTextureLoader
 // can call fetch via three.js's image-loading pipeline. Wrapping their .load()
-// (called once THREE is imported, further down) ensures absolute-path asset
-// URLs like "/skills/foo/bar.webp" resolve under document.baseURI.
+// ensures absolute-path asset URLs like "/skills/foo/bar.webp" resolve under
+// the repo path. (fetch wrapper in runtime/index.html already handles most,
+// but some loaders cache the URL before our wrapper runs.)
 function wrapLoaderLoad(LoaderCtor) {
   if (!LoaderCtor || !LoaderCtor.prototype?.load) return;
   const originalLoad = LoaderCtor.prototype.load;
   LoaderCtor.prototype.load = function patchedLoad(url, ...rest) {
     const redirected = typeof url === "string" && url.startsWith("/")
-      ? new URL(url, document.baseURI).href
+      ? new URL(url, window.location.origin + REPO_PREFIX + "/").href
       : url;
     return originalLoad.call(this, redirected, ...rest);
   };
@@ -33,9 +36,8 @@ if (!modulePath?.startsWith("/examples/")) {
 }
 
 // dynamic import resolves against window.location.origin (not <base>),
-// so we must prepend the repo prefix manually using document.baseURI
-// (which respects the injected <base> tag).
-const resolvedModulePath = new URL(modulePath, document.baseURI).href;
+// so we must prepend the repo prefix manually.
+const resolvedModulePath = new URL(modulePath, window.location.origin + REPO_PREFIX + "/").href;
 const adapterModule = await import(resolvedModulePath);
 const adapter = adapterModule.default;
 
@@ -142,9 +144,9 @@ const context = {
   camera,
   controls,
   runtime: exampleRuntime,
-  moduleUrl: new URL(modulePath, document.baseURI),
+  moduleUrl: new URL(modulePath, window.location.origin + REPO_PREFIX + "/"),
   resolveAsset(relativePath) {
-    return new URL(relativePath, new URL(modulePath, document.baseURI))
+    return new URL(relativePath, new URL(modulePath, window.location.origin + REPO_PREFIX + "/"))
       .href;
   },
 };

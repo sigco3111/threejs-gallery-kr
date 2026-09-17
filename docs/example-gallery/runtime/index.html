@@ -8,26 +8,23 @@
     <!-- Pre-module fetch shim: redirect absolute-path fetches through
          document.baseURI so scene-internal fetch("/skills/foo.webp") and
          dynamic imports resolve under the GitHub Pages repo path.
-         Must run before any module code. -->
+         Must run before any module code.
+         We do NOT inject <base> here — it would also rewrite our own
+         relative <script src="./inspection-host.js"> to a wrong path.
+         <base> is added later by inspection-host.js (after dynamic-import
+         resolution has succeeded), and the importmap prefix mappings
+         declared just below use relative paths so they resolve correctly
+         without <base>. -->
     <script>
       (function () {
-        // Inject <base> as early as possible so importmap prefix mappings
-        // (declared just below) see the repo prefix.
-        var m = window.location.pathname.match(/^(\/[^/]+)?\/example-gallery\//);
-        if (m && m[1]) {
-          var base = document.createElement("base");
-          base.href = m[1] + "/";
-          document.head.prepend(base);
-        }
-
         var originalFetch = window.fetch.bind(window);
         function redirect(input) {
           if (typeof input === "string" && input.charAt(0) === "/") {
-            return new URL(input, document.baseURI).href;
+            return new URL(input, window.location.origin + "/threejs-gallery-kr/").href;
           }
           if (input instanceof Request && input.url.charAt(0) === "/") {
             return new Request(
-              new URL(input.url, document.baseURI).href,
+              new URL(input.url, window.location.origin + "/threejs-gallery-kr/").href,
               input
             );
           }
@@ -45,7 +42,7 @@
           var origOpen = xhr.open;
           xhr.open = function (method, url) {
             if (typeof url === "string" && url.charAt(0) === "/") {
-              arguments[1] = new URL(url, document.baseURI).href;
+              arguments[1] = new URL(url, window.location.origin + "/threejs-gallery-kr/").href;
             }
             return origOpen.apply(xhr, arguments);
           };
