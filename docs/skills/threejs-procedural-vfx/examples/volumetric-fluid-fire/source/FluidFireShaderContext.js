@@ -17,10 +17,10 @@ import {
   uniformArray,
   uvec3,
   vec3
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/util/createStorage3D.ts
-import * as THREE from "https://esm.sh/three@0.185.1?external/webgpu";
+import * as THREE from "https://esm.sh/three@0.185.1/webgpu?external=three";
 function createStorage3D(name, sizeX, sizeY, sizeZ, format = THREE.RGBAFormat, dataType = THREE.HalfFloatType) {
   const texture = new THREE.Storage3DTexture(sizeX, sizeY, sizeZ);
   texture.name = name;
@@ -36,7 +36,7 @@ function createStorage3D(name, sizeX, sizeY, sizeZ, format = THREE.RGBAFormat, d
 }
 
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/FluidFireShaderContext.ts
-import { snoise } from "https://esm.sh/three@0.185.1?external/addons/tsl/math/curlNoise.js";
+import { snoise } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/math/curlNoise.js?external=three";
 var gridCoordToUVW = (coord, grid) => vec3(coord).add(0.5).div(vec3(grid.x, grid.y, grid.z));
 function makeDataTexture(name, size, config) {
   const texture = createStorage3D(name, size.x, size.y, size.z, config?.format, config?.dataType);

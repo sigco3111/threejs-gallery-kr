@@ -11,7 +11,7 @@ import {
   RepeatWrapping,
   Scene
 } from "https://esm.sh/three@0.185.1?external";
-import { MeshBasicNodeMaterial } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { MeshBasicNodeMaterial } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn,
   dFdx,
@@ -31,11 +31,11 @@ import {
   vec2,
   vec3,
   vec4
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sun.ts
 import { Color, Vector3 } from "https://esm.sh/three@0.185.1?external";
-import { uniform } from "https://esm.sh/three@0.185.1?external/tsl";
+import { uniform } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var SUN_ELEVATION = 42 * Math.PI / 180;
 var SUN_AZIMUTH = 215 * Math.PI / 180;
 var sunDirection = new Vector3(

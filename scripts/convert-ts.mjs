@@ -82,6 +82,27 @@ for (const tsPath of tsFiles) {
             });
           },
         },
+        // Map "three/*" subpath imports (three/addons/..., three/tsl,
+        // three/webgpu) to esm.sh URLs. The "three" alias above only
+        // matches the bare specifier — without this, esbuild appends
+        // the subpath to the alias target and emits broken URLs like
+        // "https://esm.sh/three@0.185.1?external/addons/..." which
+        // serve the core module (missing addons exports → SyntaxError).
+        {
+          name: "three-subpaths",
+          setup(build) {
+            build.onResolve({ filter: /^three\/(.+)$/ }, (args) => {
+              const sub = args.path.slice("three/".length);
+              const mapped = sub.startsWith("addons/")
+                ? "examples/jsm/" + sub.slice("addons/".length)
+                : sub;
+              return {
+                path: `https://esm.sh/three@0.185.1/${mapped}?external=three`,
+                external: true,
+              };
+            });
+          },
+        },
       ],
     });
     const jsPath = tsPath.replace(/\.ts$/, ".js");

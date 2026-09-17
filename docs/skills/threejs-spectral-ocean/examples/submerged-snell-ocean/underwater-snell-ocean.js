@@ -11,7 +11,7 @@ import {
   RepeatWrapping,
   Scene
 } from "https://esm.sh/three@0.185.1?external";
-import { MeshBasicNodeMaterial } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { MeshBasicNodeMaterial } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn,
   dFdx,
@@ -31,11 +31,11 @@ import {
   vec2,
   vec3,
   vec4
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sun.ts
 import { Color, Vector3 } from "https://esm.sh/three@0.185.1?external";
-import { uniform } from "https://esm.sh/three@0.185.1?external/tsl";
+import { uniform } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var SUN_ELEVATION = 42 * Math.PI / 180;
 var SUN_AZIMUTH = 215 * Math.PI / 180;
 var sunDirection = new Vector3(
@@ -142,7 +142,7 @@ function causticWorldSample(causticsNode, options = {}) {
 }
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/current.ts
-import { Fn as Fn2, cos, sin, vec3 as vec32 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { Fn as Fn2, cos, sin, vec3 as vec32 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var currentFlow = /* @__PURE__ */ Fn2(([p, t]) => {
   const x = p.x.mul(0.05);
   const z = p.z.mul(0.05);
@@ -166,7 +166,7 @@ function currentFlowCpu(px, pz, t) {
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/fft-compute.ts
 import { DataTexture, FloatType, NearestFilter, RGBAFormat } from "https://esm.sh/three@0.185.1?external";
-import { StorageBufferAttribute, StorageTexture } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { StorageBufferAttribute, StorageTexture } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn as Fn3,
   float as float2,
@@ -185,7 +185,7 @@ import {
   workgroupArray,
   workgroupBarrier,
   workgroupId
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 function createFrequencyTexture(n) {
   const tex = new StorageTexture(n, n);
   tex.type = FloatType;
@@ -315,7 +315,7 @@ import {
   RGBAFormat as RGBAFormat2,
   UnsignedByteType
 } from "https://esm.sh/three@0.185.1?external";
-import { lut3D } from "https://esm.sh/three@0.185.1?external/addons/tsl/display/Lut3DNode.js";
+import { lut3D } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/display/Lut3DNode.js?external=three";
 import {
   clamp,
   float as float3,
@@ -324,7 +324,7 @@ import {
   texture3D,
   uniform as uniform3,
   vec4 as vec43
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 var asColor = (node) => node;
 var LUT_SIZE = 32;
 var gradeParams = {
@@ -411,7 +411,7 @@ import {
   Sphere,
   Vector2
 } from "https://esm.sh/three@0.185.1?external";
-import { MeshStandardNodeMaterial } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { MeshStandardNodeMaterial } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   cameraPosition,
   cameraProjectionMatrix,
@@ -434,9 +434,9 @@ import {
   vec2 as vec23,
   vec3 as vec33,
   vec4 as vec44
-} from "https://esm.sh/three@0.185.1?external/tsl";
-import { mergeGeometries } from "https://esm.sh/three@0.185.1?external/addons/utils/BufferGeometryUtils.js";
-import { TessellateModifier } from "https://esm.sh/three@0.185.1?external/addons/modifiers/TessellateModifier.js";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { mergeGeometries } from "https://esm.sh/three@0.185.1/examples/jsm/utils/BufferGeometryUtils.js?external=three";
+import { TessellateModifier } from "https://esm.sh/three@0.185.1/examples/jsm/modifiers/TessellateModifier.js?external=three";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/optical-constants.ts
 var AIR_IOR = 1;
@@ -1012,7 +1012,7 @@ import {
 import {
   MeshBasicNodeMaterial as MeshBasicNodeMaterial2,
   RenderPipeline
-} from "https://esm.sh/three@0.185.1?external/webgpu";
+} from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn as Fn5,
   If as If2,
@@ -1043,8 +1043,8 @@ import {
   vec2 as vec24,
   vec3 as vec34,
   vec4 as vec45
-} from "https://esm.sh/three@0.185.1?external/tsl";
-import { bloom } from "https://esm.sh/three@0.185.1?external/addons/tsl/display/BloomNode.js";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { bloom } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/display/BloomNode.js?external=three";
 var SIGMA = vec34(...AQUATIC_EXTINCTION);
 var AMBIENT_DOWN = vec34(...AQUATIC_AMBIENT_DOWN);
 var AMBIENT_UP = vec34(...AQUATIC_AMBIENT_UP);
@@ -1217,7 +1217,7 @@ var UnderwaterMediumPipeline = class {
 };
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/noise.ts
-import { Fn as Fn6, Loop as Loop2, float as float6, fract as fract2, dot as dot2, floor, mix as mix4, sin as sin3, vec2 as vec25, vec3 as vec35 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { Fn as Fn6, Loop as Loop2, float as float6, fract as fract2, dot as dot2, floor, mix as mix4, sin as sin3, vec2 as vec25, vec3 as vec35 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var hash21 = /* @__PURE__ */ Fn6(([p]) => {
   const p3 = fract2(vec35(p.x, p.y, p.x).mul(0.1031)).toVar();
   p3.addAssign(dot2(p3, vec35(p3.y, p3.z, p3.x).add(33.33)));
@@ -1250,10 +1250,10 @@ var fbm2 = /* @__PURE__ */ Fn6(([p]) => {
 });
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/ocean-foam.ts
-import { dot as dot4, float as float9, max as max5, mix as mix7, normalize as normalize4, pow as pow3, smoothstep as smoothstep6, vec2 as vec26, vec3 as vec37 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { dot as dot4, float as float9, max as max5, mix as mix7, normalize as normalize4, pow as pow3, smoothstep as smoothstep6, vec2 as vec26, vec3 as vec37 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sky-radiance.ts
-import { Fn as Fn7, dot as dot3, float as float7, max as max4, mix as mix5, normalize as normalize3, pow as pow2, smoothstep as smoothstep5, vec3 as vec36 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { Fn as Fn7, dot as dot3, float as float7, max as max4, mix as mix5, normalize as normalize3, pow as pow2, smoothstep as smoothstep5, vec3 as vec36 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var SUN_COS_RADIUS = Math.cos(0.266 * Math.PI / 180);
 var marineHazeTint = /* @__PURE__ */ vec36(0.65, 0.59, 0.69);
 var skyRadiance = /* @__PURE__ */ Fn7(
@@ -1280,7 +1280,7 @@ var skyRadiance = /* @__PURE__ */ Fn7(
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/wake-foam-map.ts
 import { HalfFloatType as HalfFloatType3, LinearFilter as LinearFilter4, Vector4 } from "https://esm.sh/three@0.185.1?external";
-import { StorageTexture as StorageTexture2 } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { StorageTexture as StorageTexture2 } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn as Fn8,
   exp as exp3,
@@ -1296,7 +1296,7 @@ import {
   uniform as uniform6,
   uniformArray,
   vec4 as vec46
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 var WAKE_FOAM_CENTER_X = 0;
 var WAKE_FOAM_CENTER_Z = 10;
 var WAKE_FOAM_SIZE = 820;
@@ -1560,7 +1560,7 @@ function createOceanFoam(inputs) {
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/ocean-material.ts
 import { DoubleSide as DoubleSide2 } from "https://esm.sh/three@0.185.1?external";
-import { MeshBasicNodeMaterial as MeshBasicNodeMaterial3 } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { MeshBasicNodeMaterial as MeshBasicNodeMaterial3 } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn as Fn9,
   If as If3,
@@ -1592,10 +1592,10 @@ import {
   vec2 as vec28,
   vec3 as vec38,
   vec4 as vec47
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/seabed-surface.ts
-import { float as float10, sin as sin4, smoothstep as smoothstep7, uniform as uniform7, vec2 as vec27 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { float as float10, sin as sin4, smoothstep as smoothstep7, uniform as uniform7, vec2 as vec27 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var seabedRippleBakeFlat = uniform7(0);
 function seabedRippleSlope(worldXZ, footprint) {
   const warp = fbm2(worldXZ.mul(0.09)).mul(7);
@@ -2278,11 +2278,11 @@ function cascadeBands(patchLengths, boundaryFactor) {
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/ocean-system.ts
 import { Mesh as Mesh2, PlaneGeometry as PlaneGeometry2 } from "https://esm.sh/three@0.185.1?external";
-import { uniform as uniform9 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { uniform as uniform9 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/wave-sim.ts
 import { HalfFloatType as HalfFloatType4, LinearFilter as LinearFilter5, RepeatWrapping as RepeatWrapping2 } from "https://esm.sh/three@0.185.1?external";
-import { StorageTexture as StorageTexture3 } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { StorageTexture as StorageTexture3 } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn as Fn10,
   float as float12,
@@ -2298,7 +2298,7 @@ import {
   uniform as uniform8,
   vec2 as vec29,
   vec4 as vec48
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 var OCEAN_PRESET = {
   resolution: 256,
   patchLengths: [250, 17, 5],
@@ -2586,7 +2586,7 @@ var Rng = class _Rng {
 };
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/seabed-material.ts
-import { MeshStandardNodeMaterial as MeshStandardNodeMaterial3 } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { MeshStandardNodeMaterial as MeshStandardNodeMaterial3 } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn as Fn11,
   float as float13,
@@ -2596,7 +2596,7 @@ import {
   positionWorld as positionWorld3,
   transformNormalToView,
   vec3 as vec39
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 function createSandMaterial(applyCaustics) {
   const material = new MeshStandardNodeMaterial3();
   material.roughness = 1;
@@ -2617,8 +2617,8 @@ function createSandMaterial(applyCaustics) {
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sky-dome.ts
 import { BackSide, DirectionalLight as DirectionalLight2, Mesh as Mesh3, Scene as Scene3, SphereGeometry } from "https://esm.sh/three@0.185.1?external";
-import { MeshBasicNodeMaterial as MeshBasicNodeMaterial4, PMREMGenerator } from "https://esm.sh/three@0.185.1?external/webgpu";
-import { float as float14, normalize as normalize7, positionLocal as positionLocal3 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { MeshBasicNodeMaterial as MeshBasicNodeMaterial4, PMREMGenerator } from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import { float as float14, normalize as normalize7, positionLocal as positionLocal3 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 function createSkyDome() {
   const domeMaterial = new MeshBasicNodeMaterial4();
   domeMaterial.colorNode = skyRadiance(normalize7(positionLocal3), float14(1));

@@ -236,7 +236,7 @@ export default {
     scene.add(lake.mesh);
 
     const ktx2Loader = new KTX2Loader()
-      .setTranscoderPath("/node_modules/three/examples/jsm/libs/basis/")
+      .setTranscoderPath("https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/libs/basis/")
       .detectSupport(renderer);
     const gltfLoader = new GLTFLoader()
       .setKTX2Loader(ktx2Loader)

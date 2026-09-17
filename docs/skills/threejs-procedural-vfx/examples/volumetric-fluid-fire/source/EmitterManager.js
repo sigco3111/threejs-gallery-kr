@@ -1,6 +1,6 @@
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/EmitterManager.ts
-import { Fn, If, instanceIndex, Return, storage, vec4 } from "https://esm.sh/three@0.185.1?external/tsl";
-import * as THREE from "https://esm.sh/three@0.185.1?external/webgpu";
+import { Fn, If, instanceIndex, Return, storage, vec4 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import * as THREE from "https://esm.sh/three@0.185.1/webgpu?external=three";
 var EmitterManager = class {
   constructor(emitterBuffer) {
     this.emitters = [];

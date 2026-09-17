@@ -1,14 +1,14 @@
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sky-dome.ts
 import { BackSide, DirectionalLight, Mesh, Scene, SphereGeometry } from "https://esm.sh/three@0.185.1?external";
-import { MeshBasicNodeMaterial, PMREMGenerator } from "https://esm.sh/three@0.185.1?external/webgpu";
-import { float as float2, normalize as normalize2, positionLocal } from "https://esm.sh/three@0.185.1?external/tsl";
+import { MeshBasicNodeMaterial, PMREMGenerator } from "https://esm.sh/three@0.185.1/webgpu?external=three";
+import { float as float2, normalize as normalize2, positionLocal } from "https://esm.sh/three@0.185.1/tsl?external=three";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sky-radiance.ts
-import { Fn, dot, float, max, mix, normalize, pow, smoothstep, vec3 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { Fn, dot, float, max, mix, normalize, pow, smoothstep, vec3 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/sun.ts
 import { Color, Vector3 } from "https://esm.sh/three@0.185.1?external";
-import { uniform } from "https://esm.sh/three@0.185.1?external/tsl";
+import { uniform } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var SUN_ELEVATION = 42 * Math.PI / 180;
 var SUN_AZIMUTH = 215 * Math.PI / 180;
 var sunDirection = new Vector3(

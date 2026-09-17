@@ -35,7 +35,14 @@ async function loadTexture(url, {
 async function loadImageData(url) {
   const image = new Image();
   image.crossOrigin = "anonymous";
-  image.src = url;
+  // /skills/... absolute asset paths need the Pages repo prefix;
+  // a missing prefix yields a 404 HTML page which image.decode()
+  // reports as EncodingError. (TextureLoader calls are covered by
+  // the runtime wrapLoaderLoad shim; raw `new Image()` is not.)
+  const resolved = typeof url === "string" && url.charAt(0) === "/" && !/^\/threejs-gallery-kr\//.test(url)
+    ? window.location.origin + "/threejs-gallery-kr" + url
+    : url;
+  image.src = resolved;
   await image.decode();
   const canvas = document.createElement("canvas");
   canvas.width = image.naturalWidth;
@@ -155,7 +162,7 @@ export default {
 
     const loader = new GLTFLoader();
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("/node_modules/three/examples/jsm/libs/draco/gltf/");
+    dracoLoader.setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/libs/draco/gltf/");
     loader.setDRACOLoader(dracoLoader);
     const [
       bladeGltf,

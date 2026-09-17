@@ -1,6 +1,6 @@
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/fft-compute.ts
 import { DataTexture, FloatType, NearestFilter, RGBAFormat } from "https://esm.sh/three@0.185.1?external";
-import { StorageBufferAttribute, StorageTexture } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { StorageBufferAttribute, StorageTexture } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn,
   float,
@@ -19,7 +19,7 @@ import {
   workgroupArray,
   workgroupBarrier,
   workgroupId
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 function createFrequencyTexture(n) {
   const tex = new StorageTexture(n, n);
   tex.type = FloatType;

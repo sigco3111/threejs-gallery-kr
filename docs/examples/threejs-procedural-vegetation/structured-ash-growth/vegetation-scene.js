@@ -314,10 +314,11 @@ const continuationMaterial = new THREE.ShaderMaterial({
 });
 
 const branchNormalMaterial = new THREE.MeshNormalMaterial();
+// NOTE: MeshNormalMaterial ignores `map` (warns "'map' is not a property") —
+// keep alphaTest-only here so the normals debug mode stays warning-free.
 const leafNormalMaterial = new THREE.MeshNormalMaterial({
   side: THREE.DoubleSide,
   alphaTest: ashMedium.leaves.alphaTest,
-  map: leafTexture,
 });
 
 function createTreeObject() {
@@ -519,7 +520,7 @@ scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
 const gltfLoader = new GLTFLoader();
 const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath("/node_modules/three/examples/jsm/libs/draco/gltf/");
+dracoLoader.setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/libs/draco/gltf/");
 gltfLoader.setDRACOLoader(dracoLoader);
 
 const gltf = await gltfLoader.loadAsync(

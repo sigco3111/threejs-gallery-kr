@@ -60,7 +60,7 @@ export default {
     scene.background = new THREE.Color(0x000000);
 
     const dracoLoader = new DRACOLoader();
-    dracoLoader.setDecoderPath("/node_modules/three/examples/jsm/libs/draco/");
+    dracoLoader.setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/libs/draco/");
     const gltfLoader = new GLTFLoader();
     gltfLoader.setDRACOLoader(dracoLoader);
 

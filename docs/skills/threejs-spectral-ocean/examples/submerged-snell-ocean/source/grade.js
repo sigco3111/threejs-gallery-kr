@@ -6,7 +6,7 @@ import {
   RGBAFormat,
   UnsignedByteType
 } from "https://esm.sh/three@0.185.1?external";
-import { lut3D } from "https://esm.sh/three@0.185.1?external/addons/tsl/display/Lut3DNode.js";
+import { lut3D } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/display/Lut3DNode.js?external=three";
 import {
   clamp,
   float,
@@ -15,7 +15,7 @@ import {
   texture3D,
   uniform,
   vec4
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 var asColor = (node) => node;
 var LUT_SIZE = 32;
 var gradeParams = {

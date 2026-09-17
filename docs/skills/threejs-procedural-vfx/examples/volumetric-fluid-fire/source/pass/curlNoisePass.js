@@ -1,6 +1,6 @@
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/curlNoisePass.ts
-import { float, globalId, If, ivec3, Return, vec3, vec4 } from "https://esm.sh/three@0.185.1?external/tsl";
-import { snoiseVec3 } from "https://esm.sh/three@0.185.1?external/addons/tsl/math/curlNoise.js";
+import { float, globalId, If, ivec3, Return, vec3, vec4 } from "https://esm.sh/three@0.185.1/tsl?external=three";
+import { snoiseVec3 } from "https://esm.sh/three@0.185.1/examples/jsm/tsl/math/curlNoise.js?external=three";
 var curlNoisePass = (context) => () => {
   const coord = globalId;
   const noiseSize = context.noiseTextureConfig.size;

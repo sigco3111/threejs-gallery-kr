@@ -1,5 +1,5 @@
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/pass/jacobiPass.ts
-import { float, If, vec3, vec4 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { float, If, vec3, vec4 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var jacobiPass = (context, readFrom, writeTo) => () => {
   const coord = context.grid.phy.coord;
   const uvw = context.grid.phy.uvw;

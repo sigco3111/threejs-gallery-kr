@@ -1,5 +1,5 @@
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/seabed-material.ts
-import { MeshStandardNodeMaterial } from "https://esm.sh/three@0.185.1?external/webgpu";
+import { MeshStandardNodeMaterial } from "https://esm.sh/three@0.185.1/webgpu?external=three";
 import {
   Fn as Fn2,
   float as float3,
@@ -9,10 +9,10 @@ import {
   positionWorld,
   transformNormalToView,
   vec3 as vec32
-} from "https://esm.sh/three@0.185.1?external/tsl";
+} from "https://esm.sh/three@0.185.1/tsl?external=three";
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/noise.ts
-import { Fn, Loop, float, fract, dot, floor, mix, sin, vec2, vec3 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { Fn, Loop, float, fract, dot, floor, mix, sin, vec2, vec3 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var hash21 = /* @__PURE__ */ Fn(([p]) => {
   const p3 = fract(vec3(p.x, p.y, p.x).mul(0.1031)).toVar();
   p3.addAssign(dot(p3, vec3(p3.y, p3.z, p3.x).add(33.33)));
@@ -45,7 +45,7 @@ var fbm2 = /* @__PURE__ */ Fn(([p]) => {
 });
 
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/seabed-surface.ts
-import { float as float2, sin as sin2, smoothstep, uniform, vec2 as vec22 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { float as float2, sin as sin2, smoothstep, uniform, vec2 as vec22 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var seabedRippleBakeFlat = uniform(0);
 function seabedRippleSlope(worldXZ, footprint) {
   const warp = fbm2(worldXZ.mul(0.09)).mul(7);

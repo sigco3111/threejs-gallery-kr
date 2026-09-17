@@ -1,5 +1,5 @@
 // docs/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/source/util/createStorage3D.ts
-import * as THREE from "https://esm.sh/three@0.185.1?external/webgpu";
+import * as THREE from "https://esm.sh/three@0.185.1/webgpu?external=three";
 function createStorage3D(name, sizeX, sizeY, sizeZ, format = THREE.RGBAFormat, dataType = THREE.HalfFloatType) {
   const texture = new THREE.Storage3DTexture(sizeX, sizeY, sizeZ);
   texture.name = name;

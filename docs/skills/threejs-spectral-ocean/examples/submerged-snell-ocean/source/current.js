@@ -1,5 +1,5 @@
 // docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/current.ts
-import { Fn, cos, sin, vec3 } from "https://esm.sh/three@0.185.1?external/tsl";
+import { Fn, cos, sin, vec3 } from "https://esm.sh/three@0.185.1/tsl?external=three";
 var currentFlow = /* @__PURE__ */ Fn(([p, t]) => {
   const x = p.x.mul(0.05);
   const z = p.z.mul(0.05);
