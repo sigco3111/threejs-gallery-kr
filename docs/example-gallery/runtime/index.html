@@ -52,6 +52,41 @@
         window.XMLHttpRequest = PatchedXHR;
       })();
     </script>
+    <!-- Pre-load all known THREE loaders so we can wrap their .load() to
+         redirect absolute-path asset URLs through the repo prefix. -->
+    <script type="module">
+      const REPO_PREFIX = "/threejs-gallery-kr";
+      function redirectAbs(url) {
+        if (typeof url === "string" && url.charAt(0) === "/") {
+          return new URL(url, window.location.origin + REPO_PREFIX + "/").href;
+        }
+        return url;
+      }
+      const loaders = [
+        "three/addons/loaders/TextureLoader.js",
+        "three/addons/loaders/CubeTextureLoader.js",
+        "three/addons/loaders/RGBELoader.js",
+        "three/addons/loaders/EXRLoader.js",
+        "three/addons/loaders/GLTFLoader.js",
+        "three/addons/loaders/KTX2Loader.js",
+        "three/addons/loaders/DRACOLoader.js",
+        "three/addons/loaders/MeshoptDecoder.js",
+      ];
+      await Promise.all(loaders.map(async (spec) => {
+        try {
+          const mod = await import(spec);
+          // TextureLoader etc default-export the class; GLTFLoader named-export.
+          const Cls = mod.default || mod[Object.keys(mod)[0]];
+          if (!Cls || !Cls.prototype?.load) return;
+          const origLoad = Cls.prototype.load;
+          Cls.prototype.load = function patchedLoad(url, ...rest) {
+            return origLoad.call(this, redirectAbs(url), ...rest);
+          };
+        } catch (e) {
+          // Loader not available in this three build; ignore.
+        }
+      }));
+    </script>
     <style>
       * { box-sizing: border-box; }
       html, body, canvas { width: 100%; height: 100%; margin: 0; display: block; }
