@@ -1,3 +1,4 @@
+// docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/defineShorthand.ts
 function definePropertyShorthand(destination, ...sourceKeysArgs) {
   const descriptors = {};
   for (let i = 0; i < sourceKeysArgs.length; i += 2) {

@@ -1,3 +1,4 @@
+// docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/vendor/url-join.ts
 function normalize(parts) {
   if (parts.length === 0) return "";
   const result = [];

@@ -1,3 +1,4 @@
+// docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/geospatial/TileCoordinate.ts
 function* traverseChildren(x, y, z, maxZ, result) {
   if (z >= maxZ) {
     return;
@@ -25,7 +26,7 @@ function* traverseChildren(x, y, z, maxZ, result) {
     }
   }
 }
-class TileCoordinate {
+var TileCoordinate = class _TileCoordinate {
   constructor(x = 0, y = 0, z = 0) {
     this.x = x;
     this.y = y;
@@ -40,7 +41,7 @@ class TileCoordinate {
     return this;
   }
   clone() {
-    return new TileCoordinate(this.x, this.y, this.z);
+    return new _TileCoordinate(this.x, this.y, this.z);
   }
   copy(other) {
     this.x = other.x;
@@ -51,7 +52,7 @@ class TileCoordinate {
   equals(other) {
     return other.x === this.x && other.y === this.y && other.z === this.z;
   }
-  getParent(result = new TileCoordinate()) {
+  getParent(result = new _TileCoordinate()) {
     const divisor = 2 ** this.z;
     const x = this.x / divisor;
     const y = this.y / divisor;
@@ -82,7 +83,7 @@ class TileCoordinate {
     yield this.y;
     yield this.z;
   }
-}
+};
 export {
   TileCoordinate
 };

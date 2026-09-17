@@ -1,3 +1,4 @@
+// docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/defineShorthand.ts
 function definePropertyShorthand(destination, ...sourceKeysArgs) {
   const descriptors = {};
   for (let i = 0; i < sourceKeysArgs.length; i += 2) {

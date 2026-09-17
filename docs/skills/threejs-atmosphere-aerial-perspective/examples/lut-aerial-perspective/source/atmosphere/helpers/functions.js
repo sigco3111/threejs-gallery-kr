@@ -1,3 +1,4 @@
+// docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/atmosphere/helpers/functions.ts
 function safeSqrt(a) {
   return Math.sqrt(Math.max(a, 0));
 }

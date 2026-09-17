@@ -1,3 +1,4 @@
+// docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/vendor/url-join.ts
 function normalize(parts) {
   if (parts.length === 0) return "";
   const result = [];

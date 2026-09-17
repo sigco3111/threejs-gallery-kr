@@ -1,6 +1,8 @@
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+
+// docs/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/source/random.ts
 function hashLabel(str) {
   let h = 1779033703 ^ str.length;
   for (let i = 0; i < str.length; i++) {
@@ -11,7 +13,7 @@ function hashLabel(str) {
   h = Math.imul(h ^ h >>> 13, 3266489909);
   return (h ^ h >>> 16) >>> 0;
 }
-class Rng {
+var Rng = class _Rng {
   constructor(seed) {
     __publicField(this, "seed");
     __publicField(this, "s");
@@ -48,9 +50,9 @@ class Rng {
    * label only — draw order elsewhere can never shift a fork's sequence.
    */
   fork(label) {
-    return new Rng((hashLabel(label) ^ this.seed) >>> 0);
+    return new _Rng((hashLabel(label) ^ this.seed) >>> 0);
   }
-}
+};
 export {
   Rng
 };

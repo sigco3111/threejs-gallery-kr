@@ -1,4 +1,11 @@
-import invariant from "../../vendor/tiny-invariant.js";
+// docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/vendor/tiny-invariant.ts
+function invariant(condition, message) {
+  if (condition) return;
+  const provided = typeof message === "function" ? message() : message;
+  throw new Error(provided != null ? `Invariant failed: ${provided}` : "Invariant failed");
+}
+
+// docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/helpers/setArrayRenderTargetLayers.ts
 function setArrayRenderTargetLayers(renderer, outputBuffer) {
   const glTexture = renderer.properties.get(outputBuffer.texture).__webglTexture;
   const gl = renderer.getContext();

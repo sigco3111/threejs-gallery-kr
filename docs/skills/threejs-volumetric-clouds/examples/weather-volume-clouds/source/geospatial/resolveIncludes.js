@@ -1,4 +1,5 @@
-const includePattern = /^[ \t]*#include +"([\w\d./]+)"/gm;
+// docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/geospatial/resolveIncludes.ts
+var includePattern = /^[ \t]*#include +"([\w\d./]+)"/gm;
 function resolveIncludes(source, includes) {
   return source.replace(includePattern, (match, path) => {
     const components = path.split("/");

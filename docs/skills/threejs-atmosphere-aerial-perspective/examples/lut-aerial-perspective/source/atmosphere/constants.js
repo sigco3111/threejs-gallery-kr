@@ -1,19 +1,20 @@
-const IRRADIANCE_TEXTURE_WIDTH = 64;
-const IRRADIANCE_TEXTURE_HEIGHT = 16;
-const SCATTERING_TEXTURE_R_SIZE = 32;
-const SCATTERING_TEXTURE_MU_SIZE = 128;
-const SCATTERING_TEXTURE_MU_S_SIZE = 32;
-const SCATTERING_TEXTURE_NU_SIZE = 8;
-const SCATTERING_TEXTURE_WIDTH = SCATTERING_TEXTURE_NU_SIZE * SCATTERING_TEXTURE_MU_S_SIZE;
-const SCATTERING_TEXTURE_HEIGHT = SCATTERING_TEXTURE_MU_SIZE;
-const SCATTERING_TEXTURE_DEPTH = SCATTERING_TEXTURE_R_SIZE;
-const TRANSMITTANCE_TEXTURE_WIDTH = 256;
-const TRANSMITTANCE_TEXTURE_HEIGHT = 64;
-const METER_TO_LENGTH_UNIT = 1 / 1e3;
-const SKY_RENDER_ORDER = 100;
-const ref = "82e00c5222d6cbc222af69abdf6d3f4fc9f63030";
-const DEFAULT_PRECOMPUTED_TEXTURES_URL = `https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/${ref}/packages/atmosphere/assets`;
-const DEFAULT_STARS_DATA_URL = `https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/${ref}/packages/atmosphere/assets/stars.bin`;
+// docs/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/source/atmosphere/constants.ts
+var IRRADIANCE_TEXTURE_WIDTH = 64;
+var IRRADIANCE_TEXTURE_HEIGHT = 16;
+var SCATTERING_TEXTURE_R_SIZE = 32;
+var SCATTERING_TEXTURE_MU_SIZE = 128;
+var SCATTERING_TEXTURE_MU_S_SIZE = 32;
+var SCATTERING_TEXTURE_NU_SIZE = 8;
+var SCATTERING_TEXTURE_WIDTH = SCATTERING_TEXTURE_NU_SIZE * SCATTERING_TEXTURE_MU_S_SIZE;
+var SCATTERING_TEXTURE_HEIGHT = SCATTERING_TEXTURE_MU_SIZE;
+var SCATTERING_TEXTURE_DEPTH = SCATTERING_TEXTURE_R_SIZE;
+var TRANSMITTANCE_TEXTURE_WIDTH = 256;
+var TRANSMITTANCE_TEXTURE_HEIGHT = 64;
+var METER_TO_LENGTH_UNIT = 1 / 1e3;
+var SKY_RENDER_ORDER = 100;
+var ref = "82e00c5222d6cbc222af69abdf6d3f4fc9f63030";
+var DEFAULT_PRECOMPUTED_TEXTURES_URL = `https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/${ref}/packages/atmosphere/assets`;
+var DEFAULT_STARS_DATA_URL = `https://media.githubusercontent.com/media/takram-design-engineering/three-geospatial/${ref}/packages/atmosphere/assets/stars.bin`;
 export {
   DEFAULT_PRECOMPUTED_TEXTURES_URL,
   DEFAULT_STARS_DATA_URL,

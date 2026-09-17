@@ -1,4 +1,5 @@
-class DensityProfile {
+// docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/DensityProfile.ts
+var DensityProfile = class _DensityProfile {
   constructor(expTerm = 0, exponent = 0, linearTerm = 0, constantTerm = 0) {
     this.expTerm = expTerm;
     this.exponent = exponent;
@@ -13,7 +14,7 @@ class DensityProfile {
     return this;
   }
   clone() {
-    return new DensityProfile(
+    return new _DensityProfile(
       this.expTerm,
       this.exponent,
       this.linearTerm,
@@ -27,7 +28,7 @@ class DensityProfile {
     this.constantTerm = other.constantTerm;
     return this;
   }
-}
+};
 export {
   DensityProfile
 };

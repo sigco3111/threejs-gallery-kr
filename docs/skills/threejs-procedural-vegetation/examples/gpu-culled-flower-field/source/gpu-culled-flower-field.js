@@ -1,15 +1,17 @@
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-const WORKGROUP_SIZE = 256;
-const TILE_SIZE = 32;
-const CANDIDATES_PER_TILE = TILE_SIZE * TILE_SIZE;
-const UNIFORM_BYTES = 160;
-const DRAW_COUNT = 8;
-const DRAW_ARGS_BYTES = DRAW_COUNT * 16;
-const FRAME_HISTORY = 360;
-const MAX_REQUESTED_VISIBLE_BYTES = 16 * 1024 * 1024;
-const FLOWER_DRAW_VERTEX_COUNTS = Object.freeze([
+
+// docs/skills/threejs-procedural-vegetation/examples/gpu-culled-flower-field/source/gpu-culled-flower-field.ts
+var WORKGROUP_SIZE = 256;
+var TILE_SIZE = 32;
+var CANDIDATES_PER_TILE = TILE_SIZE * TILE_SIZE;
+var UNIFORM_BYTES = 160;
+var DRAW_COUNT = 8;
+var DRAW_ARGS_BYTES = DRAW_COUNT * 16;
+var FRAME_HISTORY = 360;
+var MAX_REQUESTED_VISIBLE_BYTES = 16 * 1024 * 1024;
+var FLOWER_DRAW_VERTEX_COUNTS = Object.freeze([
   60,
   528,
   48,
@@ -40,7 +42,7 @@ function flowerStorageMetrics(candidateCount, visibleCount) {
     compressionRatio: compactedIndexBytes > 0 ? expandedTransformBytes / compactedIndexBytes : null
   };
 }
-const FLOWER_SHADER_COMMON = (
+var FLOWER_SHADER_COMMON = (
   /* wgsl */
   `
 struct Uniforms {
@@ -249,7 +251,7 @@ fn fogAmount(root: vec3<f32>) -> f32 {
 }
 `
 );
-const RESET_SHADER = (
+var RESET_SHADER = (
   /* wgsl */
   `
 struct DrawArgs { vertexCount: u32, instanceCount: atomic<u32>, firstVertex: u32, firstInstance: u32 }
@@ -273,7 +275,7 @@ fn reset() {
 }
 `
 );
-const CULL_BINDINGS = (
+var CULL_BINDINGS = (
   /* wgsl */
   `
 struct DrawArgs { vertexCount: u32, instanceCount: atomic<u32>, firstVertex: u32, firstInstance: u32 }
@@ -297,7 +299,7 @@ fn appendCandidate(candidateId: u32, root: vec3<f32>) {
 }
 `
 );
-const FLAT_CULL_SHADER = (
+var FLAT_CULL_SHADER = (
   /* wgsl */
   `${FLOWER_SHADER_COMMON}${CULL_BINDINGS}
 @compute @workgroup_size(${WORKGROUP_SIZE})
@@ -310,7 +312,7 @@ fn compactCandidates(@builtin(global_invocation_id) invocation: vec3<u32>) {
 }
 `
 );
-const TILE_CULL_SHADER = (
+var TILE_CULL_SHADER = (
   /* wgsl */
   `${FLOWER_SHADER_COMMON}
 struct DispatchArgs { workgroupCountX: atomic<u32>, workgroupCountY: u32, workgroupCountZ: u32, padding: u32 }
@@ -343,7 +345,7 @@ fn compactTiles(@builtin(global_invocation_id) invocation: vec3<u32>) {
 }
 `
 );
-const HIERARCHICAL_CULL_SHADER = (
+var HIERARCHICAL_CULL_SHADER = (
   /* wgsl */
   `${FLOWER_SHADER_COMMON}${CULL_BINDINGS}
 @group(0) @binding(5) var<storage, read> visibleTiles: array<u32>;
@@ -368,7 +370,7 @@ fn compactTileCandidates(@builtin(workgroup_id) workgroup: vec3<u32>, @builtin(l
 }
 `
 );
-const FINALIZE_SHADER = (
+var FINALIZE_SHADER = (
   /* wgsl */
   `
 struct DrawArgs { vertexCount: u32, instanceCount: atomic<u32>, firstVertex: u32, firstInstance: u32 }
@@ -386,7 +388,7 @@ fn finalize() {
 }
 `
 );
-const STEM_SHADER = (
+var STEM_SHADER = (
   /* wgsl */
   `${FLOWER_SHADER_COMMON}
 @group(0) @binding(1) var<storage, read> visibleIds: array<u32>;
@@ -492,7 +494,7 @@ fn makeStemVertex(candidateId: u32, vertexId: u32, segments: u32, accepted: bool
 }
 `
 );
-const PETAL_SHADER = (
+var PETAL_SHADER = (
   /* wgsl */
   `${FLOWER_SHADER_COMMON}
 @group(0) @binding(1) var<storage, read> visibleIds: array<u32>;
@@ -738,7 +740,7 @@ fn makePetalVertex(candidateId: u32, vertexId: u32, radialSegments: u32, lateral
 }
 `
 );
-const CENTER_SHADER = (
+var CENTER_SHADER = (
   /* wgsl */
   `${FLOWER_SHADER_COMMON}
 @group(0) @binding(1) var<storage, read> visibleIds: array<u32>;
@@ -780,7 +782,7 @@ fn makeCenterVertex(candidateId: u32, vertexId: u32, wedges: u32, accepted: bool
 }
 `
 );
-const FAR_HEAD_SHADER = (
+var FAR_HEAD_SHADER = (
   /* wgsl */
   `${FLOWER_SHADER_COMMON}
 @group(0) @binding(1) var<storage, read> visibleIds: array<u32>;
@@ -846,7 +848,7 @@ fn farSpeciesColor(species: u32, variant: u32) -> vec3<f32> {
 }
 `
 );
-const GROUND_SHADER = (
+var GROUND_SHADER = (
   /* wgsl */
   `${FLOWER_SHADER_COMMON}
 @group(0) @binding(1) var fieldSampler: sampler;
@@ -929,7 +931,7 @@ async function textureFromUrl(device, label, url, format) {
   bitmap.close();
   return texture;
 }
-class GpuCulledFlowerField {
+var GpuCulledFlowerField = class {
   constructor(canvas, options, assets) {
     __publicField(this, "canvas");
     __publicField(this, "assets");
@@ -1456,7 +1458,7 @@ class GpuCulledFlowerField {
     this.cullTimestampResolve?.destroy();
     if (!this.cullTimestampPending) this.cullTimestampReadback?.destroy();
   }
-}
+};
 export {
   FLOWER_DRAW_VERTEX_COUNTS,
   GpuCulledFlowerField,

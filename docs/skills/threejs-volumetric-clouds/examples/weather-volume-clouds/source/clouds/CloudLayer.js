@@ -1,8 +1,41 @@
 var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-import { DensityProfile } from "./DensityProfile";
-const paramKeys = [
+
+// docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/DensityProfile.ts
+var DensityProfile = class _DensityProfile {
+  constructor(expTerm = 0, exponent = 0, linearTerm = 0, constantTerm = 0) {
+    this.expTerm = expTerm;
+    this.exponent = exponent;
+    this.linearTerm = linearTerm;
+    this.constantTerm = constantTerm;
+  }
+  set(expTerm = 0, exponent = 0, linearTerm = 0, constantTerm = 0) {
+    this.expTerm = expTerm;
+    this.exponent = exponent;
+    this.linearTerm = linearTerm;
+    this.constantTerm = constantTerm;
+    return this;
+  }
+  clone() {
+    return new _DensityProfile(
+      this.expTerm,
+      this.exponent,
+      this.linearTerm,
+      this.constantTerm
+    );
+  }
+  copy(other) {
+    this.expTerm = other.expTerm;
+    this.exponent = other.exponent;
+    this.linearTerm = other.linearTerm;
+    this.constantTerm = other.constantTerm;
+    return this;
+  }
+};
+
+// docs/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/source/clouds/CloudLayer.ts
+var paramKeys = [
   "channel",
   "altitude",
   "height",
@@ -32,7 +65,7 @@ function applyOptions(target, params) {
     }
   }
 }
-const _CloudLayer = class _CloudLayer {
+var _CloudLayer = class _CloudLayer {
   constructor(options) {
     __publicField(this, "channel", "r");
     __publicField(this, "altitude", 0);
@@ -70,7 +103,7 @@ const _CloudLayer = class _CloudLayer {
   }
 };
 __publicField(_CloudLayer, "DEFAULT", /* @__PURE__ */ new _CloudLayer());
-let CloudLayer = _CloudLayer;
+var CloudLayer = _CloudLayer;
 export {
   CloudLayer
 };

@@ -1,4 +1,5 @@
-const windSettings = {
+// docs/skills/threejs-procedural-vegetation/examples/procedural-surface-ivy/source/wind.ts
+var windSettings = {
   strength: 0.35,
   // 0 = still air, 1 = strong breeze
   speed: 1,

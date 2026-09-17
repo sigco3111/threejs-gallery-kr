@@ -60,7 +60,7 @@ for (const slug of ALL_EXAMPLES) {
 
   try {
     await page.goto(`${ORIGIN}/examples/${slug}/`, { waitUntil: "domcontentloaded", timeout: 25000 });
-    await page.waitForTimeout(7000);
+    await page.waitForTimeout(12000);
     const ready = await page.locator("html[data-example-ready='true']").count() > 0;
     if (ready) {
       ok++;
