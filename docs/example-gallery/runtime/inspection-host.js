@@ -8,8 +8,8 @@
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { exampleRuntime } from "./example-runtime.js";
-import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { EXRLoader } from "three/addons/loaders/EXRLoader.js";
+import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 const REPO_PREFIX = "/threejs-gallery-kr";
@@ -26,8 +26,9 @@ function wrapLoaderLoad(LoaderCtor) {
     let redirected = url;
     if (typeof url === "string") {
       if (url.charAt(0) === "/") {
-        // Absolute path — prepend repo prefix.
-        redirected = new URL(url, window.location.origin + REPO_PREFIX + "/").href;
+        // Absolute path — prepend repo prefix by string concatenation
+        // (new URL() ignores the base when the spec is an absolute path).
+        redirected = window.location.origin + REPO_PREFIX + url;
       } else if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) {
         // Already absolute URL or data URI — leave as-is.
       } else {
@@ -62,8 +63,8 @@ const rawWebGpu = adapter.backend === "raw-webgpu";
 const THREE = adapter.backend === "webgpu"
   ? await import("three/webgpu")
   : await import("three");
-wrapLoaderLoad(RGBELoader);
 wrapLoaderLoad(EXRLoader);
+wrapLoaderLoad(RGBELoader);
 wrapLoaderLoad(GLTFLoader);
 wrapLoaderLoad(THREE.TextureLoader);
 wrapLoaderLoad(THREE.CubeTextureLoader);

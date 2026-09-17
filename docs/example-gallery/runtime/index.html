@@ -17,16 +17,20 @@
          without <base>. -->
     <script>
       (function () {
+        var REPO_PREFIX = "/threejs-gallery-kr";
         var originalFetch = window.fetch.bind(window);
+        // Convert "/foo/bar" → origin + REPO_PREFIX + "/foo/bar"
+        // by stripping the leading "/" and concatenating. Using new URL()
+        // with the absolute path as the spec would ignore the base entirely.
+        function withRepoPrefix(absPath) {
+          return window.location.origin + REPO_PREFIX + absPath;
+        }
         function redirect(input) {
           if (typeof input === "string" && input.charAt(0) === "/") {
-            return new URL(input, window.location.origin + "/threejs-gallery-kr/").href;
+            return withRepoPrefix(input);
           }
           if (input instanceof Request && input.url.charAt(0) === "/") {
-            return new Request(
-              new URL(input.url, window.location.origin + "/threejs-gallery-kr/").href,
-              input
-            );
+            return new Request(withRepoPrefix(input.url), input);
           }
           return input;
         }
@@ -42,7 +46,7 @@
           var origOpen = xhr.open;
           xhr.open = function (method, url) {
             if (typeof url === "string" && url.charAt(0) === "/") {
-              arguments[1] = new URL(url, window.location.origin + "/threejs-gallery-kr/").href;
+              arguments[1] = withRepoPrefix(url);
             }
             return origOpen.apply(xhr, arguments);
           };
