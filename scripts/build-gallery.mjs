@@ -17,47 +17,47 @@ const SRC = PROJECT_ROOT;
 const DST = path.join(PROJECT_ROOT, "docs");
 
 const TITLE_KR = {
-  ["threejs-procedural-geometry", "formula-one-race-car"]: "포뮬러 원 레이스카",
-  ["threejs-procedural-geometry", "porcelain-brass-submarine"]: "도자기-황동 잠수함",
-  ["threejs-procedural-geometry", "sport-motorcycle"]: "스포츠 모터사이클",
-  ["threejs-procedural-geometry", "procedural-optimus-humanoid"]: "절차적 옵티머스 휴머노이드",
-  ["threejs-procedural-geometry", "sculpted-gallery-frame"]: "조각된 갤러리 프레임",
-  ["threejs-procedural-materials", "hybrid-soil-moss-surface"]: "하이브리드 흙-이끼 표면",
-  ["threejs-procedural-materials", "lava-flow-surface"]: "용암 흐름 표면",
-  ["threejs-procedural-materials", "physical-diffraction-grating"]: "물리 회절 격자",
-  ["threejs-procedural-materials", "raytraced-diamond"]: "레이 트레이싱 다이아몬드",
-  ["threejs-procedural-materials", "softbody-jelly"]: "소프트바디 젤리",
-  ["threejs-procedural-materials", "spectral-dispersive-glass"]: "스펙트럼 분산 유리",
-  ["threejs-procedural-materials", "thin-film-soap-bubbles"]: "박막 비눗방울",
-  ["threejs-procedural-vegetation", "procedural-surface-ivy"]: "절차적 표면 아이비",
-  ["threejs-procedural-vegetation", "gpu-computed-grass"]: "GPU 계산 풀",
-  ["threejs-procedural-vegetation", "gpu-culled-flower-field"]: "GPU 컬링 꽃밭",
-  ["threejs-procedural-vegetation", "stylized-meadow-grass"]: "스타일라이즈드 목초지 풀",
-  ["threejs-procedural-vegetation", "structured-ash-growth"]: "구조화된 재 성장",
-  ["threejs-procedural-vfx", "filmic-lens-flare"]: "필름릭 렌즈 플레어",
-  ["threejs-procedural-vfx", "holographic-shape-transition"]: "홀로그래픽 형태 전환",
-  ["threejs-procedural-vfx", "raymarched-aurora-curtains"]: "레이마칭 오로라 커튼",
-  ["threejs-procedural-vfx", "reentry-plasma"]: "재진입 플라즈마",
-  ["threejs-procedural-vfx", "volumetric-fluid-fire"]: "볼류메트릭 유체 불",
-  ["threejs-raymarched-space-effects", "curved-ray-accretion-volume"]: "곡선-레이 강착 볼륨",
-  ["threejs-raymarched-space-effects", "schwarzschild-geodesic-black-hole"]: "슈바르츠실트 측지선 블랙홀",
-  ["threejs-raymarched-space-effects", "traversable-wormhole-transit"]: "통과 가능한 웜홀 이동",
-  ["threejs-spectral-ocean", "coastal-breaker-ocean"]: "해안 파도 바다",
-  ["threejs-spectral-ocean", "hybrid-clear-water-ocean"]: "하이브리드 맑은 물 바다",
-  ["threejs-spectral-ocean", "spectral-cascade-ocean"]: "스펙트럼 캐스케이드 바다",
-  ["threejs-spectral-ocean", "stylized-above-below-ocean"]: "스타일라이즈드 수면 위·아래 바다",
-  ["threejs-spectral-ocean", "submerged-snell-ocean"]: "잠수 스넬 바다",
-  ["threejs-temporal-surfaces", "refractive-window-rain"]: "굴절 창문 빗물",
-  ["threejs-temporal-surfaces", "touch-history-frost"]: "터치 이력 프로스트",
-  ["threejs-atmosphere-aerial-perspective", "lut-aerial-perspective"]: "LUT 대기 원근법",
-  ["threejs-parallax-occlusion-mapping", "silhouette-relief"]: "실루엣 릴리프",
-  ["threejs-precipitation-surfaces", "snow-accumulation"]: "눈 적설",
-  ["threejs-precipitation-surfaces", "wet-puddle-rain"]: "젖은 웅덩이 비",
-  ["threejs-procedural-architecture", "procedural-financial-tower"]: "절차적 금융 타워",
-  ["threejs-procedural-planets", "procedural-planet-surface"]: "절차적 행성 표면",
-  ["threejs-volumetric-clouds", "weather-volume-clouds"]: "날씨 볼류메트릭 구름",
-  ["threejs-water-optics", "analytic-wave-optics"]: "해석적 파동 광학",
-  ["threejs-water-optics", "interactive-pool-volume"]: "인터랙티브 풀 볼륨",
+  "threejs-procedural-geometry|formula-one-race-car": "포뮬러 원 레이스카",
+  "threejs-procedural-geometry|porcelain-brass-submarine": "도자기-황동 잠수함",
+  "threejs-procedural-geometry|sport-motorcycle": "스포츠 모터사이클",
+  "threejs-procedural-geometry|procedural-optimus-humanoid": "절차적 옵티머스 휴머노이드",
+  "threejs-procedural-geometry|sculpted-gallery-frame": "조각된 갤러리 프레임",
+  "threejs-procedural-materials|hybrid-soil-moss-surface": "하이브리드 흙-이끼 표면",
+  "threejs-procedural-materials|lava-flow-surface": "용암 흐름 표면",
+  "threejs-procedural-materials|physical-diffraction-grating": "물리 회절 격자",
+  "threejs-procedural-materials|raytraced-diamond": "레이 트레이싱 다이아몬드",
+  "threejs-procedural-materials|softbody-jelly": "소프트바디 젤리",
+  "threejs-procedural-materials|spectral-dispersive-glass": "스펙트럼 분산 유리",
+  "threejs-procedural-materials|thin-film-soap-bubbles": "박막 비눗방울",
+  "threejs-procedural-vegetation|procedural-surface-ivy": "절차적 표면 아이비",
+  "threejs-procedural-vegetation|gpu-computed-grass": "GPU 계산 풀",
+  "threejs-procedural-vegetation|gpu-culled-flower-field": "GPU 컬링 꽃밭",
+  "threejs-procedural-vegetation|stylized-meadow-grass": "스타일라이즈드 목초지 풀",
+  "threejs-procedural-vegetation|structured-ash-growth": "구조화된 재 성장",
+  "threejs-procedural-vfx|filmic-lens-flare": "필름릭 렌즈 플레어",
+  "threejs-procedural-vfx|holographic-shape-transition": "홀로그래픽 형태 전환",
+  "threejs-procedural-vfx|raymarched-aurora-curtains": "레이마칭 오로라 커튼",
+  "threejs-procedural-vfx|reentry-plasma": "재진입 플라즈마",
+  "threejs-procedural-vfx|volumetric-fluid-fire": "볼류메트릭 유체 불",
+  "threejs-raymarched-space-effects|curved-ray-accretion-volume": "곡선-레이 강착 볼륨",
+  "threejs-raymarched-space-effects|schwarzschild-geodesic-black-hole": "슈바르츠실트 측지선 블랙홀",
+  "threejs-raymarched-space-effects|traversable-wormhole-transit": "통과 가능한 웜홀 이동",
+  "threejs-spectral-ocean|coastal-breaker-ocean": "해안 파도 바다",
+  "threejs-spectral-ocean|hybrid-clear-water-ocean": "하이브리드 맑은 물 바다",
+  "threejs-spectral-ocean|spectral-cascade-ocean": "스펙트럼 캐스케이드 바다",
+  "threejs-spectral-ocean|stylized-above-below-ocean": "스타일라이즈드 수면 위·아래 바다",
+  "threejs-spectral-ocean|submerged-snell-ocean": "잠수 스넬 바다",
+  "threejs-temporal-surfaces|refractive-window-rain": "굴절 창문 빗물",
+  "threejs-temporal-surfaces|touch-history-frost": "터치 이력 프로스트",
+  "threejs-atmosphere-aerial-perspective|lut-aerial-perspective": "LUT 대기 원근법",
+  "threejs-parallax-occlusion-mapping|silhouette-relief": "실루엣 릴리프",
+  "threejs-precipitation-surfaces|snow-accumulation": "눈 적설",
+  "threejs-precipitation-surfaces|wet-puddle-rain": "젖은 웅덩이 비",
+  "threejs-procedural-architecture|procedural-financial-tower": "절차적 금융 타워",
+  "threejs-procedural-planets|procedural-planet-surface": "절차적 행성 표면",
+  "threejs-volumetric-clouds|weather-volume-clouds": "날씨 볼류메트릭 구름",
+  "threejs-water-optics|analytic-wave-optics": "해석적 파동 광학",
+  "threejs-water-optics|interactive-pool-volume": "인터랙티브 풀 볼륨",
 };
 
 const SKILL_DESCRIPTIONS = {
@@ -310,43 +310,48 @@ async function main() {
     'if (!modulePath?.startsWith("/example-gallery/examples/"))',
     'if (!modulePath?.startsWith("/examples/"))'
   );
-  // Inject basePrefix + resolvedModulePath right before the dynamic import,
-  // and switch moduleUrl/resolveAsset to use the resolved URL.
-  // Inject <base> tag at the top of inspection-host.js so all absolute-path
-    // imports inside example code (/skills/..., /example-gallery/...) resolve
-    // under the GitHub Pages repo prefix. Then switch dynamic import and
-    // moduleUrl/resolveAsset to use modulePath as-is (resolved against <base>).
-    ih = ih.replace(
-      'import { OrbitControls } from "three/addons/controls/OrbitControls.js";\nimport { exampleRuntime } from "./example-runtime.js";',
-      [
-        '// GitHub Pages lives under /<repo>/ — inject <base> so absolute paths',
-        '// in example code (/skills/..., /example-gallery/...) resolve correctly.',
-        '{',
-        '  const m = window.location.pathname.match(/^(\\\\/[^/]+)?\\\\/example-gallery\\\\//);',
-        '  const repoPrefix = m ? (m[1] || "") : "";',
-        '  if (repoPrefix) {',
-        '    const base = document.createElement("base");',
-        '    base.href = repoPrefix + "/";',
-        '    document.head.prepend(base);',
-        '  }',
-        '}',
-        '',
-        'import { OrbitControls } from "three/addons/controls/OrbitControls.js";',
-        'import { exampleRuntime } from "./example-runtime.js";',
-      ].join("\n")
-    );
-    ih = ih.replace(
-      'const adapterModule = await import(modulePath);\nconst adapter = adapterModule.default;',
-      'const adapterModule = await import(modulePath);\nconst adapter = adapterModule.default;'
-    );
-    ih = ih.replace(
-      'moduleUrl: new URL(modulePath, window.location.origin),',
-      'moduleUrl: new URL(modulePath, window.location.href),'
-    );
-    ih = ih.replace(
-      'return new URL(relativePath, new URL(modulePath, window.location.origin))\n      .href;',
-      'return new URL(relativePath, new URL(modulePath, window.location.href))\n      .href;'
-    );
+  // Inject <base> tag at the top of inspection-host.js so absolute-path
+  // imports inside example code (/skills/..., /example-gallery/...) resolve
+  // under the GitHub Pages repo prefix. Also store the prefix on window so
+  // we can prepend it to dynamic import URLs (which resolve against origin).
+  ih = ih.replace(
+    'import { OrbitControls } from "three/addons/controls/OrbitControls.js";\nimport { exampleRuntime } from "./example-runtime.js";',
+    [
+      '// GitHub Pages lives under /<repo>/ — inject <base> so absolute paths',
+      '// in example code resolve correctly under the repo prefix.',
+      '{',
+      '  const m = window.location.pathname.match(/^(\\/[^/]+)?\\/example-gallery\\//);',
+      '  const repoPrefix = m ? (m[1] || "") : "";',
+      '  if (repoPrefix) {',
+      '    const base = document.createElement("base");',
+      '    base.href = repoPrefix + "/";',
+      '    document.head.prepend(base);',
+      '    window.__repoPrefix = repoPrefix;',
+      '  }',
+      '}',
+      '',
+      'import { OrbitControls } from "three/addons/controls/OrbitControls.js";',
+      'import { exampleRuntime } from "./example-runtime.js";',
+    ].join("\n")
+  );
+  ih = ih.replace(
+    'const adapterModule = await import(modulePath);\nconst adapter = adapterModule.default;',
+    [
+      '// dynamic import resolves against window.location.origin (not <base>),',
+      '// so we must prepend the repo prefix manually.',
+      'const resolvedModulePath = (window.__repoPrefix || "") + modulePath;',
+      'const adapterModule = await import(resolvedModulePath);',
+      'const adapter = adapterModule.default;',
+    ].join("\n")
+  );
+  ih = ih.replace(
+    'moduleUrl: new URL(modulePath, window.location.origin),',
+    'moduleUrl: new URL(modulePath, window.location.href),'
+  );
+  ih = ih.replace(
+    'return new URL(relativePath, new URL(modulePath, window.location.origin))\n      .href;',
+    'return new URL(relativePath, new URL(modulePath, window.location.href))\n      .href;'
+  );
   await writeFile(ihPath, ih);
 
   // 6. Discover examples and build examples.json + per-example pages
@@ -361,7 +366,7 @@ async function main() {
       skill_desc: SKILL_DESCRIPTIONS[skill] || "",
       slug,
       title: meta.title,
-      title_kr: TITLE_KR[[skill, slug]] || meta.title,
+      title_kr: TITLE_KR[`${skill}|${slug}`] || meta.title,
       description: meta.description || "",
       techniques: meta.techniques || [],
       backend: meta.backend || "WebGL",

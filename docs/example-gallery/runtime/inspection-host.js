@@ -9,6 +9,7 @@
     const base = document.createElement("base");
     base.href = repoPrefix + "/";
     document.head.prepend(base);
+    window.__repoPrefix = repoPrefix;
   }
 }
 
@@ -23,9 +24,10 @@ if (!modulePath?.startsWith("/examples/")) {
   throw new Error("Inspection runtime requires a dev example module.");
 }
 
-// With <base> injected above, absolute paths inside example code already
-// resolve under the repo prefix. Use modulePath as-is.
-const adapterModule = await import(modulePath);
+// dynamic import also resolves against window.location.origin (not <base>),
+// so we must prepend the repo prefix manually.
+const resolvedModulePath = (window.__repoPrefix || "") + modulePath;
+const adapterModule = await import(resolvedModulePath);
 const adapter = adapterModule.default;
 
 if (!adapter || typeof adapter.setup !== "function") {
