@@ -1,12 +1,12 @@
 {
   "examples": [
     {
-      "skill": "lut-aerial-perspective",
-      "skill_kr": "lut-aerial-perspective",
-      "skill_desc": "",
+      "skill": "threejs-atmosphere-aerial-perspective",
+      "skill_kr": "대기 원근법",
+      "skill_desc": "공유 Rayleigh/Mie 대기, 스카이, 깊이 산란",
       "slug": "lut-aerial-perspective",
       "title": "LUT 하늘과 시차 원근",
-      "title_kr": "LUT 하늘과 시차 원근",
+      "title_kr": "LUT 대기 원근법",
       "description": "사전 계산 LUT로 만든 하늘과 지표-세그먼트 시차 원근을 결합한 예제. Rayleigh/Mie 산란, 태양·달 디스크, 깊이 기반 투과도와 입사산란, 그리고 단일 셸과 동적 셸의 핸드오프를 공유 SkyMaterial, SkyLightProbe, SunDirectionalLight, AerialPerspectiveEffect로 구현합니다.",
       "techniques": [
         "공유 반경·밀도·계수·태양 방향·노출 스케일의 일관된 산란 모델",
@@ -16,8 +16,8 @@
         "월드-행성 좌표 변환과 고도 보정"
       ],
       "backend": "WebGL2 / package sky and postprocessing effects",
-      "thumb": "thumbs/lut-aerial-perspective__lut-aerial-perspective.png",
-      "url": "examples/lut-aerial-perspective/lut-aerial-perspective/",
+      "thumb": "thumbs/threejs-atmosphere-aerial-perspective__lut-aerial-perspective.png",
+      "url": "examples/threejs-atmosphere-aerial-perspective/lut-aerial-perspective/",
       "debug_modes": [
         {
           "value": "final",
@@ -42,12 +42,12 @@
       ]
     },
     {
-      "skill": "silhouette-relief",
-      "skill_kr": "silhouette-relief",
-      "skill_desc": "",
+      "skill": "threejs-parallax-occlusion-mapping",
+      "skill_kr": "시차 차폐 매핑",
+      "skill_desc": "TSL 높이 매칭, 클립 실루엣, 인플레이트 릴리프 셸, 셀프 섀도잉",
       "slug": "silhouette-relief",
       "title": "실루엣 릴리프 POM",
-      "title_kr": "실루엣 릴리프 POM",
+      "title_kr": "실루엣 릴리프",
       "description": "WebGPU/TSL 시차 폐색 매핑으로 단단한 실루엣과 곡면 실루엣 모두 릴리프를 처리합니다. 높이 필드 레이 마칭, 인플레이트 셸, 자체 그림자, 릴리프 인지 그림자 깊이, 높이-유도 노멀이 결합된 셸 시스템을 보여줍니다.",
       "techniques": [
         "단단/곡면 실루엣 클리핑이 있는 TSL POM",
@@ -57,8 +57,8 @@
         "셀 크기와 이터레이션이 일관된 안정성"
       ],
       "backend": "WebGPU / TSL 노드 머티리얼",
-      "thumb": "thumbs/silhouette-relief__silhouette-relief.png",
-      "url": "examples/silhouette-relief/silhouette-relief/",
+      "thumb": "thumbs/threejs-parallax-occlusion-mapping__silhouette-relief.png",
+      "url": "examples/threejs-parallax-occlusion-mapping/silhouette-relief/",
       "debug_modes": [
         {
           "value": "final",
@@ -79,12 +79,12 @@
       ]
     },
     {
-      "skill": "snow-accumulation",
-      "skill_kr": "snow-accumulation",
-      "skill_desc": "",
+      "skill": "threejs-precipitation-surfaces",
+      "skill_kr": "강수 표면",
+      "skill_desc": "눈/비 낙하, 적설, 빙판, 물웅덩이, 리플 노멀, 스플래시",
       "slug": "snow-accumulation",
       "title": "적설 표면",
-      "title_kr": "적설 표면",
+      "title_kr": "눈 적설",
       "description": "표면 노멀을 고려해 산·평지에 자연스럽게 눈이 쌓이는 적설 시뮬레이션. 시간 경과에 따라 커버리지와 두께가 점진적으로 증가하고, 모델 위 눈 모자는 상향면 누적 규칙을 따릅니다.",
       "techniques": [
         "표면 노멀 인지 적설 누적",
@@ -94,8 +94,8 @@
         "눈 결정 구조 셰이딩"
       ],
       "backend": "WebGL2 / GLSL material injection and instancing",
-      "thumb": "thumbs/snow-accumulation__snow-accumulation.png",
-      "url": "examples/snow-accumulation/snow-accumulation/",
+      "thumb": "thumbs/threejs-precipitation-surfaces__snow-accumulation.png",
+      "url": "examples/threejs-precipitation-surfaces/snow-accumulation/",
       "debug_modes": [
         {
           "value": "final",
@@ -116,12 +116,12 @@
       ]
     },
     {
-      "skill": "wet-puddle-rain",
-      "skill_kr": "wet-puddle-rain",
-      "skill_desc": "",
+      "skill": "threejs-precipitation-surfaces",
+      "skill_kr": "강수 표면",
+      "skill_desc": "눈/비 낙하, 적설, 빙판, 물웅덩이, 리플 노멀, 스플래시",
       "slug": "wet-puddle-rain",
       "title": "젖은 아스팔트 빗물",
-      "title_kr": "젖은 아스팔트 빗물",
+      "title_kr": "젖은 웅덩이 비",
       "description": "빗방울 낙하 → 물웅덩이 형성 → 절차적 리플 노멀 → 스플래시 플립북이 결합된 젖은 노면 효과. 공유 날씨 엔벨로프가 입자 시스템과 표면 시스템을 동시에 구동합니다.",
       "techniques": [
         "낙하 빗방울 + 절차적 물웅덩이 + 리플 노멀",
@@ -131,8 +131,8 @@
         "아스팔트 PBR 매핑"
       ],
       "backend": "WebGL2 / GLSL material injection and instancing",
-      "thumb": "thumbs/wet-puddle-rain__wet-puddle-rain.png",
-      "url": "examples/wet-puddle-rain/wet-puddle-rain/",
+      "thumb": "thumbs/threejs-precipitation-surfaces__wet-puddle-rain.png",
+      "url": "examples/threejs-precipitation-surfaces/wet-puddle-rain/",
       "debug_modes": [
         {
           "value": "final",
@@ -153,9 +153,9 @@
       ]
     },
     {
-      "skill": "procedural-financial-tower",
-      "skill_kr": "procedural-financial-tower",
-      "skill_desc": "",
+      "skill": "threejs-procedural-architecture",
+      "skill_kr": "절차적 건축",
+      "skill_desc": "매싱과 파사드 문법, 노출-엣지 분석, 모듈, 머티리얼-슬롯 컴파일",
       "slug": "procedural-financial-tower",
       "title": "절차적 금융 타워",
       "title_kr": "절차적 금융 타워",
@@ -168,8 +168,8 @@
         "건물 스케일 시맨틱 배치"
       ],
       "backend": "WebGPU / TSL node materials and cached clipmap shadows",
-      "thumb": "thumbs/procedural-financial-tower__procedural-financial-tower.png",
-      "url": "examples/procedural-financial-tower/procedural-financial-tower/",
+      "thumb": "thumbs/threejs-procedural-architecture__procedural-financial-tower.png",
+      "url": "examples/threejs-procedural-architecture/procedural-financial-tower/",
       "debug_modes": [
         {
           "value": "final",
@@ -190,12 +190,12 @@
       ]
     },
     {
-      "skill": "formula-one-race-car",
-      "skill_kr": "formula-one-race-car",
-      "skill_desc": "",
+      "skill": "threejs-procedural-geometry",
+      "skill_kr": "절차적 지오메트리",
+      "skill_desc": "폴리곤 모델링, 로프트/리볼브/스윕/솔리디파이/베벨, 시맨틱 조인",
       "slug": "formula-one-race-car",
       "title": "포뮬러 원 경주용 차",
-      "title_kr": "포뮬러 원 경주용 차",
+      "title_kr": "포뮬러 원 레이스카",
       "description": "노즈부터 엔진 커버까지 하나의 연속적인 매개변수-곡선 로프트로 만든 오픈-휠 경주용 차. 콕핏 리세스 단면, 수퍼엘립스 사이드포드(실제 인렛 개구부 포함), 스팬와이즈 에어포일 윙 로프트, 2-평면 리버리 프로젝터, 하중-편향 타이어 캐스카스, 파트별 삼각형 진단을 포함합니다.",
       "techniques": [
         "단조 매개변수-곡선 트랙이 구동하는 연속 헐 로프트",
@@ -209,8 +209,8 @@
         "파트별 삼각형 진단"
       ],
       "backend": "WebGPU / TSL 노드 머티리얼",
-      "thumb": "thumbs/formula-one-race-car__formula-one-race-car.png",
-      "url": "examples/formula-one-race-car/formula-one-race-car/",
+      "thumb": "thumbs/threejs-procedural-geometry__formula-one-race-car.png",
+      "url": "examples/threejs-procedural-geometry/formula-one-race-car/",
       "debug_modes": [
         {
           "value": "final",
@@ -235,12 +235,12 @@
       ]
     },
     {
-      "skill": "porcelain-brass-submarine",
-      "skill_kr": "porcelain-brass-submarine",
-      "skill_desc": "",
+      "skill": "threejs-procedural-geometry",
+      "skill_kr": "절차적 지오메트리",
+      "skill_desc": "폴리곤 모델링, 로프트/리볼브/스윕/솔리디파이/베벨, 시맨틱 조인",
       "slug": "porcelain-brass-submarine",
       "title": "포셀린-황동 잠수함",
-      "title_kr": "포셀린-황동 잠수함",
+      "title_kr": "도자기-황동 잠수함",
       "description": "경사진 칼라 헐 로프트와 평행-수송 트림, 가구 있는 유리 캐빈, 둘러싼 프로펠러, 렌즈-섹션 핀으로 구성된 완전한 잠수함 어셈블리. 시맨틱 서브어셈블리, UV-소유 개구부, 생성된 피팅과 모델 진단을 함께 제공합니다.",
       "techniques": [
         "경사진 칼라 헐 로프트와 평행-수송 트림",
@@ -251,8 +251,8 @@
         "파트별 삼각형 진단"
       ],
       "backend": "WebGPU / TSL 노드 머티리얼",
-      "thumb": "thumbs/porcelain-brass-submarine__porcelain-brass-submarine.png",
-      "url": "examples/porcelain-brass-submarine/porcelain-brass-submarine/",
+      "thumb": "thumbs/threejs-procedural-geometry__porcelain-brass-submarine.png",
+      "url": "examples/threejs-procedural-geometry/porcelain-brass-submarine/",
       "debug_modes": [
         {
           "value": "final",
@@ -273,9 +273,9 @@
       ]
     },
     {
-      "skill": "procedural-optimus-humanoid",
-      "skill_kr": "procedural-optimus-humanoid",
-      "skill_desc": "",
+      "skill": "threejs-procedural-geometry",
+      "skill_kr": "절차적 지오메트리",
+      "skill_desc": "폴리곤 모델링, 로프트/리볼브/스윕/솔리디파이/베벨, 시맨틱 조인",
       "slug": "procedural-optimus-humanoid",
       "title": "절차적 옵티머스 휴머노이드",
       "title_kr": "절차적 옵티머스 휴머노이드",
@@ -289,8 +289,8 @@
         "891,809개 방출 삼각형 진단"
       ],
       "backend": "WebGPU / TSL 노드 머티리얼",
-      "thumb": "thumbs/procedural-optimus-humanoid__procedural-optimus-humanoid.png",
-      "url": "examples/procedural-optimus-humanoid/procedural-optimus-humanoid/",
+      "thumb": "thumbs/threejs-procedural-geometry__procedural-optimus-humanoid.png",
+      "url": "examples/threejs-procedural-geometry/procedural-optimus-humanoid/",
       "debug_modes": [
         {
           "value": "final",
@@ -315,9 +315,9 @@
       ]
     },
     {
-      "skill": "sculpted-gallery-frame",
-      "skill_kr": "sculpted-gallery-frame",
-      "skill_desc": "",
+      "skill": "threejs-procedural-geometry",
+      "skill_kr": "절차적 지오메트리",
+      "skill_desc": "폴리곤 모델링, 로프트/리볼브/스윕/솔리디파이/베벨, 시맨틱 조인",
       "slug": "sculpted-gallery-frame",
       "title": "조각된 갤러리 프레임",
       "title_kr": "조각된 갤러리 프레임",
@@ -330,8 +330,8 @@
         "고정-뷰 진단"
       ],
       "backend": "WebGL2 / Three.js physical materials",
-      "thumb": "thumbs/sculpted-gallery-frame__sculpted-gallery-frame.png",
-      "url": "examples/sculpted-gallery-frame/sculpted-gallery-frame/",
+      "thumb": "thumbs/threejs-procedural-geometry__sculpted-gallery-frame.png",
+      "url": "examples/threejs-procedural-geometry/sculpted-gallery-frame/",
       "debug_modes": [
         {
           "value": "final",
@@ -352,9 +352,9 @@
       ]
     },
     {
-      "skill": "sport-motorcycle",
-      "skill_kr": "sport-motorcycle",
-      "skill_desc": "",
+      "skill": "threejs-procedural-geometry",
+      "skill_kr": "절차적 지오메트리",
+      "skill_desc": "폴리곤 모델링, 로프트/리볼브/스윕/솔리디파이/베벨, 시맨틱 조인",
       "slug": "sport-motorcycle",
       "title": "스포츠 모터사이클",
       "title_kr": "스포츠 모터사이클",
@@ -368,8 +368,8 @@
         "시맨틱 파트 분리"
       ],
       "backend": "WebGPU / TSL 노드 머티리얼",
-      "thumb": "thumbs/sport-motorcycle__sport-motorcycle.png",
-      "url": "examples/sport-motorcycle/sport-motorcycle/",
+      "thumb": "thumbs/threejs-procedural-geometry__sport-motorcycle.png",
+      "url": "examples/threejs-procedural-geometry/sport-motorcycle/",
       "debug_modes": [
         {
           "value": "final",
@@ -390,9 +390,9 @@
       ]
     },
     {
-      "skill": "hybrid-soil-moss-surface",
-      "skill_kr": "hybrid-soil-moss-surface",
-      "skill_desc": "",
+      "skill": "threejs-procedural-materials",
+      "skill_kr": "절차적 머티리얼",
+      "skill_desc": "하이브리드 텍스처 PBR, 대기권/용암/디스펜션 글래스/베벨/프레임 PBR",
       "slug": "hybrid-soil-moss-surface",
       "title": "하이브리드 흙-이끼 표면",
       "title_kr": "하이브리드 흙-이끼 표면",
@@ -406,8 +406,8 @@
         "모델-잠금 상향면 이끼 누적"
       ],
       "backend": "WebGL2 / MeshStandardMaterial 셰이더 주입",
-      "thumb": "thumbs/hybrid-soil-moss-surface__hybrid-soil-moss-surface.png",
-      "url": "examples/hybrid-soil-moss-surface/hybrid-soil-moss-surface/",
+      "thumb": "thumbs/threejs-procedural-materials__hybrid-soil-moss-surface.png",
+      "url": "examples/threejs-procedural-materials/hybrid-soil-moss-surface/",
       "debug_modes": [
         {
           "value": "final",
@@ -436,9 +436,9 @@
       ]
     },
     {
-      "skill": "lava-flow-surface",
-      "skill_kr": "lava-flow-surface",
-      "skill_desc": "",
+      "skill": "threejs-procedural-materials",
+      "skill_kr": "절차적 머티리얼",
+      "skill_desc": "하이브리드 텍스처 PBR, 대기권/용암/디스펜션 글래스/베벨/프레임 PBR",
       "slug": "lava-flow-surface",
       "title": "용암 흐름 표면",
       "title_kr": "용암 흐름 표면",
@@ -451,8 +451,8 @@
         "단일 머티리얼 원인 스택"
       ],
       "backend": "WebGL2 / GLSL raymarched material",
-      "thumb": "thumbs/lava-flow-surface__lava-flow-surface.png",
-      "url": "examples/lava-flow-surface/lava-flow-surface/",
+      "thumb": "thumbs/threejs-procedural-materials__lava-flow-surface.png",
+      "url": "examples/threejs-procedural-materials/lava-flow-surface/",
       "debug_modes": [
         {
           "value": "final",
@@ -473,12 +473,12 @@
       ]
     },
     {
-      "skill": "physical-diffraction-grating",
-      "skill_kr": "physical-diffraction-grating",
-      "skill_desc": "",
+      "skill": "threejs-procedural-materials",
+      "skill_kr": "절차적 머티리얼",
+      "skill_desc": "하이브리드 텍스처 PBR, 대기권/용암/디스펜션 글래스/베벨/프레임 PBR",
       "slug": "physical-diffraction-grating",
       "title": "물리적 회절격자",
-      "title_kr": "물리적 회절격자",
+      "title_kr": "물리 회절 격자",
       "description": "인쇄 기판 위에 가산 HDR 포일 응답을 얹은 회절격자. 별·줄무늬 마스크가 국부 그루브 각도·피치·릴리프를 선택하고, 파장이 단독으로 스펙트럼 색을 소유합니다. 전체 광학 모델은 TSL 그래프로 표현됩니다.",
       "techniques": [
         "엠보스드 필드 + CIE/블랙바디 스펙트럼",
@@ -488,8 +488,8 @@
         "순수 TSL 그래프 (`Fn`, `If`, `Loop`)"
       ],
       "backend": "WebGPU / pure TSL node graph",
-      "thumb": "thumbs/physical-diffraction-grating__physical-diffraction-grating.png",
-      "url": "examples/physical-diffraction-grating/physical-diffraction-grating/",
+      "thumb": "thumbs/threejs-procedural-materials__physical-diffraction-grating.png",
+      "url": "examples/threejs-procedural-materials/physical-diffraction-grating/",
       "debug_modes": [
         {
           "value": "final",
@@ -510,9 +510,9 @@
       ]
     },
     {
-      "skill": "raytraced-diamond",
-      "skill_kr": "raytraced-diamond",
-      "skill_desc": "",
+      "skill": "threejs-procedural-materials",
+      "skill_kr": "절차적 머티리얼",
+      "skill_desc": "하이브리드 텍스처 PBR, 대기권/용암/디스펜션 글래스/베벨/프레임 PBR",
       "slug": "raytraced-diamond",
       "title": "레이 트레이싱 다이아몬드",
       "title_kr": "레이 트레이싱 다이아몬드",
@@ -525,8 +525,8 @@
         "진실한 내부 광학 경로"
       ],
       "backend": "WebGL2 / GLSL BVH-raytraced material",
-      "thumb": "thumbs/raytraced-diamond__raytraced-diamond.png",
-      "url": "examples/raytraced-diamond/raytraced-diamond/",
+      "thumb": "thumbs/threejs-procedural-materials__raytraced-diamond.png",
+      "url": "examples/threejs-procedural-materials/raytraced-diamond/",
       "debug_modes": [
         {
           "value": "final",
@@ -547,9 +547,9 @@
       ]
     },
     {
-      "skill": "softbody-jelly",
-      "skill_kr": "softbody-jelly",
-      "skill_desc": "",
+      "skill": "threejs-procedural-materials",
+      "skill_kr": "절차적 머티리얼",
+      "skill_desc": "하이브리드 텍스처 PBR, 대기권/용암/디스펜션 글래스/베벨/프레임 PBR",
       "slug": "softbody-jelly",
       "title": "소프트바디 젤리",
       "title_kr": "소프트바디 젤리",
@@ -562,8 +562,8 @@
         "댐핑·슬립 규칙이 적용된 솔버"
       ],
       "backend": "WebGPU / TSL",
-      "thumb": "thumbs/softbody-jelly__softbody-jelly.png",
-      "url": "examples/softbody-jelly/softbody-jelly/",
+      "thumb": "thumbs/threejs-procedural-materials__softbody-jelly.png",
+      "url": "examples/threejs-procedural-materials/softbody-jelly/",
       "debug_modes": [
         {
           "value": "final",
@@ -584,9 +584,9 @@
       ]
     },
     {
-      "skill": "spectral-dispersive-glass",
-      "skill_kr": "spectral-dispersive-glass",
-      "skill_desc": "",
+      "skill": "threejs-procedural-materials",
+      "skill_kr": "절차적 머티리얼",
+      "skill_desc": "하이브리드 텍스처 PBR, 대기권/용암/디스펜션 글래스/베벨/프레임 PBR",
       "slug": "spectral-dispersive-glass",
       "title": "스펙트럼 분산 유리",
       "title_kr": "스펙트럼 분산 유리",
@@ -599,8 +599,8 @@
         "정확한 비편광 Fresnel과 회전 가능한 환경 프로브"
       ],
       "backend": "WebGPU / TSL",
-      "thumb": "thumbs/spectral-dispersive-glass__spectral-dispersive-glass.png",
-      "url": "examples/spectral-dispersive-glass/spectral-dispersive-glass/",
+      "thumb": "thumbs/threejs-procedural-materials__spectral-dispersive-glass.png",
+      "url": "examples/threejs-procedural-materials/spectral-dispersive-glass/",
       "debug_modes": [
         {
           "value": "final",
@@ -621,9 +621,9 @@
       ]
     },
     {
-      "skill": "thin-film-soap-bubbles",
-      "skill_kr": "thin-film-soap-bubbles",
-      "skill_desc": "",
+      "skill": "threejs-procedural-materials",
+      "skill_kr": "절차적 머티리얼",
+      "skill_desc": "하이브리드 텍스처 PBR, 대기권/용암/디스펜션 글래스/베벨/프레임 PBR",
       "slug": "thin-film-soap-bubbles",
       "title": "박막 비눗방울",
       "title_kr": "박막 비눗방울",
@@ -636,8 +636,8 @@
         "카메라-인지 유입"
       ],
       "backend": "WebGPU / TSL",
-      "thumb": "thumbs/thin-film-soap-bubbles__thin-film-soap-bubbles.png",
-      "url": "examples/thin-film-soap-bubbles/thin-film-soap-bubbles/",
+      "thumb": "thumbs/threejs-procedural-materials__thin-film-soap-bubbles.png",
+      "url": "examples/threejs-procedural-materials/thin-film-soap-bubbles/",
       "debug_modes": [
         {
           "value": "final",
@@ -658,9 +658,9 @@
       ]
     },
     {
-      "skill": "procedural-planet-surface",
-      "skill_kr": "procedural-planet-surface",
-      "skill_desc": "",
+      "skill": "threejs-procedural-planets",
+      "skill_kr": "절차적 행성",
+      "skill_desc": "구면 지형, 능선, 크레이터, 바이옴, 절차적 노멀, 고도 필터링",
       "slug": "procedural-planet-surface",
       "title": "절차적 행성 표면",
       "title_kr": "절차적 행성 표면",
@@ -673,8 +673,8 @@
         "절차적 크레이터와 산맥"
       ],
       "backend": "WebGL2 / GLSL planet surface",
-      "thumb": "thumbs/procedural-planet-surface__procedural-planet-surface.png",
-      "url": "examples/procedural-planet-surface/procedural-planet-surface/",
+      "thumb": "thumbs/threejs-procedural-planets__procedural-planet-surface.png",
+      "url": "examples/threejs-procedural-planets/procedural-planet-surface/",
       "debug_modes": [
         {
           "value": "final",
@@ -695,12 +695,12 @@
       ]
     },
     {
-      "skill": "gpu-computed-grass",
-      "skill_kr": "gpu-computed-grass",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vegetation",
+      "skill_kr": "절차적 식생",
+      "skill_desc": "성장 계층, 표면-팔로잉 ivy, GPU-컴퓨티드 그래스, 가지 링, 바람",
       "slug": "gpu-computed-grass",
       "title": "GPU-컴퓨티드 풀",
-      "title_kr": "GPU-컴퓨티드 풀",
+      "title_kr": "GPU 계산 풀",
       "description": "MRT 블레이드 매개변수 생성, 결정론적 지형-적합 배치, Voronoi 클럼프, Bezier 블레이드 폴딩, 바람-대향 요, 거리 LOD/컬링이 결합된 GPU 풀 필드. 노멀/색 페이딩, 투명도, 필드 진단을 함께 제공합니다.",
       "techniques": [
         "MRT 블레이드 매개변수 생성",
@@ -710,8 +710,8 @@
         "노멀·색 페이딩 + 투명도"
       ],
       "backend": "WebGL2 / GLSL MRT instanced vegetation",
-      "thumb": "thumbs/gpu-computed-grass__gpu-computed-grass.png",
-      "url": "examples/gpu-computed-grass/gpu-computed-grass/",
+      "thumb": "thumbs/threejs-procedural-vegetation__gpu-computed-grass.png",
+      "url": "examples/threejs-procedural-vegetation/gpu-computed-grass/",
       "debug_modes": [
         {
           "value": "final",
@@ -736,12 +736,12 @@
       ]
     },
     {
-      "skill": "gpu-culled-flower-field",
-      "skill_kr": "gpu-culled-flower-field",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vegetation",
+      "skill_kr": "절차적 식생",
+      "skill_desc": "성장 계층, 표면-팔로잉 ivy, GPU-컴퓨티드 그래스, 가지 링, 바람",
       "slug": "gpu-culled-flower-field",
       "title": "GPU-컬링 꽃밭",
-      "title_kr": "GPU-컬링 꽃밭",
+      "title_kr": "GPU 컬링 꽃밭",
       "description": "0-레코드 정수 후보 재구성, 32×32 타일 컬링, 3개 가시-ID 스트림, 간접 near/middle/far 드로, 곡선 텍스처드 꽃잎, 정체성-보존 지평선 머리, 루트된 가동-접촉 응답을 갖춘 100만-꽃 가상 필드.",
       "techniques": [
         "가상 주소 + 32×32 타일 컬링",
@@ -751,8 +751,8 @@
         "루트된 가동-접촉 응답"
       ],
       "backend": "Raw WebGPU / WGSL",
-      "thumb": "thumbs/gpu-culled-flower-field__gpu-culled-flower-field.png",
-      "url": "examples/gpu-culled-flower-field/gpu-culled-flower-field/",
+      "thumb": "thumbs/threejs-procedural-vegetation__gpu-culled-flower-field.png",
+      "url": "examples/threejs-procedural-vegetation/gpu-culled-flower-field/",
       "debug_modes": [
         {
           "value": "final",
@@ -773,9 +773,9 @@
       ]
     },
     {
-      "skill": "procedural-surface-ivy",
-      "skill_kr": "procedural-surface-ivy",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vegetation",
+      "skill_kr": "절차적 식생",
+      "skill_desc": "성장 계층, 표면-팔로잉 ivy, GPU-컴퓨티드 그래스, 가지 링, 바람",
       "slug": "procedural-surface-ivy",
       "title": "절차적 표면 아이비",
       "title_kr": "절차적 표면 아이비",
@@ -788,8 +788,8 @@
         "강체 병경-힌지 바람"
       ],
       "backend": "WebGPU / procedural mesh vegetation",
-      "thumb": "thumbs/procedural-surface-ivy__procedural-surface-ivy.png",
-      "url": "examples/procedural-surface-ivy/procedural-surface-ivy/",
+      "thumb": "thumbs/threejs-procedural-vegetation__procedural-surface-ivy.png",
+      "url": "examples/threejs-procedural-vegetation/procedural-surface-ivy/",
       "debug_modes": [
         {
           "value": "final",
@@ -810,12 +810,12 @@
       ]
     },
     {
-      "skill": "structured-ash-growth",
-      "skill_kr": "structured-ash-growth",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vegetation",
+      "skill_kr": "절차적 식생",
+      "skill_desc": "성장 계층, 표면-팔로잉 ivy, GPU-컴퓨티드 그래스, 가지 링, 바람",
       "slug": "structured-ash-growth",
       "title": "구조화 재 성장",
-      "title_kr": "구조화 재 성장",
+      "title_kr": "구조화된 재 성장",
       "description": "재(Ash) 종 프리셋과 연속 규칙, 자식 배치, 잎/머티리얼/바람 계약이 결합된 절차적 나무 시스템. 성장 계층과 렌더링 적응을 분리해 진단 가능한 결과를 만듭니다.",
       "techniques": [
         "재 종 프리셋 + 연속 규칙",
@@ -825,8 +825,8 @@
         "진단 가능한 예산 관리"
       ],
       "backend": "WebGL2 / GLSL",
-      "thumb": "thumbs/structured-ash-growth__structured-ash-growth.png",
-      "url": "examples/structured-ash-growth/structured-ash-growth/",
+      "thumb": "thumbs/threejs-procedural-vegetation__structured-ash-growth.png",
+      "url": "examples/threejs-procedural-vegetation/structured-ash-growth/",
       "debug_modes": [
         {
           "value": "final",
@@ -847,12 +847,12 @@
       ]
     },
     {
-      "skill": "stylized-meadow-grass",
-      "skill_kr": "stylized-meadow-grass",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vegetation",
+      "skill_kr": "절차적 식생",
+      "skill_desc": "성장 계층, 표면-팔로잉 ivy, GPU-컴퓨티드 그래스, 가지 링, 바람",
       "slug": "stylized-meadow-grass",
       "title": "양식화된 목초지 풀",
-      "title_kr": "양식화된 목초지 풀",
+      "title_kr": "스타일라이즈드 목초지 풀",
       "description": "작성된 블레이드-클러스터 지오메트리(절차적 폴백 포함), 이미지-구동 경로 마스킹, 인스턴스별 원점/페이싱 속성, 원-호 루트 바람, 돌풍 전선, 팁 플러터, 색 클럼프, 매크로 변화, 투명도, 림 진단을 갖춘 풀.",
       "techniques": [
         "블레이드-클러스터 지오메트리 + 절차적 폴백",
@@ -862,8 +862,8 @@
         "투명도 + 림 진단"
       ],
       "backend": "WebGL2 / GLSL instanced vegetation",
-      "thumb": "thumbs/stylized-meadow-grass__stylized-meadow-grass.png",
-      "url": "examples/stylized-meadow-grass/stylized-meadow-grass/",
+      "thumb": "thumbs/threejs-procedural-vegetation__stylized-meadow-grass.png",
+      "url": "examples/threejs-procedural-vegetation/stylized-meadow-grass/",
       "debug_modes": [
         {
           "value": "final",
@@ -884,9 +884,9 @@
       ]
     },
     {
-      "skill": "filmic-lens-flare",
-      "skill_kr": "filmic-lens-flare",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vfx",
+      "skill_kr": "절차적 VFX",
+      "skill_desc": "오로라 커튼, 필름릭 렌즈 플레어, WebGPU 복셀 불/연기, 유체장",
       "slug": "filmic-lens-flare",
       "title": "필름릭 렌즈 플레어",
       "title_kr": "필름릭 렌즈 플레어",
@@ -899,8 +899,8 @@
         "파노라마-레이 재구성"
       ],
       "backend": "WebGPU / TSL fullscreen compositor",
-      "thumb": "thumbs/filmic-lens-flare__filmic-lens-flare.png",
-      "url": "examples/filmic-lens-flare/filmic-lens-flare/",
+      "thumb": "thumbs/threejs-procedural-vfx__filmic-lens-flare.png",
+      "url": "examples/threejs-procedural-vfx/filmic-lens-flare/",
       "debug_modes": [
         {
           "value": "final",
@@ -921,12 +921,12 @@
       ]
     },
     {
-      "skill": "holographic-shape-transition",
-      "skill_kr": "holographic-shape-transition",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vfx",
+      "skill_kr": "절차적 VFX",
+      "skill_desc": "오로라 커튼, 필름릭 렌즈 플레어, WebGPU 복셀 불/연기, 유체장",
       "slug": "holographic-shape-transition",
       "title": "홀로그래픽 형상 전이",
-      "title_kr": "홀로그래픽 형상 전이",
+      "title_kr": "홀로그래픽 형태 전환",
       "description": "가산 림 셸(제곱 Fresnel 입사 + 그레이징 폴오프), 풋프린트-필터 객체-공간 스캔라인, 높이-위상 글리치 변위, 인덱스-게이트 참여. 형상 세트 전반 공유 스윕 범위와 보완-디스카드 핸드오프.",
       "techniques": [
         "가산 림 셸 + 제곱 Fresnel 입사",
@@ -936,8 +936,8 @@
         "인덱스-게이트 참여"
       ],
       "backend": "WebGL2 / GLSL additive shell",
-      "thumb": "thumbs/holographic-shape-transition__holographic-shape-transition.png",
-      "url": "examples/holographic-shape-transition/holographic-shape-transition/",
+      "thumb": "thumbs/threejs-procedural-vfx__holographic-shape-transition.png",
+      "url": "examples/threejs-procedural-vfx/holographic-shape-transition/",
       "debug_modes": [
         {
           "value": "final",
@@ -958,9 +958,9 @@
       ]
     },
     {
-      "skill": "raymarched-aurora-curtains",
-      "skill_kr": "raymarched-aurora-curtains",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vfx",
+      "skill_kr": "절차적 VFX",
+      "skill_desc": "오로라 커튼, 필름릭 렌즈 플레어, WebGPU 복셀 불/연기, 유체장",
       "slug": "raymarched-aurora-curtains",
       "title": "레이마칭 오로라 커튼",
       "title_kr": "레이마칭 오로라 커튼",
@@ -973,8 +973,8 @@
         "공유 유니폼 세트"
       ],
       "backend": "WebGL2 / GLSL volumetric raymarch",
-      "thumb": "thumbs/raymarched-aurora-curtains__raymarched-aurora-curtains.png",
-      "url": "examples/raymarched-aurora-curtains/raymarched-aurora-curtains/",
+      "thumb": "thumbs/threejs-procedural-vfx__raymarched-aurora-curtains.png",
+      "url": "examples/threejs-procedural-vfx/raymarched-aurora-curtains/",
       "debug_modes": [
         {
           "value": "final",
@@ -995,9 +995,9 @@
       ]
     },
     {
-      "skill": "reentry-plasma",
-      "skill_kr": "reentry-plasma",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vfx",
+      "skill_kr": "절차적 VFX",
+      "skill_desc": "오로라 커튼, 필름릭 렌즈 플레어, WebGPU 복셀 불/연기, 유체장",
       "slug": "reentry-plasma",
       "title": "재진입 플라즈마",
       "title_kr": "재진입 플라즈마",
@@ -1010,8 +1010,8 @@
         "비-블룸 베이스라인"
       ],
       "backend": "WebGL2 / GLSL additive wake shells",
-      "thumb": "thumbs/reentry-plasma__reentry-plasma.png",
-      "url": "examples/reentry-plasma/reentry-plasma/",
+      "thumb": "thumbs/threejs-procedural-vfx__reentry-plasma.png",
+      "url": "examples/threejs-procedural-vfx/reentry-plasma/",
       "debug_modes": [
         {
           "value": "final",
@@ -1032,9 +1032,9 @@
       ]
     },
     {
-      "skill": "volumetric-fluid-fire",
-      "skill_kr": "volumetric-fluid-fire",
-      "skill_desc": "",
+      "skill": "threejs-procedural-vfx",
+      "skill_kr": "절차적 VFX",
+      "skill_desc": "오로라 커튼, 필름릭 렌즈 플레어, WebGPU 복셀 불/연기, 유체장",
       "slug": "volumetric-fluid-fire",
       "title": "볼류메트릭 유체 불",
       "title_kr": "볼류메트릭 유체 불",
@@ -1047,8 +1047,8 @@
         "보정된 불 프리셋 + 진단"
       ],
       "backend": "WebGPU / TSL compute and volume raymarching",
-      "thumb": "thumbs/volumetric-fluid-fire__volumetric-fluid-fire.png",
-      "url": "examples/volumetric-fluid-fire/volumetric-fluid-fire/",
+      "thumb": "thumbs/threejs-procedural-vfx__volumetric-fluid-fire.png",
+      "url": "examples/threejs-procedural-vfx/volumetric-fluid-fire/",
       "debug_modes": [
         {
           "value": "final",
@@ -1069,12 +1069,12 @@
       ]
     },
     {
-      "skill": "curved-ray-accretion-volume",
-      "skill_kr": "curved-ray-accretion-volume",
-      "skill_desc": "",
+      "skill": "threejs-raymarched-space-effects",
+      "skill_kr": "레이마칭 우주 효과",
+      "skill_desc": "곡선-레이, 블랙홀, 강착 원반, 웜홀 스로트, 렌즈드 천체",
       "slug": "curved-ray-accretion-volume",
       "title": "곡선 레이 강착 볼륨",
-      "title_kr": "곡선 레이 강착 볼륨",
+      "title_kr": "곡선-레이 강착 볼륨",
       "description": "블랙홀 주변 광선을 곡선화해 강착 원반과 라이팅 결합까지 풀 광학 시뮬레이션. 적분기와 적색편이 계산이 일관되게 결합되어 HDR 발광이 사실적으로 보입니다.",
       "techniques": [
         "RK4 곡선-레이 적분기",
@@ -1084,8 +1084,8 @@
         "라이브 카메라-행렬 유니폼"
       ],
       "backend": "WebGL2 / GLSL curved-ray volume",
-      "thumb": "thumbs/curved-ray-accretion-volume__curved-ray-accretion-volume.png",
-      "url": "examples/curved-ray-accretion-volume/curved-ray-accretion-volume/",
+      "thumb": "thumbs/threejs-raymarched-space-effects__curved-ray-accretion-volume.png",
+      "url": "examples/threejs-raymarched-space-effects/curved-ray-accretion-volume/",
       "debug_modes": [
         {
           "value": "final",
@@ -1106,9 +1106,9 @@
       ]
     },
     {
-      "skill": "schwarzschild-geodesic-black-hole",
-      "skill_kr": "schwarzschild-geodesic-black-hole",
-      "skill_desc": "",
+      "skill": "threejs-raymarched-space-effects",
+      "skill_kr": "레이마칭 우주 효과",
+      "skill_desc": "곡선-레이, 블랙홀, 강착 원반, 웜홀 스로트, 렌즈드 천체",
       "slug": "schwarzschild-geodesic-black-hole",
       "title": "슈바르츠실트 측지선 블랙홀",
       "title_kr": "슈바르츠실트 측지선 블랙홀",
@@ -1121,8 +1121,8 @@
         "카메라 의존 적색편이"
       ],
       "backend": "WebGL / GLSL geodesic renderer",
-      "thumb": "thumbs/schwarzschild-geodesic-black-hole__schwarzschild-geodesic-black-hole.png",
-      "url": "examples/schwarzschild-geodesic-black-hole/schwarzschild-geodesic-black-hole/",
+      "thumb": "thumbs/threejs-raymarched-space-effects__schwarzschild-geodesic-black-hole.png",
+      "url": "examples/threejs-raymarched-space-effects/schwarzschild-geodesic-black-hole/",
       "debug_modes": [
         {
           "value": "final",
@@ -1143,12 +1143,12 @@
       ]
     },
     {
-      "skill": "traversable-wormhole-transit",
-      "skill_kr": "traversable-wormhole-transit",
-      "skill_desc": "",
+      "skill": "threejs-raymarched-space-effects",
+      "skill_kr": "레이마칭 우주 효과",
+      "skill_desc": "곡선-레이, 블랙홀, 강착 원반, 웜홀 스로트, 렌즈드 천체",
       "slug": "traversable-wormhole-transit",
       "title": "통과 가능한 웜홀 트랜짓",
-      "title_kr": "통과 가능한 웜홀 트랜짓",
+      "title_kr": "통과 가능한 웜홀 이동",
       "description": "양쪽 좌표계가 일치하는 통과 가능한 웜홀. 출구 좌표가 입구 광선을 받아 적분되며, 광선이 메트릭을 따라 스로트를 통과해 다른 쪽으로 매끄럽게 이어집니다.",
       "techniques": [
         "양쪽 좌표계 일관성",
@@ -1158,8 +1158,8 @@
         "메트릭 파라미터 노출"
       ],
       "backend": "WebGL / GLSL geodesic renderer",
-      "thumb": "thumbs/traversable-wormhole-transit__traversable-wormhole-transit.png",
-      "url": "examples/traversable-wormhole-transit/traversable-wormhole-transit/",
+      "thumb": "thumbs/threejs-raymarched-space-effects__traversable-wormhole-transit.png",
+      "url": "examples/threejs-raymarched-space-effects/traversable-wormhole-transit/",
       "debug_modes": [
         {
           "value": "final",
@@ -1180,12 +1180,12 @@
       ]
     },
     {
-      "skill": "coastal-breaker-ocean",
-      "skill_kr": "coastal-breaker-ocean",
-      "skill_desc": "",
+      "skill": "threejs-spectral-ocean",
+      "skill_kr": "스펙트럼 바다",
+      "skill_desc": "FFT 합성, 하이브리드 FFT/Gerstner, 스넬 창, 총 내부 반사, 거품",
       "slug": "coastal-breaker-ocean",
       "title": "코스트 브레이커 바다",
-      "title_kr": "코스트 브레이커 바다",
+      "title_kr": "해안 파도 바다",
       "description": "FFT 스펙트럼으로 만든 광역 바다 + 하이브리드 Gerstner 큰 파랑 + 스넬 창, 거품, 백워시. 해안 전이가 자연스럽게 끝나도록 마루 응답과 결합됩니다.",
       "techniques": [
         "FFT 스펙트럼 + 하이브리드 Gerstner",
@@ -1195,8 +1195,8 @@
         "바람/페치 길이 파라미터"
       ],
       "backend": "WebGPU / TSL",
-      "thumb": "thumbs/coastal-breaker-ocean__coastal-breaker-ocean.png",
-      "url": "examples/coastal-breaker-ocean/coastal-breaker-ocean/",
+      "thumb": "thumbs/threejs-spectral-ocean__coastal-breaker-ocean.png",
+      "url": "examples/threejs-spectral-ocean/coastal-breaker-ocean/",
       "debug_modes": [
         {
           "value": "final",
@@ -1217,9 +1217,9 @@
       ]
     },
     {
-      "skill": "hybrid-clear-water-ocean",
-      "skill_kr": "hybrid-clear-water-ocean",
-      "skill_desc": "",
+      "skill": "threejs-spectral-ocean",
+      "skill_kr": "스펙트럼 바다",
+      "skill_desc": "FFT 합성, 하이브리드 FFT/Gerstner, 스넬 창, 총 내부 반사, 거품",
       "slug": "hybrid-clear-water-ocean",
       "title": "하이브리드 맑은 물 바다",
       "title_kr": "하이브리드 맑은 물 바다",
@@ -1232,8 +1232,8 @@
         "바람/페치 길이 파라미터"
       ],
       "backend": "WebGL2 fragment FFT plus GLSL hybrid water",
-      "thumb": "thumbs/hybrid-clear-water-ocean__hybrid-clear-water-ocean.png",
-      "url": "examples/hybrid-clear-water-ocean/hybrid-clear-water-ocean/",
+      "thumb": "thumbs/threejs-spectral-ocean__hybrid-clear-water-ocean.png",
+      "url": "examples/threejs-spectral-ocean/hybrid-clear-water-ocean/",
       "debug_modes": [
         {
           "value": "final",
@@ -1254,9 +1254,9 @@
       ]
     },
     {
-      "skill": "spectral-cascade-ocean",
-      "skill_kr": "spectral-cascade-ocean",
-      "skill_desc": "",
+      "skill": "threejs-spectral-ocean",
+      "skill_kr": "스펙트럼 바다",
+      "skill_desc": "FFT 합성, 하이브리드 FFT/Gerstner, 스넬 창, 총 내부 반사, 거품",
       "slug": "spectral-cascade-ocean",
       "title": "스펙트럼 캐스케이드 바다",
       "title_kr": "스펙트럼 캐스케이드 바다",
@@ -1269,8 +1269,8 @@
         "바람/페치 길이 파라미터"
       ],
       "backend": "WebGL2 fragment FFT inspection path",
-      "thumb": "thumbs/spectral-cascade-ocean__spectral-cascade-ocean.png",
-      "url": "examples/spectral-cascade-ocean/spectral-cascade-ocean/",
+      "thumb": "thumbs/threejs-spectral-ocean__spectral-cascade-ocean.png",
+      "url": "examples/threejs-spectral-ocean/spectral-cascade-ocean/",
       "debug_modes": [
         {
           "value": "final",
@@ -1291,12 +1291,12 @@
       ]
     },
     {
-      "skill": "stylized-above-below-ocean",
-      "skill_kr": "stylized-above-below-ocean",
-      "skill_desc": "",
+      "skill": "threejs-spectral-ocean",
+      "skill_kr": "스펙트럼 바다",
+      "skill_desc": "FFT 합성, 하이브리드 FFT/Gerstner, 스넬 창, 총 내부 반사, 거품",
       "slug": "stylized-above-below-ocean",
       "title": "양식화된 수면 위·아래 바다",
-      "title_kr": "양식화된 수면 위·아래 바다",
+      "title_kr": "스타일라이즈드 수면 위·아래 바다",
       "description": "수면 위·아래를 하나의 일관된 머티리얼 시스템으로 다룹니다. 굴절·흡수·산란이 양쪽에서 자연스럽게 전환됩니다.",
       "techniques": [
         "수면 위·아래 일관 머티리얼",
@@ -1306,8 +1306,8 @@
         "바람/페치 길이 파라미터"
       ],
       "backend": "WebGL2 fragment FFT plus GLSL surface, seafloor, and underwater composite",
-      "thumb": "thumbs/stylized-above-below-ocean__stylized-above-below-ocean.png",
-      "url": "examples/stylized-above-below-ocean/stylized-above-below-ocean/",
+      "thumb": "thumbs/threejs-spectral-ocean__stylized-above-below-ocean.png",
+      "url": "examples/threejs-spectral-ocean/stylized-above-below-ocean/",
       "debug_modes": [
         {
           "value": "final",
@@ -1328,9 +1328,9 @@
       ]
     },
     {
-      "skill": "submerged-snell-ocean",
-      "skill_kr": "submerged-snell-ocean",
-      "skill_desc": "",
+      "skill": "threejs-spectral-ocean",
+      "skill_kr": "스펙트럼 바다",
+      "skill_desc": "FFT 합성, 하이브리드 FFT/Gerstner, 스넬 창, 총 내부 반사, 거품",
       "slug": "submerged-snell-ocean",
       "title": "잠수 스넬 바다",
       "title_kr": "잠수 스넬 바다",
@@ -1343,8 +1343,8 @@
         "바람/페치 길이 파라미터"
       ],
       "backend": "WebGPU / TSL compute, node materials, and render pipeline",
-      "thumb": "thumbs/submerged-snell-ocean__submerged-snell-ocean.png",
-      "url": "examples/submerged-snell-ocean/submerged-snell-ocean/",
+      "thumb": "thumbs/threejs-spectral-ocean__submerged-snell-ocean.png",
+      "url": "examples/threejs-spectral-ocean/submerged-snell-ocean/",
       "debug_modes": [
         {
           "value": "final",
@@ -1365,9 +1365,9 @@
       ]
     },
     {
-      "skill": "refractive-window-rain",
-      "skill_kr": "refractive-window-rain",
-      "skill_desc": "",
+      "skill": "threejs-temporal-surfaces",
+      "skill_kr": "시간적 표면",
+      "skill_desc": "터치 이력, 프로스트, 창문 빗물, 배경 굴절, 블러",
       "slug": "refractive-window-rain",
       "title": "굴절 창문 빗물",
       "title_kr": "굴절 창문 빗물",
@@ -1380,8 +1380,8 @@
         "입력 이벤트-표면 결합"
       ],
       "backend": "WebGL2 / GLSL refractive surface",
-      "thumb": "thumbs/refractive-window-rain__refractive-window-rain.png",
-      "url": "examples/refractive-window-rain/refractive-window-rain/",
+      "thumb": "thumbs/threejs-temporal-surfaces__refractive-window-rain.png",
+      "url": "examples/threejs-temporal-surfaces/refractive-window-rain/",
       "debug_modes": [
         {
           "value": "final",
@@ -1402,9 +1402,9 @@
       ]
     },
     {
-      "skill": "touch-history-frost",
-      "skill_kr": "touch-history-frost",
-      "skill_desc": "",
+      "skill": "threejs-temporal-surfaces",
+      "skill_kr": "시간적 표면",
+      "skill_desc": "터치 이력, 프로스트, 창문 빗물, 배경 굴절, 블러",
       "slug": "touch-history-frost",
       "title": "터치 이력 프로스트",
       "title_kr": "터치 이력 프로스트",
@@ -1417,8 +1417,8 @@
         "입력 이벤트-표면 결합"
       ],
       "backend": "WebGL2 / GLSL render-target pipeline",
-      "thumb": "thumbs/touch-history-frost__touch-history-frost.png",
-      "url": "examples/touch-history-frost/touch-history-frost/",
+      "thumb": "thumbs/threejs-temporal-surfaces__touch-history-frost.png",
+      "url": "examples/threejs-temporal-surfaces/touch-history-frost/",
       "debug_modes": [
         {
           "value": "final",
@@ -1439,12 +1439,12 @@
       ]
     },
     {
-      "skill": "weather-volume-clouds",
-      "skill_kr": "weather-volume-clouds",
-      "skill_desc": "",
+      "skill": "threejs-volumetric-clouds",
+      "skill_kr": "볼류메트릭 구름",
+      "skill_desc": "날씨-모양 밀도, 바운디드 레이마칭, 클라우드 라이팅, 그림자",
       "slug": "weather-volume-clouds",
       "title": "날씨 볼륨 구름",
-      "title_kr": "날씨 볼륨 구름",
+      "title_kr": "날씨 볼류메트릭 구름",
       "description": "3D 노이즈 밀도와 적운·층운·권운 프로파일이 결합된 볼류메트릭 구름. 태양 방향, 비, 자체-그림자, HG 위상 함수가 일관된 라이팅을 만듭니다.",
       "techniques": [
         "3D 노이즈 밀도 + 저주파 모양·고주파 디테일",
@@ -1454,8 +1454,8 @@
         "거리 LOD + 천이 안정화"
       ],
       "backend": "WebGL2 / package CloudsEffect and postprocessing",
-      "thumb": "thumbs/weather-volume-clouds__weather-volume-clouds.png",
-      "url": "examples/weather-volume-clouds/weather-volume-clouds/",
+      "thumb": "thumbs/threejs-volumetric-clouds__weather-volume-clouds.png",
+      "url": "examples/threejs-volumetric-clouds/weather-volume-clouds/",
       "debug_modes": [
         {
           "value": "final",
@@ -1476,9 +1476,9 @@
       ]
     },
     {
-      "skill": "analytic-wave-optics",
-      "skill_kr": "analytic-wave-optics",
-      "skill_desc": "",
+      "skill": "threejs-water-optics",
+      "skill_kr": "물 광학",
+      "skill_desc": "해석적 파동, 풀 높이필드, 객체 리플, 굴절, 흡수, 반사",
       "slug": "analytic-wave-optics",
       "title": "해석적 파동 광학",
       "title_kr": "해석적 파동 광학",
@@ -1491,8 +1491,8 @@
         "풀-높이 일관 라이팅"
       ],
       "backend": "WebGL2 / GLSL analytic water",
-      "thumb": "thumbs/analytic-wave-optics__analytic-wave-optics.png",
-      "url": "examples/analytic-wave-optics/analytic-wave-optics/",
+      "thumb": "thumbs/threejs-water-optics__analytic-wave-optics.png",
+      "url": "examples/threejs-water-optics/analytic-wave-optics/",
       "debug_modes": [
         {
           "value": "final",
@@ -1513,9 +1513,9 @@
       ]
     },
     {
-      "skill": "interactive-pool-volume",
-      "skill_kr": "interactive-pool-volume",
-      "skill_desc": "",
+      "skill": "threejs-water-optics",
+      "skill_kr": "물 광학",
+      "skill_desc": "해석적 파동, 풀 높이필드, 객체 리플, 굴절, 흡수, 반사",
       "slug": "interactive-pool-volume",
       "title": "인터랙티브 풀 볼륨",
       "title_kr": "인터랙티브 풀 볼륨",
@@ -1528,8 +1528,8 @@
         "인터랙션 매핑"
       ],
       "backend": "WebGL2 / GLSL heightfield water",
-      "thumb": "thumbs/interactive-pool-volume__interactive-pool-volume.png",
-      "url": "examples/interactive-pool-volume/interactive-pool-volume/",
+      "thumb": "thumbs/threejs-water-optics__interactive-pool-volume.png",
+      "url": "examples/threejs-water-optics/interactive-pool-volume/",
       "debug_modes": [
         {
           "value": "final",

@@ -156,14 +156,14 @@ function rewrite(content) {
     .replace(/(import\s*\(\s*["'])\/example-gallery\//g, "$1/example-gallery/");
 }
 
-async function discover(root) {
+async function discover(root, segments = []) {
   const found = [];
   let entries = [];
   try { entries = await readdir(root, { withFileTypes: true }); } catch { return found; }
   for (const e of entries) {
     if (!e.isDirectory()) continue;
     const dir = path.join(root, e.name);
-    const next = [e.name];
+    const next = [...segments, e.name];
     if (await isFile(path.join(dir, "scene.js")) && await isFile(path.join(dir, "example.json"))) {
       found.push({ dir, segments: next });
     } else {

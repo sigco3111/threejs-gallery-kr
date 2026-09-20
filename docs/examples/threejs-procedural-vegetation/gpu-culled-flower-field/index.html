@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="refresh" content="0; url=../../../example-gallery/runtime/index.html?module=%2Fexamples%2Fthreejs-procedural-vegetation%2Fgpu-culled-flower-field%2Fscene.js&krTitle=GPU%20%EC%BB%AC%EB%A7%81%20%EA%BD%83%EB%B0%AD&krSkill=%EC%A0%88%EC%B0%A8%EC%A0%81%20%EC%8B%9D%EC%83%9D&krDesc=0-%EB%A0%88%EC%BD%94%EB%93%9C%20%EC%A0%95%EC%88%98%20%ED%9B%84%EB%B3%B4%20%EC%9E%AC%EA%B5%AC%EC%84%B1%2C%2032%C3%9732%20%ED%83%80%EC%9D%BC%20%EC%BB%AC%EB%A7%81%2C%203%EA%B0%9C%20%EA%B0%80%EC%8B%9C-ID%20%EC%8A%A4%ED%8A%B8%EB%A6%BC%2C%20%EA%B0%84%EC%A0%91%20near%2Fmiddle%2Ffar%20%EB%93%9C%EB%A1%9C%2C%20%EA%B3%A1%EC%84%A0%20%ED%85%8D%EC%8A%A4%EC%B2%98%EB%93%9C%20%EA%BD%83%EC%9E%8E%2C%20%EC%A0%95%EC%B2%B4%EC%84%B1-%EB%B3%B4%EC%A1%B4%20%EC%A7%80%ED%8F%89%EC%84%A0%20%EB%A8%B8%EB%A6%AC%2C%20%EB%A3%A8%ED%8A%B8%EB%90%9C%20%EA%B0%80%EB%8F%99-%EC%A0%91%EC%B4%89%20%EC%9D%91%EB%8B%B5%EC%9D%84%20%EA%B0%96%EC%B6%98%20100%EB%A7%8C-%EA%BD%83%20%EA%B0%80%EC%83%81%20%ED%95%84%EB%93%9C.&krTech=%EA%B0%80%EC%83%81%20%EC%A3%BC%EC%86%8C%20%2B%2032%C3%9732%20%ED%83%80%EC%9D%BC%20%EC%BB%AC%EB%A7%81%7C3%20%EA%B0%80%EC%8B%9C-ID%20%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%2B%20%EA%B0%84%EC%A0%91%20%EB%93%9C%EB%A1%9C%7C%EA%B3%A1%EC%84%A0%20%ED%85%8D%EC%8A%A4%EC%B2%98%EB%93%9C%20%EA%BD%83%EC%9E%8E%7C%EC%A0%95%EC%B2%B4%EC%84%B1-%EB%B3%B4%EC%A1%B4%20%EC%A7%80%ED%8F%89%EC%84%A0%20%EB%A8%B8%EB%A6%AC%7C%EB%A3%A8%ED%8A%B8%EB%90%9C%20%EA%B0%80%EB%8F%99-%EC%A0%91%EC%B4%89%20%EC%9D%91%EB%8B%B5&krBack=..%2F..%2F..%2F..%2F&galleryBackend=webgpu" />
+<title>GPU 컬링 꽃밭 — 갤러리</title>
+<style>
+body { margin: 0; height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: #020305; color: #e8edf2; font-family: system-ui, -apple-system, sans-serif; }
+.loader { text-align: center; max-width: 480px; padding: 0 24px; }
+.loader h1 { margin: 0 0 8px; font-size: 18px; font-weight: 600; }
+.loader .skill { font-size: 11px; color: #8aa4d1; text-transform: uppercase; letter-spacing: 0.04em; }
+.loader p { color: #8a96a8; font-size: 13px; }
+.loader a { color: #6ec1ff; text-decoration: none; }
+.loader a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<div class="loader">
+  <div class="skill">절차적 식생</div>
+  <h1>GPU 컬링 꽃밭</h1>
+  <p>씬을 로딩하고 있습니다…</p>
+  <p><a href="../../../example-gallery/runtime/index.html?module=%2Fexamples%2Fthreejs-procedural-vegetation%2Fgpu-culled-flower-field%2Fscene.js&krTitle=GPU%20%EC%BB%AC%EB%A7%81%20%EA%BD%83%EB%B0%AD&krSkill=%EC%A0%88%EC%B0%A8%EC%A0%81%20%EC%8B%9D%EC%83%9D&krDesc=0-%EB%A0%88%EC%BD%94%EB%93%9C%20%EC%A0%95%EC%88%98%20%ED%9B%84%EB%B3%B4%20%EC%9E%AC%EA%B5%AC%EC%84%B1%2C%2032%C3%9732%20%ED%83%80%EC%9D%BC%20%EC%BB%AC%EB%A7%81%2C%203%EA%B0%9C%20%EA%B0%80%EC%8B%9C-ID%20%EC%8A%A4%ED%8A%B8%EB%A6%BC%2C%20%EA%B0%84%EC%A0%91%20near%2Fmiddle%2Ffar%20%EB%93%9C%EB%A1%9C%2C%20%EA%B3%A1%EC%84%A0%20%ED%85%8D%EC%8A%A4%EC%B2%98%EB%93%9C%20%EA%BD%83%EC%9E%8E%2C%20%EC%A0%95%EC%B2%B4%EC%84%B1-%EB%B3%B4%EC%A1%B4%20%EC%A7%80%ED%8F%89%EC%84%A0%20%EB%A8%B8%EB%A6%AC%2C%20%EB%A3%A8%ED%8A%B8%EB%90%9C%20%EA%B0%80%EB%8F%99-%EC%A0%91%EC%B4%89%20%EC%9D%91%EB%8B%B5%EC%9D%84%20%EA%B0%96%EC%B6%98%20100%EB%A7%8C-%EA%BD%83%20%EA%B0%80%EC%83%81%20%ED%95%84%EB%93%9C.&krTech=%EA%B0%80%EC%83%81%20%EC%A3%BC%EC%86%8C%20%2B%2032%C3%9732%20%ED%83%80%EC%9D%BC%20%EC%BB%AC%EB%A7%81%7C3%20%EA%B0%80%EC%8B%9C-ID%20%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%2B%20%EA%B0%84%EC%A0%91%20%EB%93%9C%EB%A1%9C%7C%EA%B3%A1%EC%84%A0%20%ED%85%8D%EC%8A%A4%EC%B2%98%EB%93%9C%20%EA%BD%83%EC%9E%8E%7C%EC%A0%95%EC%B2%B4%EC%84%B1-%EB%B3%B4%EC%A1%B4%20%EC%A7%80%ED%8F%89%EC%84%A0%20%EB%A8%B8%EB%A6%AC%7C%EB%A3%A8%ED%8A%B8%EB%90%9C%20%EA%B0%80%EB%8F%99-%EC%A0%91%EC%B4%89%20%EC%9D%91%EB%8B%B5&krBack=..%2F..%2F..%2F..%2F&galleryBackend=webgpu">여기를 눌러 계속</a></p>
+</div>
+<script>window.location.replace("../../../example-gallery/runtime/index.html?module=%2Fexamples%2Fthreejs-procedural-vegetation%2Fgpu-culled-flower-field%2Fscene.js&krTitle=GPU%20%EC%BB%AC%EB%A7%81%20%EA%BD%83%EB%B0%AD&krSkill=%EC%A0%88%EC%B0%A8%EC%A0%81%20%EC%8B%9D%EC%83%9D&krDesc=0-%EB%A0%88%EC%BD%94%EB%93%9C%20%EC%A0%95%EC%88%98%20%ED%9B%84%EB%B3%B4%20%EC%9E%AC%EA%B5%AC%EC%84%B1%2C%2032%C3%9732%20%ED%83%80%EC%9D%BC%20%EC%BB%AC%EB%A7%81%2C%203%EA%B0%9C%20%EA%B0%80%EC%8B%9C-ID%20%EC%8A%A4%ED%8A%B8%EB%A6%BC%2C%20%EA%B0%84%EC%A0%91%20near%2Fmiddle%2Ffar%20%EB%93%9C%EB%A1%9C%2C%20%EA%B3%A1%EC%84%A0%20%ED%85%8D%EC%8A%A4%EC%B2%98%EB%93%9C%20%EA%BD%83%EC%9E%8E%2C%20%EC%A0%95%EC%B2%B4%EC%84%B1-%EB%B3%B4%EC%A1%B4%20%EC%A7%80%ED%8F%89%EC%84%A0%20%EB%A8%B8%EB%A6%AC%2C%20%EB%A3%A8%ED%8A%B8%EB%90%9C%20%EA%B0%80%EB%8F%99-%EC%A0%91%EC%B4%89%20%EC%9D%91%EB%8B%B5%EC%9D%84%20%EA%B0%96%EC%B6%98%20100%EB%A7%8C-%EA%BD%83%20%EA%B0%80%EC%83%81%20%ED%95%84%EB%93%9C.&krTech=%EA%B0%80%EC%83%81%20%EC%A3%BC%EC%86%8C%20%2B%2032%C3%9732%20%ED%83%80%EC%9D%BC%20%EC%BB%AC%EB%A7%81%7C3%20%EA%B0%80%EC%8B%9C-ID%20%EC%8A%A4%ED%8A%B8%EB%A6%BC%20%2B%20%EA%B0%84%EC%A0%91%20%EB%93%9C%EB%A1%9C%7C%EA%B3%A1%EC%84%A0%20%ED%85%8D%EC%8A%A4%EC%B2%98%EB%93%9C%20%EA%BD%83%EC%9E%8E%7C%EC%A0%95%EC%B2%B4%EC%84%B1-%EB%B3%B4%EC%A1%B4%20%EC%A7%80%ED%8F%89%EC%84%A0%20%EB%A8%B8%EB%A6%AC%7C%EB%A3%A8%ED%8A%B8%EB%90%9C%20%EA%B0%80%EB%8F%99-%EC%A0%91%EC%B4%89%20%EC%9D%91%EB%8B%B5&krBack=..%2F..%2F..%2F..%2F&galleryBackend=webgpu");</script>
+</body>
+</html>
