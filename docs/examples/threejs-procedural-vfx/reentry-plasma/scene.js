@@ -1,5 +1,5 @@
 import { createReentryPlasma } from
-  "/skills/threejs-procedural-vfx/examples/reentry-plasma/reentry-plasma.js";
+  "/threejs-gallery-kr/skills/threejs-procedural-vfx/examples/reentry-plasma/reentry-plasma.js";
 
 export default {
   backend: "webgl",

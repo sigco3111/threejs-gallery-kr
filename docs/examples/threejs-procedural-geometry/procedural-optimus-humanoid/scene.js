@@ -1,7 +1,7 @@
 import * as THREE from "three/webgpu";
 import {
   createProceduralOptimusHumanoid,
-} from "/skills/threejs-procedural-geometry/examples/procedural-optimus-humanoid/procedural-optimus-humanoid.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-geometry/examples/procedural-optimus-humanoid/procedural-optimus-humanoid.js";
 
 export default {
   backend: "webgpu",

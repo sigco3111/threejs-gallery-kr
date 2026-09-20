@@ -11,12 +11,12 @@ export const rainPuddleDebugModes = new Map([
 
 export const wetPuddleRainAssetPaths = {
   road: {
-    map: "/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/road/aerial_asphalt_01_diff_2k.jpg",
-    normalMap: "/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/road/aerial_asphalt_01_nor_gl_2k.jpg",
-    roughnessMap: "/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/road/aerial_asphalt_01_rough_2k.jpg",
-    aoMap: "/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/road/aerial_asphalt_01_ao_2k.jpg",
+    map: "/threejs-gallery-kr/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/road/aerial_asphalt_01_diff_2k.jpg",
+    normalMap: "/threejs-gallery-kr/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/road/aerial_asphalt_01_nor_gl_2k.jpg",
+    roughnessMap: "/threejs-gallery-kr/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/road/aerial_asphalt_01_rough_2k.jpg",
+    aoMap: "/threejs-gallery-kr/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/road/aerial_asphalt_01_ao_2k.jpg",
   },
-  splashFlipbook: "/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/Splash.png",
+  splashFlipbook: "/threejs-gallery-kr/skills/threejs-precipitation-surfaces/assets/wet-puddle-rain/Splash.png",
 };
 
 const glNoise = `

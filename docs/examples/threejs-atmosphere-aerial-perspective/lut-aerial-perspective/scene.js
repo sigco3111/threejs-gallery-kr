@@ -16,7 +16,7 @@ import {
   getMoonDirectionECEF,
   getSunDirectionECEF,
   radians,
-} from "/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/atmosphere-effect.js";
+} from "/threejs-gallery-kr/skills/threejs-atmosphere-aerial-perspective/examples/lut-aerial-perspective/atmosphere-effect.js";
 
 const moduleStartTime = performance.now();
 const referenceDate = new Date("2000-06-01T10:00:00Z");
@@ -426,7 +426,7 @@ export default {
       new PrecomputedTexturesLoader()
         .setTypeFromRenderer(renderer)
         .load(
-          "/skills/threejs-atmosphere-aerial-perspective/assets/lut-aerial-perspective",
+          "/threejs-gallery-kr/skills/threejs-atmosphere-aerial-perspective/assets/lut-aerial-perspective",
           resolve,
           undefined,
           reject,

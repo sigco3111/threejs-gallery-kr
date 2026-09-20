@@ -1,7 +1,7 @@
 import { EXRLoader } from "three/addons/loaders/EXRLoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { AgXToneMapping } from "three/webgpu";
-import { SpectralDispersiveGlass } from "/skills/threejs-procedural-materials/examples/spectral-dispersive-glass/spectral-glass-material.js";
+import { SpectralDispersiveGlass } from "/threejs-gallery-kr/skills/threejs-procedural-materials/examples/spectral-dispersive-glass/spectral-glass-material.js";
 
 // Normalised subject height in world units. The glass example derives its
 // fallback thickness and maximum interior segment from the subject's bounding

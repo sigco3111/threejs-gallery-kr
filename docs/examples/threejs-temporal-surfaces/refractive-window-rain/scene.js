@@ -2,7 +2,7 @@ import * as THREE from "three";
 import {
   createWindowRainMaterial,
   updateWindowRainMaterial,
-} from "/skills/threejs-temporal-surfaces/examples/refractive-window-rain/window-rain-effect.js";
+} from "/threejs-gallery-kr/skills/threejs-temporal-surfaces/examples/refractive-window-rain/window-rain-effect.js";
 
 export default {
   renderer: {
@@ -26,7 +26,7 @@ export default {
     const background = await loader.loadAsync(resolveAsset("./assets/background.webp"));
     background.colorSpace = THREE.SRGBColorSpace;
     const fragmentShader = await fetch(
-      "/skills/threejs-temporal-surfaces/examples/refractive-window-rain/rain-window.frag",
+      "/threejs-gallery-kr/skills/threejs-temporal-surfaces/examples/refractive-window-rain/rain-window.frag",
     ).then((response) => response.text());
     const material = createWindowRainMaterial({
       background,

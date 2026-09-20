@@ -1,6 +1,6 @@
 import {
   GpuCulledFlowerField,
-} from "/skills/threejs-procedural-vegetation/examples/gpu-culled-flower-field/gpu-culled-flower-field.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-vegetation/examples/gpu-culled-flower-field/gpu-culled-flower-field.js";
 
 export default {
   backend: "raw-webgpu",
@@ -37,8 +37,8 @@ export default {
         seed: 4177,
       },
       {
-        grassAtlasUrl: "/skills/threejs-procedural-vegetation/assets/gpu-culled-flower-field/painted-grass-atlas.png",
-        petalAtlasUrl: "/skills/threejs-procedural-vegetation/assets/gpu-culled-flower-field/flower-petal-variants.png",
+        grassAtlasUrl: "/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/gpu-culled-flower-field/painted-grass-atlas.png",
+        petalAtlasUrl: "/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/gpu-culled-flower-field/flower-petal-variants.png",
       },
     );
     await field.init();

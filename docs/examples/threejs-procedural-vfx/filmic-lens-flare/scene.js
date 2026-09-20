@@ -6,7 +6,7 @@ import {
   createFilmicLensFlare,
   detectHdrSun,
   solvePanoramaView,
-} from "/skills/threejs-procedural-vfx/examples/filmic-lens-flare/filmic-lens-flare.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-vfx/examples/filmic-lens-flare/filmic-lens-flare.js";
 
 const forward = new THREE.Vector3();
 const right = new THREE.Vector3();

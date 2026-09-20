@@ -1,5 +1,5 @@
 import { createProceduralPlanetSurface } from
-  "/skills/threejs-procedural-planets/examples/procedural-planet-surface/planet-system.js";
+  "/threejs-gallery-kr/skills/threejs-procedural-planets/examples/procedural-planet-surface/planet-system.js";
 
 export default {
   renderer: {

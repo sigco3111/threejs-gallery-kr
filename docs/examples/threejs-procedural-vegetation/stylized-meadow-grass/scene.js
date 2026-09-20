@@ -4,7 +4,7 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import {
   createStylizedGrassField,
   stylizedMeadowGrassAssetPaths,
-} from "/skills/threejs-procedural-vegetation/examples/stylized-meadow-grass/grass-system.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-vegetation/examples/stylized-meadow-grass/grass-system.js";
 
 const GROUND_SIZE = 40;
 

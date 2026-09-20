@@ -11,7 +11,7 @@ import {
   loadWetPuddleRainTextures,
   rainPuddleDebugModes,
   wetPuddleRainAssetPaths,
-} from "/skills/threejs-precipitation-surfaces/examples/wet-puddle-rain/rain-puddle-system.js";
+} from "/threejs-gallery-kr/skills/threejs-precipitation-surfaces/examples/wet-puddle-rain/rain-puddle-system.js";
 
 async function loadTrashMaterial(resolveAsset) {
   const loader = new THREE.TextureLoader();

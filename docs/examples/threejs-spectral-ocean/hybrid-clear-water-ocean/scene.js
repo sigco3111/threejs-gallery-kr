@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import { SpectralOceanSystem } from
-  "/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/ocean-system.js";
+  "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/ocean-system.js";
 import { validateFragmentIFFT } from
-  "/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/fft-pipeline.js";
+  "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/fft-pipeline.js";
 import {
   buildHybridSwell,
   createClearWaterSandMaterial,
@@ -11,7 +11,7 @@ import {
   hybridOceanDebugModes,
   updateClearWaterSandMaterial,
   updateHybridOceanMaterial,
-} from "/skills/threejs-spectral-ocean/examples/hybrid-clear-water-ocean/hybrid-ocean-material.js";
+} from "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/hybrid-clear-water-ocean/hybrid-ocean-material.js";
 
 async function loadTexture(url, colorSpace = THREE.SRGBColorSpace) {
   const texture = await new THREE.TextureLoader().loadAsync(url);

@@ -1,5 +1,5 @@
 import { FrostSurfaceEffect } from
-  "/skills/threejs-temporal-surfaces/examples/touch-history-frost/frost-surface-effect.js";
+  "/threejs-gallery-kr/skills/threejs-temporal-surfaces/examples/touch-history-frost/frost-surface-effect.js";
 
 export default {
   renderer: {
@@ -22,13 +22,13 @@ export default {
         "/examples/threejs-temporal-surfaces/touch-history-frost/assets/winter_forest.jpeg",
       ),
       loader.loadAsync(
-        "/skills/threejs-temporal-surfaces/assets/touch-history-frost/noise.webp",
+        "/threejs-gallery-kr/skills/threejs-temporal-surfaces/assets/touch-history-frost/noise.webp",
       ),
       loader.loadAsync(
-        "/skills/threejs-temporal-surfaces/assets/touch-history-frost/main-normal.webp",
+        "/threejs-gallery-kr/skills/threejs-temporal-surfaces/assets/touch-history-frost/main-normal.webp",
       ),
       loader.loadAsync(
-        "/skills/threejs-temporal-surfaces/assets/touch-history-frost/sub-normal.webp",
+        "/threejs-gallery-kr/skills/threejs-temporal-surfaces/assets/touch-history-frost/sub-normal.webp",
       ),
     ]);
 

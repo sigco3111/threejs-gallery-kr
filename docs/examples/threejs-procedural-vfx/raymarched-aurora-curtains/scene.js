@@ -3,7 +3,7 @@ import {
   AURORA_PROBE_SIZE,
   AURORA_VOLUME_GLSL,
   createAuroraCurtains,
-} from "/skills/threejs-procedural-vfx/examples/raymarched-aurora-curtains/aurora-curtains.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-vfx/examples/raymarched-aurora-curtains/aurora-curtains.js";
 import { createPolarNightSky } from "./polar-night-sky.js";
 import { createSnowDesert } from "./snow-desert.js";
 

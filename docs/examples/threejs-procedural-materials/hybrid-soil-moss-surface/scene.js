@@ -3,8 +3,8 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import {
   createHybridSoilMossSurface,
   setHybridSoilMossDebugMode,
-} from "/skills/threejs-procedural-materials/examples/hybrid-soil-moss-surface/hybrid-soil-moss-surface.js";
-import { createModelMossAccumulation } from "/skills/threejs-procedural-materials/examples/hybrid-soil-moss-surface/model-moss-accumulation.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-materials/examples/hybrid-soil-moss-surface/hybrid-soil-moss-surface.js";
+import { createModelMossAccumulation } from "/threejs-gallery-kr/skills/threejs-procedural-materials/examples/hybrid-soil-moss-surface/model-moss-accumulation.js";
 
 const CAR_URL = "/examples/threejs-precipitation-surfaces/snow-accumulation/assets/old_rusty_car_2.glb";
 
@@ -48,7 +48,7 @@ export default {
     scene.add(key, fill, rim, rim.target, new THREE.AmbientLight(0x3a2f24, 0.4));
 
     const soil = await createHybridSoilMossSurface({
-      textureBaseUrl: "/skills/threejs-procedural-materials/assets/hybrid-soil-moss-surface",
+      textureBaseUrl: "/threejs-gallery-kr/skills/threejs-procedural-materials/assets/hybrid-soil-moss-surface",
       anisotropy: renderer.capabilities?.getMaxAnisotropy?.() ?? 4,
     });
     soil.castShadow = true;

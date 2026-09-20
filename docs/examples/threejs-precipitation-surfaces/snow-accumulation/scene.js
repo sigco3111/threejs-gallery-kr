@@ -18,7 +18,7 @@ import {
   createSnow,
   createSnowyGroundMaterial,
   snowDebugModes,
-} from "/skills/threejs-precipitation-surfaces/examples/snow-accumulation/snow-system.js";
+} from "/threejs-gallery-kr/skills/threejs-precipitation-surfaces/examples/snow-accumulation/snow-system.js";
 
 async function loadAsphaltTextures(resolveAsset, renderer) {
   const loader = new THREE.TextureLoader();

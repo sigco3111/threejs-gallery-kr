@@ -1,6 +1,6 @@
 import {
   createSchwarzschildGeodesicBlackHoleEffect,
-} from "/skills/threejs-raymarched-space-effects/examples/schwarzschild-geodesic-black-hole/geodesic-black-hole-effect.js";
+} from "/threejs-gallery-kr/skills/threejs-raymarched-space-effects/examples/schwarzschild-geodesic-black-hole/geodesic-black-hole-effect.js";
 
 export default {
   renderer: {

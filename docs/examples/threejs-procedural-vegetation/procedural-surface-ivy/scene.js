@@ -5,7 +5,7 @@ import {
   disposeRaycastIndex,
   indexForRaycasts,
   windSettings,
-} from "/skills/threejs-procedural-vegetation/examples/procedural-surface-ivy/ivy-effect.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-vegetation/examples/procedural-surface-ivy/ivy-effect.js";
 
 function makeStroke() {
   const samples = [];

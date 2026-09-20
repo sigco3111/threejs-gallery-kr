@@ -1,8 +1,8 @@
 import * as THREE from "three";
 import { SpectralOceanSystem } from
-  "/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/ocean-system.js";
+  "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/ocean-system.js";
 import { validateFragmentIFFT } from
-  "/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/fft-pipeline.js";
+  "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/fft-pipeline.js";
 import {
   createStylizedOceanSkyMaterial,
   createStylizedOceanSurfaceMaterial,
@@ -11,7 +11,7 @@ import {
   stylizedAboveBelowOceanAssetPaths,
   stylizedOceanDebugModes,
   updateStylizedOceanMaterials,
-} from "/skills/threejs-spectral-ocean/examples/stylized-above-below-ocean/stylized-ocean-material.js";
+} from "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/stylized-above-below-ocean/stylized-ocean-material.js";
 
 const ABOVE_CAMERA = new THREE.Vector3(0, 40, 200);
 const ABOVE_TARGET = new THREE.Vector3(0, 0, 0);

@@ -1,5 +1,5 @@
 import * as THREE from "three/webgpu";
-import { createSilhouetteReliefSystem } from "/skills/threejs-parallax-occlusion-mapping/examples/silhouette-relief/silhouette-relief-system.js";
+import { createSilhouetteReliefSystem } from "/threejs-gallery-kr/skills/threejs-parallax-occlusion-mapping/examples/silhouette-relief/silhouette-relief-system.js";
 
 export default {
   backend: "webgpu",

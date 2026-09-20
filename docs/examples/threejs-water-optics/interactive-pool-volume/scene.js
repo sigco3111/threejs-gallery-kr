@@ -9,7 +9,7 @@ import {
   interactivePoolWaterAssetPaths,
   PoolCausticsPass,
   poolWaterDebugModes,
-} from "/skills/threejs-water-optics/examples/interactive-pool-volume/water-volume-system.js";
+} from "/threejs-gallery-kr/skills/threejs-water-optics/examples/interactive-pool-volume/water-volume-system.js";
 
 async function createTileTexture(url) {
   const texture = await new THREE.TextureLoader().loadAsync(url);

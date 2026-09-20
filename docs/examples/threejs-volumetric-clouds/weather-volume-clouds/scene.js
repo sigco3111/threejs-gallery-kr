@@ -19,7 +19,7 @@ import {
   getSunDirectionECEF,
   parseUint8Array,
   radians,
-} from "/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/cloud-effect.js";
+} from "/threejs-gallery-kr/skills/threejs-volumetric-clouds/examples/weather-volume-clouds/cloud-effect.js";
 
 const date = new Date("2000-06-01T10:00:00Z");
 const geodetic = new Geodetic(0, radians(67), 500);
@@ -490,7 +490,7 @@ export default {
 function loadPrecomputedAtmosphere(renderer) {
   return new Promise((resolve, reject) => {
     new PrecomputedTexturesLoader().load(
-      "/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/atmosphere",
+      "/threejs-gallery-kr/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/atmosphere",
       resolve,
       undefined,
       reject,
@@ -501,7 +501,7 @@ function loadPrecomputedAtmosphere(renderer) {
 function loadLocalWeather(THREE) {
   return new Promise((resolve, reject) => {
     new THREE.TextureLoader().load(
-      "/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/local_weather.png",
+      "/threejs-gallery-kr/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/local_weather.png",
       (texture) => {
         texture.minFilter = THREE.LinearMipMapLinearFilter;
         texture.magFilter = THREE.LinearFilter;
@@ -525,7 +525,7 @@ function loadShapeTexture(THREE) {
       depth: CLOUD_SHAPE_TEXTURE_SIZE,
     });
     new Loader().load(
-      "/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/shape.bin",
+      "/threejs-gallery-kr/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/shape.bin",
       (texture) => {
         texture.format = THREE.RedFormat;
         texture.minFilter = THREE.LinearFilter;
@@ -551,7 +551,7 @@ function loadShapeDetailTexture(THREE) {
       depth: CLOUD_SHAPE_DETAIL_TEXTURE_SIZE,
     });
     new Loader().load(
-      "/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/shape_detail.bin",
+      "/threejs-gallery-kr/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/shape_detail.bin",
       (texture) => {
         texture.format = THREE.RedFormat;
         texture.minFilter = THREE.LinearFilter;
@@ -572,7 +572,7 @@ function loadShapeDetailTexture(THREE) {
 function loadTurbulence(THREE) {
   return new Promise((resolve, reject) => {
     new THREE.TextureLoader().load(
-      "/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/turbulence.png",
+      "/threejs-gallery-kr/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/turbulence.png",
       (texture) => {
         texture.minFilter = THREE.LinearMipMapLinearFilter;
         texture.magFilter = THREE.LinearFilter;
@@ -591,7 +591,7 @@ function loadTurbulence(THREE) {
 function loadSTBNTexture() {
   return new Promise((resolve, reject) => {
     new STBNLoader().load(
-      "/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/stbn.bin",
+      "/threejs-gallery-kr/skills/threejs-volumetric-clouds/assets/weather-volume-clouds/stbn.bin",
       resolve,
       undefined,
       reject,

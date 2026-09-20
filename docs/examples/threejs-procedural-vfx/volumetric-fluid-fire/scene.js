@@ -11,7 +11,7 @@ import {
 import {
   VolumetricFluidFire,
   VOLUMETRIC_FLUID_FIRE_PRESET,
-} from "/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/volumetric-fluid-fire.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-vfx/examples/volumetric-fluid-fire/volumetric-fluid-fire.js";
 
 const VOLUME_LAYER = 10;
 const THUMBNAIL_WARMUP_FRAMES = 120;

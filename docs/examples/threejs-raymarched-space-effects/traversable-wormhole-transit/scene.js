@@ -1,5 +1,5 @@
 import { createTraversableWormholeTransitEffect } from
-  "/skills/threejs-raymarched-space-effects/examples/traversable-wormhole-transit/wormhole-effect.js";
+  "/threejs-gallery-kr/skills/threejs-raymarched-space-effects/examples/traversable-wormhole-transit/wormhole-effect.js";
 
 // The effect carries its own observer through the throat, so this adapter binds
 // raw input rather than an orbit rig: drag to look, W/A/S/D to fly, shift to

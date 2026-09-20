@@ -2,7 +2,7 @@ import * as THREE from "three";
 import {
   createLavaFlowSurface,
   updateLavaFlowMaterial,
-} from "/skills/threejs-procedural-materials/examples/lava-flow-surface/lava-surface.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-materials/examples/lava-flow-surface/lava-surface.js";
 
 export default {
   initialTime: 18,

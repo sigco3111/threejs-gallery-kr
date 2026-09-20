@@ -2,7 +2,7 @@ import * as THREE from "three/webgpu";
 import {
   DIFFRACTION_GRATING_DEFAULTS,
   createPhysicalDiffractionGrating,
-} from "/skills/threejs-procedural-materials/examples/physical-diffraction-grating/physical-diffraction-grating.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-materials/examples/physical-diffraction-grating/physical-diffraction-grating.js";
 
 export default {
   backend: "webgpu",

@@ -10,10 +10,10 @@ import { MeshBVHHelper } from "three-mesh-bvh";
 import {
   makeDiamond,
   setDiamondResolution,
-} from "/skills/threejs-procedural-materials/examples/raytraced-diamond/diamond-material.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-materials/examples/raytraced-diamond/diamond-material.js";
 
 const DIAMOND_URL =
-  "/skills/threejs-procedural-materials/assets/raytraced-diamond/diamond.glb";
+  "/threejs-gallery-kr/skills/threejs-procedural-materials/assets/raytraced-diamond/diamond.glb";
 
 // Scene-buffer passthrough feeding the gamma + SMAA presentation chain. The
 // scene is rendered into an explicit target and handed to the composer as

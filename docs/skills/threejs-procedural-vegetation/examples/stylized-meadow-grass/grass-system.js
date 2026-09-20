@@ -9,9 +9,9 @@ export const grassDebugModes = new Map([
 ]);
 
 export const stylizedMeadowGrassAssetPaths = {
-  blades: "/skills/threejs-procedural-vegetation/assets/stylized-meadow-grass/grass-blades-up.glb",
-  noise: "/skills/threejs-procedural-vegetation/assets/stylized-meadow-grass/perlin.webp",
-  pathMask: "/skills/threejs-procedural-vegetation/assets/stylized-meadow-grass/path.webp",
+  blades: "/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/stylized-meadow-grass/grass-blades-up.glb",
+  noise: "/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/stylized-meadow-grass/perlin.webp",
+  pathMask: "/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/stylized-meadow-grass/path.webp",
 };
 
 class SeededRandom {

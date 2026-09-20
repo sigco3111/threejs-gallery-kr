@@ -1,6 +1,6 @@
 import { createStudioStage } from "/example-gallery/support/studio-stage.js";
 import { createPorcelainBrassSubmarine } from
-  "/skills/threejs-procedural-geometry/examples/porcelain-brass-submarine/submarine-model.js";
+  "/threejs-gallery-kr/skills/threejs-procedural-geometry/examples/porcelain-brass-submarine/submarine-model.js";
 
 const GROUND_Y = -1.34;
 

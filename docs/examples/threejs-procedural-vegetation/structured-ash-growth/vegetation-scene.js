@@ -6,9 +6,9 @@ import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
 import { SMAAPass } from "three/addons/postprocessing/SMAAPass.js";
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { ashMedium } from
-  "/skills/threejs-procedural-vegetation/examples/structured-ash-growth/ash-preset.js";
+  "/threejs-gallery-kr/skills/threejs-procedural-vegetation/examples/structured-ash-growth/ash-preset.js";
 import { compileAshTree } from
-  "/skills/threejs-procedural-vegetation/examples/structured-ash-growth/tree-system.js";
+  "/threejs-gallery-kr/skills/threejs-procedural-vegetation/examples/structured-ash-growth/tree-system.js";
 
 export async function createVegetationScene({
   renderer,
@@ -85,10 +85,10 @@ const [
   groundDirt,
   groundNormal,
 ] = await Promise.all([
-  textureLoader.loadAsync("/skills/threejs-procedural-vegetation/assets/structured-ash-growth/bark-color.jpg"),
-  textureLoader.loadAsync("/skills/threejs-procedural-vegetation/assets/structured-ash-growth/bark-normal.jpg"),
-  textureLoader.loadAsync("/skills/threejs-procedural-vegetation/assets/structured-ash-growth/bark-roughness.jpg"),
-  textureLoader.loadAsync("/skills/threejs-procedural-vegetation/assets/structured-ash-growth/ash.png"),
+  textureLoader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/structured-ash-growth/bark-color.jpg"),
+  textureLoader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/structured-ash-growth/bark-normal.jpg"),
+  textureLoader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/structured-ash-growth/bark-roughness.jpg"),
+  textureLoader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/structured-ash-growth/ash.png"),
   textureLoader.loadAsync("/examples/threejs-procedural-vegetation/structured-ash-growth/assets/ground-grass.jpg"),
   textureLoader.loadAsync("/examples/threejs-procedural-vegetation/structured-ash-growth/assets/ground-dirt.jpg"),
   textureLoader.loadAsync("/examples/threejs-procedural-vegetation/structured-ash-growth/assets/ground-normal.jpg"),

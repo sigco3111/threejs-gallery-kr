@@ -2,7 +2,7 @@ import * as THREE from "three/webgpu";
 import { EXRLoader } from "three/addons/loaders/EXRLoader.js";
 import {
   createThinFilmSoapBubbleSystem,
-} from "/skills/threejs-procedural-materials/examples/thin-film-soap-bubbles/soap-bubble-system.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-materials/examples/thin-film-soap-bubbles/soap-bubble-system.js";
 
 export default {
   backend: "webgpu",

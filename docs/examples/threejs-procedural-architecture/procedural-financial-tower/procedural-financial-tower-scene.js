@@ -3,9 +3,9 @@ import { attribute, float, texture, vec3 } from "three/tsl";
 import {
   compileBuilding,
   createBuildingPlan,
-} from "/skills/threejs-procedural-architecture/examples/procedural-financial-tower/building-system.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-architecture/examples/procedural-financial-tower/building-system.js";
 import { CachedClipmapShadowNode } from
-  "/skills/threejs-procedural-architecture/examples/procedural-financial-tower/shadow-clipmaps.js";
+  "/threejs-gallery-kr/skills/threejs-procedural-architecture/examples/procedural-financial-tower/shadow-clipmaps.js";
 import {
   createDaylightEnvironment,
   daylightLighting,
@@ -153,16 +153,16 @@ async function loadFinancialMaterials() {
     ornamentNormal,
   ] = await Promise.all([
     loader.loadAsync(
-      "/skills/threejs-procedural-architecture/assets/procedural-financial-tower/limestone-albedo.png",
+      "/threejs-gallery-kr/skills/threejs-procedural-architecture/assets/procedural-financial-tower/limestone-albedo.png",
     ),
     loader.loadAsync(
-      "/skills/threejs-procedural-architecture/assets/procedural-financial-tower/limestone-normal.png",
+      "/threejs-gallery-kr/skills/threejs-procedural-architecture/assets/procedural-financial-tower/limestone-normal.png",
     ),
     loader.loadAsync(
-      "/skills/threejs-procedural-architecture/assets/procedural-financial-tower/ornaments-albedo.png",
+      "/threejs-gallery-kr/skills/threejs-procedural-architecture/assets/procedural-financial-tower/ornaments-albedo.png",
     ),
     loader.loadAsync(
-      "/skills/threejs-procedural-architecture/assets/procedural-financial-tower/ornaments-normal.png",
+      "/threejs-gallery-kr/skills/threejs-procedural-architecture/assets/procedural-financial-tower/ornaments-normal.png",
     ),
   ]);
 

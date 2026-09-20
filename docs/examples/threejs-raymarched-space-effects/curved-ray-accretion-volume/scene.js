@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { createCurvedRayAccretionEffect } from
-  "/skills/threejs-raymarched-space-effects/examples/curved-ray-accretion-volume/curved-ray-effect.js";
+  "/threejs-gallery-kr/skills/threejs-raymarched-space-effects/examples/curved-ray-accretion-volume/curved-ray-effect.js";
 
 function createMulberry32(seed) {
   let state = seed >>> 0;
@@ -106,7 +106,7 @@ export default {
   async setup({ scene, camera }) {
     const starTexture = createStarTexture();
     const noiseTexture = await new THREE.TextureLoader().loadAsync(
-      "/skills/threejs-raymarched-space-effects/assets/curved-ray-accretion-volume/noise_deep.png",
+      "/threejs-gallery-kr/skills/threejs-raymarched-space-effects/assets/curved-ray-accretion-volume/noise_deep.png",
     );
     noiseTexture.wrapS = THREE.RepeatWrapping;
     noiseTexture.wrapT = THREE.RepeatWrapping;

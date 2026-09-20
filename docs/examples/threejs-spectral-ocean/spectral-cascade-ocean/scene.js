@@ -1,15 +1,15 @@
 import { SpectralOceanSystem } from
-  "/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/ocean-system.js";
+  "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/ocean-system.js";
 import { validateFragmentIFFT } from
-  "/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/fft-pipeline.js";
+  "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/fft-pipeline.js";
 import { createOceanDetailTexture } from
-  "/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/detail-texture.js";
+  "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/detail-texture.js";
 import {
   createOceanMaterial,
   createSkyMaterial,
   createSpectrumDebugMaterial,
   updateOceanMaterialTextures,
-} from "/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/ocean-material.js";
+} from "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/spectral-cascade-ocean/ocean-material.js";
 
 export default {
   initialTime: 18.5,

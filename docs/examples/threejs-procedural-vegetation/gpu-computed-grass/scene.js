@@ -9,7 +9,7 @@ import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js"
 import {
   createGpuComputedGrassSystem,
   createGpuGrassTerrainMaterial,
-} from "/skills/threejs-procedural-vegetation/examples/gpu-computed-grass/gpu-grass-system.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-vegetation/examples/gpu-computed-grass/gpu-grass-system.js";
 
 const TERRAIN = {
   amplitude: 2.5,

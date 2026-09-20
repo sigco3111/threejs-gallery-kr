@@ -9,14 +9,14 @@ export const poolWaterDebugModes = new Map([
 ]);
 
 export const interactivePoolWaterAssetPaths = {
-  tiles: "/skills/threejs-water-optics/assets/interactive-pool-volume/tiles.jpg",
+  tiles: "/threejs-gallery-kr/skills/threejs-water-optics/assets/interactive-pool-volume/tiles.jpg",
   skybox: [
-    "/skills/threejs-water-optics/assets/interactive-pool-volume/xpos.jpg",
-    "/skills/threejs-water-optics/assets/interactive-pool-volume/xneg.jpg",
-    "/skills/threejs-water-optics/assets/interactive-pool-volume/ypos.jpg",
-    "/skills/threejs-water-optics/assets/interactive-pool-volume/ypos.jpg",
-    "/skills/threejs-water-optics/assets/interactive-pool-volume/zpos.jpg",
-    "/skills/threejs-water-optics/assets/interactive-pool-volume/zneg.jpg",
+    "/threejs-gallery-kr/skills/threejs-water-optics/assets/interactive-pool-volume/xpos.jpg",
+    "/threejs-gallery-kr/skills/threejs-water-optics/assets/interactive-pool-volume/xneg.jpg",
+    "/threejs-gallery-kr/skills/threejs-water-optics/assets/interactive-pool-volume/ypos.jpg",
+    "/threejs-gallery-kr/skills/threejs-water-optics/assets/interactive-pool-volume/ypos.jpg",
+    "/threejs-gallery-kr/skills/threejs-water-optics/assets/interactive-pool-volume/zpos.jpg",
+    "/threejs-gallery-kr/skills/threejs-water-optics/assets/interactive-pool-volume/zneg.jpg",
   ],
 };
 

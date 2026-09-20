@@ -9,7 +9,7 @@ import {
   buildFrameProfile,
   createSculptedRailGeometry,
   getFrameMetrics,
-} from "/skills/threejs-procedural-geometry/examples/sculpted-gallery-frame/frame-geometry.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-geometry/examples/sculpted-gallery-frame/frame-geometry.js";
 
 export async function createGalleryFrameScene({
   renderer,
@@ -69,10 +69,10 @@ const [
   plasterBump,
   floorTexture,
 ] = await Promise.all([
-  loader.loadAsync("/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/aged-walnut-frame.webp"),
-  loader.loadAsync("/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/antique-gold-frame.webp"),
-  loader.loadAsync("/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/dark-ebony-frame.webp"),
-  loader.loadAsync("/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/gallery-mat-board.webp"),
+  loader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/aged-walnut-frame.webp"),
+  loader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/antique-gold-frame.webp"),
+  loader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/dark-ebony-frame.webp"),
+  loader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/gallery-mat-board.webp"),
   loader.loadAsync("/examples/threejs-procedural-geometry/sculpted-gallery-frame/assets/gallery-plaster.webp"),
   loader.loadAsync("/examples/threejs-procedural-geometry/sculpted-gallery-frame/assets/gallery-plaster-bump.webp"),
   loader.loadAsync("/examples/threejs-procedural-geometry/sculpted-gallery-frame/assets/gallery-floor.webp"),

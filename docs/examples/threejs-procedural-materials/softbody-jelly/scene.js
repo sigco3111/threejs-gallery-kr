@@ -3,7 +3,7 @@ import { float, positionWorld, texture, uniform } from "three/tsl";
 import {
   SOFTBODY_JELLY_DEFAULTS,
   createSoftbodyJellySystem,
-} from "/skills/threejs-procedural-materials/examples/softbody-jelly/softbody-jelly.js";
+} from "/threejs-gallery-kr/skills/threejs-procedural-materials/examples/softbody-jelly/softbody-jelly.js";
 
 const LIGHT_DIRECTION = new THREE.Vector3(
   -0.6123724357,

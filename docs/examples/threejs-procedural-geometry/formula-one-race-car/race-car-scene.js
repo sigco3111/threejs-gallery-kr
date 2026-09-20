@@ -1,7 +1,7 @@
 import * as THREE from "three/webgpu";
 import { createStudioStage } from "/example-gallery/support/studio-stage.js";
 import { createFormulaOneRaceCar } from
-  "/skills/threejs-procedural-geometry/examples/formula-one-race-car/race-car-model.js";
+  "/threejs-gallery-kr/skills/threejs-procedural-geometry/examples/formula-one-race-car/race-car-model.js";
 
 const GROUND_Y = 0;
 

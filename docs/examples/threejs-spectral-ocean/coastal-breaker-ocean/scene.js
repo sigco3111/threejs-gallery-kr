@@ -13,7 +13,7 @@ import {
   CoastalBreakerOcean,
   coastalSkyRadiance,
   loadCoastalBreakerSandTextures,
-} from "/skills/threejs-spectral-ocean/examples/coastal-breaker-ocean/coastal-breaker-ocean.js";
+} from "/threejs-gallery-kr/skills/threejs-spectral-ocean/examples/coastal-breaker-ocean/coastal-breaker-ocean.js";
 
 const COASTAL_TERRAIN_MAX_Y = 3;
 const CAMERA_GROUND_MARGIN = 0.05;
@@ -87,8 +87,8 @@ export default {
   },
   async setup({ renderer, scene, camera, controls }) {
     const sand = await loadCoastalBreakerSandTextures(renderer, {
-      baseUrl: "/skills/threejs-spectral-ocean/assets/coastal-breaker-ocean/sand-base.jpg",
-      normalUrl: "/skills/threejs-spectral-ocean/assets/coastal-breaker-ocean/sand-normal.jpg",
+      baseUrl: "/threejs-gallery-kr/skills/threejs-spectral-ocean/assets/coastal-breaker-ocean/sand-base.jpg",
+      normalUrl: "/threejs-gallery-kr/skills/threejs-spectral-ocean/assets/coastal-breaker-ocean/sand-normal.jpg",
     });
     const coast = new CoastalBreakerOcean(renderer, {
       sandBase: sand.base,

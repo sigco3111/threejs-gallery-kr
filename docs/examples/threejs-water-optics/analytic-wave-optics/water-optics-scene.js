@@ -2,7 +2,7 @@ import * as THREE from "three";
 import {
   createWaterMaterial,
   oceanSurfaceHeightAt,
-} from "/skills/threejs-water-optics/examples/analytic-wave-optics/water-system.js";
+} from "/threejs-gallery-kr/skills/threejs-water-optics/examples/analytic-wave-optics/water-system.js";
 
 export function createWaterOpticsScene({ renderer, scene, camera }) {
 scene.background = new THREE.Color(0x07152d);

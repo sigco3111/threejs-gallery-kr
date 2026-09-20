@@ -1,5 +1,5 @@
 import { createHologramProjection } from
-  "/skills/threejs-procedural-vfx/examples/holographic-shape-transition/hologram-transition.js";
+  "/threejs-gallery-kr/skills/threejs-procedural-vfx/examples/holographic-shape-transition/hologram-transition.js";
 
 const STAGE_TOP_Y = -1.75;
 
