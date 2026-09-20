@@ -8,7 +8,7 @@
 // 6. Build main gallery index.html
 
 import { spawn } from "node:child_process";
-import { copyFile, mkdir, readdir, readFile, writeFile, stat } from "node:fs/promises";
+import { copyFile, mkdir, readdir, readFile, writeFile, stat, mkdtemp, rm, copyFile as cp } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
@@ -178,6 +178,14 @@ async function main() {
   const thumbsBackup = path.join(PROJECT_ROOT, "docs", "thumbs");
   let thumbsKeep = null;
   try { thumbsKeep = await readdir(thumbsBackup); } catch {}
+  // Stash thumbs to a temp dir before rmdir wipes docs/thumbs/
+  let thumbsStash = null;
+  if (thumbsKeep && thumbsKeep.length > 0) {
+    thumbsStash = await mkdtemp(path.join(process.env.TMPDIR || "/tmp", "threejs-gallery-thumbs-"));
+    for (const f of thumbsKeep) {
+      await copyFile(path.join(thumbsBackup, f), path.join(thumbsStash, f)).catch(() => {});
+    }
+  }
   await rmdir(DST);
 
   // 2. Copy tree
@@ -188,12 +196,13 @@ async function main() {
   await copyDir(path.join(SRC, "example-gallery", "runtime"), path.join(DST, "example-gallery", "runtime"));
   await copyDir(path.join(SRC, "example-gallery", "examples"), path.join(DST, "examples"));
 
-  // Restore thumbs if existed
-  if (thumbsKeep) {
-    await mkdir(path.join(DST, "thumbs"));
-    for (const f of thumbsKeep) {
-      await copyFile(path.join(PROJECT_ROOT, "docs_old_thumbs", f), path.join(DST, "thumbs", f)).catch(() => {});
+  // Restore thumbs from stash if we backed them up.
+  if (thumbsStash) {
+    await mkdir(path.join(DST, "thumbs"), { recursive: true });
+    for (const f of (await readdir(thumbsStash))) {
+      await copyFile(path.join(thumbsStash, f), path.join(DST, "thumbs", f)).catch(() => {});
     }
+    await rm(thumbsStash, { recursive: true, force: true });
   }
 
   // 3. Rewrite imports in all copied .js/.ts
