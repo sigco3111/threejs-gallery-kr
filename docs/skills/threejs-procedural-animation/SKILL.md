@@ -1,44 +1,30 @@
 ---
 name: threejs-procedural-animation
-description: Build advanced procedural animation in Three.js. Use for launch kinematics, gravity turns, staging, spin docking, target-frame decomposition, spring-follow motion, rotating-frame alignment, peeling debris, analytic transform timelines, frame-rate-independent response, and quaternion control.
+description: Three.js에서 해석적 타임라인, 절차적 모션, 결정론적 애니메이션을 구현합니다. 베지어/이징 보간, 중력 턴, 회전 프레임 도킹, 스프링/댐퍼, 쿼터니언 정렬, 부동 소수점 안정성에 사용하세요.
 ---
 
-# Procedural Animation
+# 절차적 애니메이션 (Procedural Animation)
 
-Animate semantic state, not unrelated transform curves. Define phases,
-coordinate frames, velocities, and ownership before writing per-frame updates.
+키프레임 트랙 대신 해석적 함수로 모션을 정의하세요. 같은 입력 → 같은 출력. 재현 가능하고, 시드 기반이며, 물리 기반입니다.
 
-## Build order
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-1. Define the timeline phases and event boundaries.
-2. Choose the frame for each motion: world, subject local, orbital radial,
-   docking axis, or camera shot.
-3. Derive target position/orientation from that frame.
-4. Use analytic kinematics for authored travel and springs for responsive
-   convergence.
-5. Preserve world transforms when detaching children from a hierarchy.
-6. Separate translation, alignment, spin, and secondary debris state.
-7. Clamp integration delta and reset every state variable on replay/disposal.
+## 워크플로
 
-Read [references/procedural-motion-and-docking-systems.md](references/procedural-motion-and-docking-systems.md)
-for the launch, staging, docking, debris, spring, quaternion, and
-frame-rate-independent response implementations.
+1. 각 애니메이션 채널을 해석적 함수로 정의 (위치, 회전, 스케일)
+2. 시간/입력 매핑을 명시 — fixed-timestep, 변수 dt, 누적 시간
+3. 이징/스프링/베지어 파라미터 튜닝
+4. 회전은 쿼터니언으로 보간 (Euler 금지)
+5. 부동 소수점 안정성 위해 시간/위치 클램프
 
-## Non-negotiable rules
+## 실패 조건
 
-- Use elapsed seconds and `deltaSeconds`; do not make motion frame-count based.
-- Derive orientation from direction/frame, then apply roll or spin as a
-  separate quaternion.
-- Decompose docking error into axial and radial components.
-- Switch from spring convergence to an exact terminal pose at the end of a
-  sequence.
-- When reparenting an animated object, capture world position, quaternion, and
-  scale before removal.
-- Use seeded randomness when motion must be reproducible.
-- Keep visual shake in a bounded envelope and separate it from trajectory.
+- Euler 회전 보간으로 짐벌락 발생
+- 가변 dt 가 적분 오차를 누적
+- 애니메이션이 시드/입력 비결정론적
+- 스케일 0 또는 무한대 클램프 누락
+- 모션이 충돌이나 표면과 무관하게 진행
 
-## Routing boundary
+## 라우팅 경계
 
-Use `$threejs-camera-direction` for shot composition and camera handoffs.
-Use `$threejs-procedural-vfx` when the deliverable is primarily plasma, sparks,
-or effect pooling rather than object transform motion.
+이 스킬은 모션 함수 자체를 다룹니다. 카메라 모드와 핸드오프는 `$threejs-camera-direction` 으로 라우팅하세요. 절차적 메시 변형은 `$threejs-procedural-geometry` 로 라우팅하세요.

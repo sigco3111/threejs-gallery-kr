@@ -10,7 +10,7 @@ import {
   SKY_ENVIRONMENT_INTENSITY,
   SubmergedOcean,
   UnderwaterMediumPipeline,
-} from "/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/underwater-snell-ocean.js";
+} from "/skills/threejs-spectral-ocean/examples/submerged-snell-ocean/underwater-snell-ocean.ts";
 
 const SEABED_Y = -26;
 const CAMERA_MIN_Y = SEABED_Y + 1.25;

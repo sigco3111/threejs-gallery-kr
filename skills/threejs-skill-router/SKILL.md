@@ -1,73 +1,44 @@
 ---
 name: threejs-skill-router
-description: Route ambitious Three.js graphics work to the smallest expert skill set. Use for new visual experiences, graphics rewrites, reference matching, or requests spanning geometry, materials, atmosphere, shadows, temporal effects, and final image treatment.
+description: 시각 타겟을 최소 단위의 전문 시스템으로 분해합니다. 어떤 스킬을 로드할지, 어떤 순서로 빌드할지 결정하는 데 사용하세요. 진입점 스킬 — 먼저 로드해서 다른 Three.js 스킬을 안내받으세요.
 ---
 
-# Three.js Visual Skill Router
+# 스킬 라우터 (Skill Router)
 
-Treat the model's Three.js knowledge and official documentation as prerequisites. Load only the expertise that changes the visual result.
+시각 타겟을 듣고 어떤 전문 스킬이 필요한지 결정하세요. 모든 스킬을 한꺼번에 로드하지 마세요. 최소 세트로 시작하고, 필요할 때 추가하세요.
 
-This pack goes beyond procedural guidance: its working examples and supporting
-assets contain much of its practical implementation value. When they are
-relevant, give them particular attention.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-## Route by the visual system being authored
+## 라우팅 의사결정
 
-| Required result | Load |
-| --- | --- |
-| shot composition, chase/side/orbit rigs, camera handoffs, projection ownership, pointer look, floating origins | `$threejs-camera-direction` |
-| launch and docking timelines, procedural transform phases, springs, staging, rotating-frame alignment, debris motion | `$threejs-procedural-animation` |
-| reusable scalar/vector fields, domain warping, causal masks, procedural normals | `$threejs-procedural-fields` |
-| atlas-filtered blocks, planetary surfaces, hybrid texture-backed PBR soil/moss with procedural displacement and masks, ground and model moss accumulation, terrain wetness, lava/emissive surfaces, reflective wave-optical diffraction gratings, thin-film soap bubbles with Airy interference, raytraced diamond/gem refraction, dispersive glass transmission with internal reflection and volume absorption, deforming softbody jelly materials with XPBD mechanics and refractive caustics, authored frame PBR, specular AA | `$threejs-procedural-materials` |
-| height-field ray marching, silhouette-aware POM, curved relief shells, relief self-shadowing | `$threejs-parallax-occlusion-mapping` |
-| well-crafted and complete hard-surface object assemblies, procedural vehicles and humanoid robots, parameter-curve section tracks, tilted shell and spine lofts, pillow panels, exact polygon cuts, UV-owned apertures, spanwise airfoil lofts, sculpted rails/frames, branch rings, fin lofts, profile extrusion, inset, revolve, sweep, solidify, bevels and fillets, shell thickness, direct-topology apertures, semantic mesh writers, material slots and groups, primitive-built forms, coplanar flicker, loose/non-manifold geometry, detached parts, interpenetration, support, clearance and swept-envelope defects | `$threejs-procedural-geometry` |
-| trees, surface-following ivy, painted vines, stylized grass, GPU-computed grass, GPU-culled virtual flower fields, distance-tiered plant geometry, roots, foliage, rooted wind deformation | `$threejs-procedural-vegetation` |
-| buildings, façade grammars, profiles, ornaments, modular mesh writers | `$threejs-procedural-architecture` |
-| planets, terrain, craters, biome fields, coastlines, spherical detail | `$threejs-procedural-planets` |
-| sky scattering, planetary shells, depth-based aerial perspective | `$threejs-atmosphere-aerial-perspective` |
-| weather-driven raymarched clouds and cloud shadows | `$threejs-volumetric-clouds` |
-| FFT oceans, hybrid FFT/Gerstner clear water, coastal breaker transitions, signed-distance coastlines, shallow-water swash chains, wet sand, stylized above/below ocean optics, submerged Snell windows, total internal reflection, forward-refracted structures, pixel-footprint spectral LOD, aquatic perspective, caustic god rays, spectral cascades, choppy derivatives, Jacobian whitecaps | `$threejs-spectral-ocean` |
-| authored analytic waves, bounded heightfield pools, object ripples, differential-area caustics, ray-traced pool volume optics, shared normals, heuristic refraction, fallback absorption, crest foam | `$threejs-water-optics` |
-| falling snow, snow accumulation, model snow caps, wet asphalt puddles, procedural ripple normals, splash flipbooks, rain streaks, shared weather envelopes, surface wetness | `$threejs-precipitation-surfaces` |
-| curved-ray black holes, accretion disks, wormholes and throat transits, null-geodesic integration, lensed celestial spheres and star fields | `$threejs-raymarched-space-effects` |
-| filmic HDR lens-flare compositors, highlight-derived radial ghosts, field-angle pupil deformation, spectral pupil rings, localized glare and bloom, raymarched aurora curtains, finite-footprint emissive slabs, uniform volume integration, equirectangular radiance probes, WebGPU voxel fire and smoke, volumetric fluid fields, mesh-surface emitters, SDF fire collisions, particles, trails, plasma, shockwaves, holographic projections, Fresnel rim shells, scanline banding, layered event effects | `$threejs-procedural-vfx` |
-| accumulated screen frost, touch clearing, wet-window rain, view-aligned droplet refraction and blur | `$threejs-temporal-surfaces` |
-| stable large-world shadows, cascades, clipmaps, cached updates | `$threejs-shadow-systems` |
-| GTAO, bent normals, bilateral reconstruction | `$threejs-screen-space-ambient-occlusion` |
-| HDR bloom and selective emission contribution | `$threejs-bloom` |
-| eye adaptation, tone mapping, LUT grading, output color | `$threejs-exposure-color-grading` |
-| shared depth/normal/velocity ownership and multi-pass ordering | `$threejs-image-pipeline` |
-| fixed-view diagnostics, seed sweeps, temporal and budget evidence | `$threejs-visual-validation` |
+1. 시각 타겟이 무엇인지 한 문장으로 정의
+2. 표현하려는 핵심 시스템 식별 (예: 시차 폐색, 절차적 식생, 볼류메트릭 구름)
+3. 해당 시스템의 원자 스킬 로드
+4. 이미지 합성이 필요하면 `$threejs-image-pipeline` 로드
+5. 카메라 시스템이 특수하면 `$threejs-camera-direction` 로드
+6. 시각적 검증 단계로 `$threejs-visual-validation` 로드
 
-## Execution order
+## 의사결정 트리 예시
 
-For a new procedural scene:
+- "검은 행성이 대기 굴절로 보이는 풍경" → `$threejs-procedural-planets` + `$threejs-atmosphere-aerial-perspective`
+- "푸른 하늘 아래 디테일한 풀밭" → `$threejs-procedural-vegetation` + `$threejs-sky-and-sun` (없으면 대기)
+- "블룸과 색 그레이딩" → `$threejs-bloom` + `$threejs-exposure-color-grading` + `$threejs-image-pipeline`
+- "용암 흐름 표면" → `$threejs-procedural-materials`
 
-1. Define a visual contract: subject, scale, camera distance, motion, and target frame budget.
-2. Load `$threejs-camera-direction` when framing, lens, camera frame, or mode transitions affect the target.
-3. Load the subject-generation skill.
-4. Add `$threejs-procedural-animation` when object motion requires authored phases, moving frames, or spring convergence.
-5. Add `$threejs-procedural-fields` when multiple visual channels must share coherent structure.
-6. Add lighting/shadows and atmosphere only after silhouette and material masks read without effects.
-7. Add `$threejs-image-pipeline` last.
-8. Load only the atomic image effects actually needed.
-9. Use `$threejs-visual-validation` for a deterministic evidence set.
+## 워크플로
 
-## Routing constraints
+1. 사용자 요청을 듣고 시각 타겟 식별
+2. 최소 스킬 세트로 라우팅
+3. 각 스킬의 워크플로 따라 빌드
+4. 시각 검증으로 마무리
 
-- Do not load a skill for API setup alone. Inspect the installed Three.js version and use official docs.
-- Do not route “make it beautiful” directly to post-processing. Find the missing authored system.
-- Prefer one strong, inspectable visual rule over several independent noise layers.
-- When adapting a supplied reference, preserve the mechanism that creates its character. Do not reduce it to a generic effect category.
-- Keep object-space, world-space, and screen-space systems separate unless the composition explicitly requires coupling.
-- If no retained skill matches, state that the pack lacks expert coverage for that system. Do not stretch the nearest skill to cover it.
+## 실패 조건
 
-## Acceptance gate
+- 모든 스킬을 무차별 로드하여 컨텍스트 낭비
+- 순서를 무시하고 의존하는 스킬보다 의존되는 스킬이 먼저 로드
+- 시각 검증 단계 생략
+- 단일 스킬로 모든 것을 처리하려 함
 
-A routed task is incomplete until the implementation exposes:
+## 라우팅 경계
 
-- deterministic seed or reproducible inputs;
-- visual debug modes for its controlling fields;
-- parameters grouped by perceptual role;
-- an intentional mechanism-backed quality or resolution tier when the system defines one;
-- a no-post baseline that still reads.
+이 스킬은 의사결정만 담당하며, 직접 빌드하지 않습니다. 각 효과의 실제 구현은 해당 원자 스킬로 라우팅하세요.

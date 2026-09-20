@@ -1,10 +1,43 @@
 {
-  "title": "Silhouette Relief POM",
-  "description": "The complete relief-built bulkhead uses one procedural wall tile, a panelled deck, curved service columns, and overhead pipes with silhouette-aware TSL parallax occlusion mapping, self-shadowing, and relief-aware shadow depth.",
-  "backend": "WebGPU / TSL node materials",
-  "techniques": ["procedural packed wall floor and column height maps", "adaptive tangent-space height march", "flat and curved silhouette clipping", "inflated relief shells", "height-derived normals", "light-ray self-shadow march", "relief-aware shadow depth"],
-  "defaultViewport": { "width": 1440, "height": 900 },
+  "title": "실루엣 릴리프 POM",
+  "description": "WebGPU/TSL 시차 폐색 매핑으로 단단한 실루엣과 곡면 실루엣 모두 릴리프를 처리합니다. 높이 필드 레이 마칭, 인플레이트 셸, 자체 그림자, 릴리프 인지 그림자 깊이, 높이-유도 노멀이 결합된 셸 시스템을 보여줍니다.",
+  "backend": "WebGPU / TSL 노드 머티리얼",
+  "techniques": [
+    "단단/곡면 실루엣 클리핑이 있는 TSL POM",
+    "인플레이트 셸과 자체 그림자",
+    "릴리프 인지 그림자 깊이",
+    "높이 그라디언트로 노멀 재계산",
+    "셀 크기와 이터레이션이 일관된 안정성"
+  ],
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
   "defaultDpr": 1,
-  "debugModes": [{ "value": "final", "label": "Final" }, { "value": "flat", "label": "Zero Relief" }, { "value": "no-shadow", "label": "No Cast Shadow" }, { "value": "grazing", "label": "Grazing View" }],
-  "controls": ["orbit", "pan", "pause", "dpr", "debugMode", "capture"]
+  "debugModes": [
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "relief",
+      "label": "릴리프"
+    },
+    {
+      "value": "shell",
+      "label": "인플레이트 셸"
+    },
+    {
+      "value": "self-shadow",
+      "label": "자체 그림자"
+    }
+  ],
+  "controls": [
+    "orbit",
+    "pan",
+    "pause",
+    "dpr",
+    "debugMode",
+    "capture"
+  ]
 }

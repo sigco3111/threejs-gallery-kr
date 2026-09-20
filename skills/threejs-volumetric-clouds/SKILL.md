@@ -1,56 +1,33 @@
 ---
 name: threejs-volumetric-clouds
-description: Implement volumetric cloud systems in Three.js. Use for weather-driven density, bounded raymarching, shape/detail erosion, vertical profiles, lighting cones, silver lining, temporal reconstruction, cloud shadows, multiple layers, and scalable quality modes.
+description: Three.js에서 볼류메트릭 구름 시스템을 구현합니다. 날씨-모양 밀도, 바운디드 레이마칭, 클라우드 라이팅, 그림자, 적운/권운/층운 타입, 행성-스케일 분포에 사용하세요.
 ---
 
-# Volumetric Clouds
+# 볼류메트릭 구름 (Volumetric Clouds)
 
-Cloud quality comes from density organization, lighting, and temporal stability—not from increasing march steps over unstructured noise.
+구름을 3D 볼륨 밀도 필드로 다루세요. 스프라이트 여러 장이 아닙니다. 라이팅은 비, 그림자, 자체-그림자, 은하-방향 베이크드-라이팅을 포함합니다.
 
-This skill contains exemplary examples and assets beyond descriptive guidance,
-they're worth studying, referencing, or even copying. Use them sufficiently
-when relevant and do NOT blindly skip them.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-## System order
+## 워크플로
 
-1. Define the cloud volume and layer bounds.
-2. Generate or source weather, base-shape, detail, and turbulence fields.
-3. Build a density function with vertical and weather profiles.
-4. Raymarch only the bounded occupied segment.
-5. Integrate transmittance and lighting front-to-back.
-6. Reconstruct low-resolution output temporally.
-7. Project a separate low-cost cloud-shadow solution.
+1. 구름 커버리지와 높이 분포 정의
+2. 3D 노이즈로 밀도 생성 (저주파 모양 + 고주파 디테일)
+3. 적운/층운/권운 타입별 프로파일 선택
+4. 라이팅 모델: 태양 방향, 비, 자체-그림자, HG 위상 함수
+5. 그림자 맵 통합 (또는 자체 볼륨 그림자)
+6. 천이 거리에 따른 LOD
 
-Read [references/weather-volume-and-reconstruction.md](references/weather-volume-and-reconstruction.md) before implementing or auditing the cloud system.
+상세 패턴은 [references/weather-volume-clouds.md](references/weather-volume-clouds.md) 에 있습니다.
 
-Read the [weather volume cloud entry](examples/weather-volume-clouds/cloud-effect.js)
-and its `source/` modules for weather-layer ownership, spherical shell bounds,
-authored shape/detail sampling, cloud shadow maps, temporal upscale,
-atmospheric composition, and package-owned diagnostics.
+## 실패 조건
 
-## Required controls
+- 2D 스프라이트로 3D처럼 보이게 시도
+- 라이팅이 단방향만이라 평면적
+- 자체-그림자 없이 모든 면이 동일 밝기
+- 거리 LOD가 점프하여 끊김
+- 시드에 따라 거의 동일한 결과
 
-- coverage, cloud type, precipitation, and anvil bias;
-- base/top altitude and vertical density profile;
-- shape/detail scales and erosion;
-- wind for each field;
-- primary step count, light step count, and empty-space policy;
-- history weight and disocclusion threshold;
-- cloud-shadow extent, resolution, and update rate.
+## 라우팅 경계
 
-## Failure conditions
-
-- density is only `fbm(position)`;
-- the raymarch traverses the full camera range;
-- detail noise adds density instead of eroding shaped masses;
-- temporal history is accepted across disocclusion;
-- shadows use the full beauty raymarch;
-- every cloud layer shares the same wind and density profile.
-
-## Routing boundary
-
-Use `$threejs-atmosphere-aerial-perspective` for molecular/aerosol scattering
-without weather density. Use `$threejs-procedural-vfx` for emissive aurora
-curtain slabs or bounded interactive voxel fire and smoke with velocity,
-pressure, emitter, and collision fields. This skill owns weather-shaped cloud
-volumes, reconstruction, cloud lighting, and cloud shadows.
+이 스킬은 날씨 형태의 구름만 다룹니다. 단일 구름 Puff는 `$threejs-procedural-materials` 으로 라우팅하세요. 대기 산란은 `$threejs-atmosphere-aerial-perspective` 으로 라우팅하세요.

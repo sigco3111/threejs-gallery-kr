@@ -1,33 +1,32 @@
 {
-  "title": "Spectral Dispersive Glass",
-  "description": "A glass body whose interior optical path is solved in image space: the view ray refracts in, locates its exit against a back-face normal-and-distance buffer, keeps reflecting past the critical angle, and is traced once per wavelength for true Cauchy dispersion recombined through CIE 1931.",
+  "title": "스펙트럼 분산 유리",
+  "description": "이미지 공간에서 해결되는 투과 바디 — 양면 백-페이스 데이터 패스와 반전된 깊이, 반복적 내부 출구 탐색, 경계 있는 전반사, 진실한 경로 길이 위 Beer-Lambert 흡수, CIE 1931으로 재결합된 파장별 Cauchy 인덱스.",
   "backend": "WebGPU / TSL",
   "techniques": [
-    "double-sided back-face data pass with inverted depth so the farthest surface wins",
-    "iterative image-space exit search along the refracted interior ray",
-    "exact unpolarised Fresnel with total internal reflection at every interface",
-    "per-wavelength Cauchy index from a catalogue (n_d, Abbe) pair",
-    "CIE 1931 piecewise-Gaussian spectral recombination into linear sRGB",
-    "Beer-Lambert absorption over the true internal path length"
+    "양면 백-페이스 데이터 패스 + 반전 깊이",
+    "반복적 내부 출구 탐색 + 경계 있는 전반사",
+    "Beer-Lambert 흡수 (진실한 경로 길이)",
+    "파장별 Cauchy 인덱스 + CIE 1931 재결합",
+    "정확한 비편광 Fresnel과 회전 가능한 환경 프로브"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 2,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "thickness",
-      "label": "View-ray thickness"
+      "value": "dispersion",
+      "label": "분산"
     },
     {
-      "value": "exit-normal",
-      "label": "Back-face normal"
+      "value": "absorption",
+      "label": "흡수"
     },
     {
-      "value": "entry-fresnel",
-      "label": "Entry Fresnel"
+      "value": "exit",
+      "label": "출구"
     }
   ],
   "controls": [

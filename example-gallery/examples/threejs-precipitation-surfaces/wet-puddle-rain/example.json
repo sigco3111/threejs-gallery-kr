@@ -1,36 +1,32 @@
 {
-  "title": "Wet Puddle Rain",
-  "description": "A GPL-licensed rain surface example with wet asphalt roughness collapse, procedural puddle masking, analytic ripple normals, instanced falling rain streaks, upward-surface splash placement, and 4x5 flipbook splashes.",
+  "title": "젖은 아스팔트 빗물",
+  "description": "빗방울 낙하 → 물웅덩이 형성 → 절차적 리플 노멀 → 스플래시 플립북이 결합된 젖은 노면 효과. 공유 날씨 엔벨로프가 입자 시스템과 표면 시스템을 동시에 구동합니다.",
   "backend": "WebGL2 / GLSL material injection and instancing",
   "techniques": [
-    "rain-progress wetness envelope",
-    "procedural asphalt puddle mask",
-    "analytic expanding-ring ripple normals",
-    "camera-facing instanced rain streaks",
-    "surface-weighted flipbook splash placement"
+    "낙하 빗방울 + 절차적 물웅덩이 + 리플 노멀",
+    "스플래시 플립북 임팩트",
+    "공유 날씨 엔벨로프 (밀도·풍향·강도)",
+    "젖음/거칠기 표면 전이",
+    "아스팔트 PBR 매핑"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 1,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "puddleMask",
-      "label": "Puddle mask"
+      "value": "wetness",
+      "label": "젖음"
     },
     {
-      "value": "rippleNormals",
-      "label": "Ripple normals"
+      "value": "ripples",
+      "label": "리플"
     },
     {
-      "value": "rainProgress",
-      "label": "Rain progress"
-    },
-    {
-      "value": "splashes",
-      "label": "Splashes"
+      "value": "rain",
+      "label": "빗방울"
     }
   ],
   "controls": [

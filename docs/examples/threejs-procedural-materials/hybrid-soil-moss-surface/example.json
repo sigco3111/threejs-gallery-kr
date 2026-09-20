@@ -1,10 +1,52 @@
 {
-  "title": "Hybrid PBR Soil & Moss",
-  "description": "PBR soil and moss texture sets supply albedo, AO, roughness, and normal microdetail while procedural fields drive mound displacement, moisture, cracks, moss coverage and height, and model-locked accumulation on a rusty car.",
-  "backend": "WebGL2 / MeshStandardMaterial shader injection",
-  "techniques": ["hybrid texture-backed and procedural material", "PBR soil and moss texture sets", "procedural mound and moss displacement", "coupled moisture color and roughness", "warped two-scale Worley cracks", "model-locked upward-face moss accumulation"],
-  "defaultViewport": { "width": 1440, "height": 900 },
+  "title": "하이브리드 흙-이끼 표면",
+  "description": "PBR 흙과 이끼 텍스처 세트가 알베도·AO·러프니스·노멀 마이크로디테일을 제공하는 동시에 절차적 필드가 mound 변위, 수분, 크랙, 이끼 커버리지/높이, 녹슨 차체 위 모델-잠금 누적을 구동합니다.",
+  "backend": "WebGL2 / MeshStandardMaterial 셰이더 주입",
+  "techniques": [
+    "하이브리드 텍스처-지원 + 절차적 머티리얼",
+    "PBR 흙·이끼 텍스처 세트",
+    "절차적 mound와 이끼 변위",
+    "결합된 수분 색과 러프니스",
+    "휩쓴 2-스케일 Worley 크랙",
+    "모델-잠금 상향면 이끼 누적"
+  ],
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
   "defaultDpr": 1,
-  "debugModes": [{ "value": "final", "label": "Final" }, { "value": "height", "label": "Ground Height" }, { "value": "moisture", "label": "Moisture" }, { "value": "cracks", "label": "Cracks" }, { "value": "moss", "label": "Ground Moss Mask" }, { "value": "ground-only", "label": "Ground Only" }],
-  "controls": ["orbit", "pan", "pause", "dpr", "debugMode", "capture"]
+  "debugModes": [
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "height",
+      "label": "지반 높이"
+    },
+    {
+      "value": "moisture",
+      "label": "수분"
+    },
+    {
+      "value": "cracks",
+      "label": "크랙"
+    },
+    {
+      "value": "moss",
+      "label": "지반 이끼 마스크"
+    },
+    {
+      "value": "ground-only",
+      "label": "지반만"
+    }
+  ],
+  "controls": [
+    "orbit",
+    "pan",
+    "pause",
+    "dpr",
+    "debugMode",
+    "capture"
+  ]
 }

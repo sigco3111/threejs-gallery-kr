@@ -1,14 +1,13 @@
 {
-  "title": "Sculpted Gallery Frame",
-  "description": "A production-grade sculpted frame system with an exact multi-lobe 92-sample rail profile, orientation-specific miter-like sweeps, coupled artwork depth, distinct walnut/gold/ebony texture bundles, gallery wall and floor surfaces, warm grazing spotlights, static VSM shadows, ACES exposure, and selective bloom restoration.",
+  "title": "조각된 갤러리 프레임",
+  "description": "프로파일 스윕, 마이터형 레일 매핑, 의도적 캡 소유권, PBR 표면 번들, 그레이징 하이라이트, 셀렉티브 블룸, 지오메트리 진단을 갖춘 조각된 액자. 월넛·안틱-골드·흑단 머티리얼이 같은 그레이징 라이트 설정에서 어떻게 보이는지 보여줍니다.",
   "backend": "WebGL2 / Three.js physical materials",
   "techniques": [
-    "exact multi-lobe sculpted rail profile",
-    "orientation-specific closed rail mesh emission",
-    "authored walnut, antique-gold, and ebony PBR identities",
-    "warm grazing painting spotlights",
-    "static VSM shadow invalidation",
-    "selective bloom material substitution and restoration"
+    "프로파일 스윕 + 마이터형 레일 매핑",
+    "의도적 캡 소유권",
+    "월넛·안틱-골드·흑단 PBR 번들",
+    "그레이징-라이트 셋업과 셀렉티브 블룸",
+    "고정-뷰 진단"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -18,23 +17,19 @@
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "profile",
-      "label": "Profile construction"
+      "value": "rail",
+      "label": "레일"
     },
     {
-      "value": "topology",
-      "label": "Rail topology"
+      "value": "caps",
+      "label": "캡"
     },
     {
-      "value": "normals",
-      "label": "Surface normals"
-    },
-    {
-      "value": "no-bloom",
-      "label": "No bloom"
+      "value": "roughness",
+      "label": "러프니스"
     }
   ],
   "controls": [

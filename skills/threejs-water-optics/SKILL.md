@@ -1,65 +1,33 @@
 ---
 name: threejs-water-optics
-description: Build production analytic and bounded water in Three.js. Use for shared multi-wave displacement and normals, bounded RGBA heightfield pool simulation, local drops, object-driven ripples, differential-area caustics, ray-traced pool/water/sphere volume optics, derivative-filtered normal bands, analytic sky reflection, side-aware Fresnel, heuristic screen refraction, Beer-Lambert absorption, and crest foam.
+description: Three.js에서 해석적 파동 광학과 풀 볼륨을 다룹니다. 단일 분석 파동, 풀 높이필드, 객체 리플, 굴절, 흡수, 반사, 반사-굴절 결합에 사용하세요.
 ---
 
-# Water Optics
+# 물 광학 (Water Optics)
 
-Treat water as geometry motion, surface orientation, and a participating optical layer. A blue transparent material is not a water system.
+물 표면을 해석적 파동 광학으로 다루세요. 단순 반사/굴절 텍스처가 아니라 물리 기반 솔루션입니다.
 
-This skill contains exemplary examples and assets beyond descriptive guidance,
-they're worth studying, referencing, or even copying. Use them sufficiently
-when relevant and do NOT blindly skip them.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-For large stochastic seas driven by directional spectra and GPU FFTs, use
-`$threejs-spectral-ocean` instead.
+## 워크플로
 
-## Analytic surface build order
+1. 파동 타입 선택 — Gerstner 해석, FFT 통계, 단일 분석 파동
+2. 풀 높이필드 정의 (보통 256×256 이상)
+3. 객체-기반 리플과 결합 (필요시)
+4. 굴절: Beer-Lambert 흡수, 굴절 샘플링
+5. 반사: 환경 맵 또는 라이브 반사
+6. 라이팅과 섀도우 맵 결합
 
-1. Define wave bands and evaluate displacement.
-2. Derive the normal analytically from the same waves.
-3. Choose displaced geometry or explicitly normal-only water.
-4. Establish scene-color ownership for heuristic refraction.
-5. Declare whether absorption uses true depth or a fallback path-length estimate.
-6. Blend analytic reflection/refraction through side-aware Fresnel.
-7. Derive foam and glints from the shared wave response.
-8. Filter unresolved normal bands from derivatives.
+상세 패턴은 [references/analytic-wave-system.md](references/analytic-wave-system.md) 와 [references/interactive-pool-volume.md](references/interactive-pool-volume.md) 에 있습니다.
 
-Read [references/water-surface-system.md](references/water-surface-system.md)
-for the exact five-wave displaced ocean, six-band normal-only water, optical
-hierarchy, and the limits that distinguish both from the spectral-ocean skill.
+## 실패 조건
 
-Read the
-[analytic wave optics implementation](examples/analytic-wave-optics/water-system.js) for
-shared displacement/normals, derivative filtering, reflection, screen-space
-refraction, absorption, Fresnel, and crest-linked foam diagnostics.
+- 단순 환경 맵 반사로 표면 디테일 손실
+- 굴절 샘플링이 거울처럼 작동
+- 흡수가 Beer-Lambert 와 무관하게 균일
+- 객체 리플이 표면과 시각적으로 단절
+- 풀 높이가 라이팅과 불일치
 
-Read the
-[interactive pool volume implementation](examples/interactive-pool-volume/water-volume-system.js)
-for bounded RGBA height/velocity/normal simulation, local drops, moving-sphere
-displacement suitable for draggable objects, differential-area caustics, and
-in-shader pool/water/sphere ray tracing against the pool bounds and sphere.
+## 라우팅 경계
 
-## Failure conditions
-
-- normal texture motion does not agree with displaced crests;
-- heuristic refraction can sample foreground objects but the limitation is undisclosed;
-- fallback path length is presented as reconstructed scene thickness;
-- bounded pool caustics are a decorative projection detached from simulated
-  height normals;
-- micro-waves alias into sparkling noise;
-- foam is a scrolling texture unrelated to the shared crest metric;
-- Fresnel is replaced by constant opacity;
-- reflection, refraction, and transparency are all added without energy control.
-
-## Routing boundary
-
-Use `$threejs-spectral-ocean` for stochastic directional spectra, FFT
-cascades, Jacobian breaking, persistent ocean foam, and any interface the camera
-crosses — this skill's heuristic screen-refraction offset assumes a bounded
-volume seen from air, and an open interface needs that skill's forward
-projection instead. Use
-`$threejs-precipitation-surfaces` for rain-driven puddle wetness, ripple masks,
-and weather-coupled splashes on ground surfaces. This skill owns authored
-analytic waves, bounded heightfield simulation, ray-traced pool-volume optics,
-and bounded-water optics.
+이 스킬은 단일 해석 파동과 풀 볼륨을 다룹니다. 통계 FFT 기반 광역 바다는 `$threejs-spectral-ocean` 으로 라우팅하세요.

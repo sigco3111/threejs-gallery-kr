@@ -1,92 +1,62 @@
 ---
 name: threejs-procedural-vegetation
-description: Generate authored procedural trees, grass, ivy, flowers, and vegetation in Three.js or raw WebGPU. Use for surface-following vines, painted ivy paths, stylized or GPU grass, GPU-culled virtual flower fields, trunks, recursive branches, roots, canopies, leaf cards, species presets, deterministic growth, distance-tiered plant geometry, and rooted blade, stem, or petiole-hinge wind.
+description: Three.js 또는 raw WebGPU에서 작성된 절차적 나무, 풀, 아이비, 꽃, 식생을 생성합니다. 표면-팔로잉 덩굴, 페인티드 아이비 경로, 양식화 또는 GPU 풀, GPU-컬링 가상 꽃밭, 줄기, 재귀 분기, 뿌리, 캐노피, 잎 카드, 종 프리셋, 결정론적 성장, 거리-티어 식물 지오메트리, 루트된 블레이드/줄기/병경-힌지 바람에 사용하세요.
 ---
 
-# Procedural Vegetation
+# 절차적 식생 (Procedural Vegetation)
 
-Represent a plant as a growth hierarchy plus rendering adaptations. Do not model it as randomly scattered cylinders.
+식물을 성장 계층과 렌더링 적응으로 표현하세요. 무작위로 흩어진 실린더로 모델링하지 마세요.
 
-This skill contains exemplary examples and assets beyond descriptive guidance,
-they're worth studying, referencing, or even copying. Use them sufficiently
-when relevant and do NOT blindly skip them.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-## Build sequence
+## 빌드 시퀀스
 
-1. Define a per-level species table: length, radius, taper, child count, emergence range, angle, twist, gnarliness, sections, radial segments.
-2. Grow branches iteratively from a queue so recursion depth and budgets remain inspectable.
-3. Emit each branch as oriented rings with an intentional UV seam.
-4. Update section orientation from:
-   - inherited direction;
-   - stochastic curvature;
-   - tropism or external force;
-   - optional attraction constraints.
-5. Spawn children with stratified longitudinal slots and independently permuted angular slots.
-6. Generate leaves only after branch topology is stable.
-7. Build foliage normals from both card orientation and local crown volume.
-8. Choose wind scope explicitly. Leaf-root deformation, branch hierarchy deformation, and whole-tree sway are separate systems.
+1. 레벨별 종 테이블 정의: 길이, 반경, 테이퍼, 자식 수, 출현 범위, 각도, 트위스트, 옹골짐, 섹션 수, 반경 세그먼트
+2. 큐에서 반복적으로 분기 성장시켜 재귀 깊이와 예산이 검사 가능하게 유지
+3. 각 분기를 의도적 UV 심이 있는 방향성 링으로 방출
+4. 다음에서 섹션 방향 업데이트:
+   - 상속된 방향
+   - 확률적 곡률
+   - 트로피즘 또는 외부 힘
+   - 선택적 어트랙션 제약
+5. 층화된 종방향 슬롯과 독립적으로 순열된 각도 슬롯으로 자식 생성
+6. 분기 토폴로지가 안정된 후에만 잎 생성
+7. 카드 방향과 로컬 크라운 볼륨 양쪽에서 캐노피 노멀 빌드
+8. 바람 스코프를 명시적으로 선택. 잎-루트 변형, 분기 계층 변형, 전체-나무 스윙은 별개 시스템
 
-Read [references/structured-ash-growth-system.md](references/structured-ash-growth-system.md) and preserve its preset, continuation, child-placement, leaf, material, wind, and composition contracts before tuning.
+[references/structured-ash-growth-system.md](references/structured-ash-growth-system.md) 를 읽고 그 프리셋, 연속, 자식 배치, 잎, 머티리얼, 바람, 구성 계약을 보존하세요.
 
-Read the [Ash Growth System implementation](examples/structured-ash-growth/tree-system.js)
-with its [authored preset](examples/structured-ash-growth/ash-preset.js) for a
-contract-accurate implementation and its diagnostic attributes.
+계약-정확한 구현과 그 진단 속성은 [Ash Growth System 구현](examples/structured-ash-growth/tree-system.js) 과 [작성된 프리셋](examples/structured-ash-growth/ash-preset.js) 에 있습니다.
 
-Read the
-[stylized meadow grass implementation](examples/stylized-meadow-grass/grass-system.js)
-for authored blade-cluster geometry with a procedural fallback, image-driven
-path masking, per-instance origin/facing attributes, circular-arc rooted wind,
-gust fronts, tip flutter, color clumps, macro variation, translucency, and rim
-diagnostics.
+작성된 블레이드-클러스터 지오메트리(절차적 폴백 포함), 이미지-구동 경로 마스킹, 인스턴스별 원점/페이싱 속성, 원-호 루트 바람, 돌풍 전선, 팁 플러터, 색 클럼프, 매크로 변화, 투명도, 림 진단은 [양식화된 목초지 풀 구현](examples/stylized-meadow-grass/grass-system.js) 에 있습니다.
 
-Read the
-[GPU-computed grass implementation](examples/gpu-computed-grass/gpu-grass-system.js)
-for MRT blade-parameter generation, deterministic terrain-conforming placement,
-Voronoi clumps, Bezier blade folding, wind-facing yaw, distance LOD/culling,
-normal/color fading, translucency, and field diagnostics.
+MRT 블레이드-매개변수 생성, 결정론적 지형-적합 배치, Voronoi 클럼프, Bezier 블레이드 폴딩, 바람-대향 요, 거리 LOD/컬링, 노멀/색 페이딩, 투명도, 필드 진단은 [GPU-컴퓨티드 풀 구현](examples/gpu-computed-grass/gpu-grass-system.js) 에 있습니다.
 
-Read [references/gpu-culled-flower-field.md](references/gpu-culled-flower-field.md)
-for the exact virtual-address, ecology, hierarchical-compaction, indirect-draw,
-distance-tier, atlas, wind, contact, resource, and diagnostic contracts.
+정확한 가상-주소, 생태, 계층-압축, 간접-드로, 거리-티어, 아틀라스, 바람, 접촉, 자원, 진단 계약은 [references/gpu-culled-flower-field.md](references/gpu-culled-flower-field.md) 에 있습니다.
 
-Read the
-[GPU-culled flower-field entry](examples/gpu-culled-flower-field/gpu-culled-flower-field.js)
-and its complete
-[raw WebGPU implementation](examples/gpu-culled-flower-field/source/gpu-culled-flower-field.ts)
-for zero-record integer candidate reconstruction, 32 by 32 tile culling,
-three visible-ID streams, indirect near/middle/far draws, curved textured
-petals, identity-preserving horizon heads, and rooted moving-contact response.
+0-레코드 정수 후보 재구성, 32×32 타일 컬링, 3개 가시-ID 스트림, 간접 near/middle/far 드로, 곡선 텍스처드 꽃잎, 정체성-보존 지평선 머리, 루트된 가동-접촉 응답은 [GPU-컬링 꽃밭 엔트리](examples/gpu-culled-flower-field/gpu-culled-flower-field.js) 와 그 완전한 [raw WebGPU 구현](examples/gpu-culled-flower-field/source/gpu-culled-flower-field.ts) 에 있습니다.
 
-Read the
-[procedural surface ivy entry](examples/procedural-surface-ivy/ivy-effect.js)
-and its complete
-[TypeScript implementation](examples/procedural-surface-ivy/source/ivy.ts)
-for seeded spline-following stems, repeated mesh reprojection, tangent-plane
-creep and droop, parallel-transport tube rings, growth reveal, instanced leaves
-and umbels, and rigid petiole-hinge wind. Treat the TypeScript modules as the
-only implementation; the entry file only re-exports them.
+시드된 스플라인-팔로잉 줄기, 반복 메시 리프로젝션, 탄젠트-평면 크리프와 드룹, 평행-수송 튜브 링, 성장 리베일, 인스턴스된 잎과 산형화, 강체 병경-힌지 바람은 [절차적 표면 아이비 엔트리](examples/procedural-surface-ivy/ivy-effect.js) 와 그 완전한 [TypeScript 구현](examples/procedural-surface-ivy/source/ivy.ts) 에 있습니다. TypeScript 모듈을 유일한 구현으로 다루세요; 엔트리 파일은 그것들을 재-내보내기만 합니다.
 
-## Visual failure conditions
+## 시각 실패 조건
 
-- branches form visible helices;
-- dense grass ignores terrain height or clump-level variation;
-- every child emerges at the same relative height;
-- bark texture scale changes with branch radius;
-- leaves reveal flat card normals under rotation;
-- leaf wind moves card roots instead of remaining anchored;
-- branch wind is claimed to match a reference whose branches are static;
-- different seeds change species identity rather than controlled variation;
-- geometry cost grows without a per-level budget;
-- surface-following stems are offset from the host or flip normals across seams;
-- ivy branches ignore the tangent plane while attached;
-- leaf wind rotates around the card center instead of the petiole.
-- a million-flower field allocates CPU transforms or per-candidate records;
-- distant flower LOD replaces species identity with one generic sprite;
-- compaction and direct rendering reconstruct different roots or acceptance;
-- flower heads stay world-up after their stems bend.
+- 분기가 가시 헬릭스 형성
+- 빽빽한 풀이 지형 높이 또는 클럼프-레벨 변화를 무시
+- 모든 자식이 같은 상대 높이로 출현
+- 껍질 텍스처 스케일이 분기 반경에 따라 변함
+- 회전 시 잎이 평면 카드 노멀을 드러냄
+- 잎 바람이 카드 루트를 움직여 고정점에 머무르지 않음
+- 분기 바람이 분기가 정적인 레퍼런스와 일치한다고 주장
+- 다른 시드가 제어된 변화가 아닌 종 정체성을 바꿈
+- 지오메트리 비용이 레벨-별 예산 없이 증가
+- 표면-팔로잉 줄기가 호스트에서 오프셋되거나 솔기를 가로질러 노멀 뒤집힘
+- 부착된 동안 아이비 분기가 탄젠트 평면을 무시
+- 잎 바람이 병경이 아닌 카드 중심을 중심으로 회전
+- 100만-꽃 밭이 CPU 변환 또는 후보별 레코드를 할당
+- 먼 거리 꽃 LOD가 종 정체성을 하나의 일반 스프라이트로 대체
+- 압축과 직접 렌더링이 서로 다른 루트 또는 수용 조건을 재구성
+- 꽃 머리가 줄기가 휘어진 후에도 월드-업을 유지
 
-## Routing boundary
+## 라우팅 경계
 
-Use `$threejs-procedural-geometry` for generic branch-ring emission without a
-growth model. This skill owns species tables, vine and branch topology,
-surface-following growth, foliage, grass fields, roots, and rooted wind.
+성장 모델 없는 일반 분기-링 방출은 `$threejs-procedural-geometry` 를 사용하세요. 이 스킬은 종 테이블, 덩굴과 분기 토폴로지, 표면-팔로잉 성장, 캐노피, 풀 필드, 뿌리, 루트된 바람을 소유합니다.

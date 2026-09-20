@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="color-scheme" content="dark" />
-    <title>Three.js Visual Example Gallery</title>
+    <title>Three.js 비주얼 예제 갤러리 — 한글판</title>
     <link rel="stylesheet" href="/gallery/styles.css" />
   </head>
   <body>
@@ -25,16 +25,16 @@
             <ellipse cx="60" cy="77" rx="34" ry="10.2" stroke-opacity=".5" />
             <ellipse cx="60" cy="94" rx="20" ry="6" stroke-opacity=".3" />
           </svg>
-          <h1>Example Gallery</h1>
+          <h1>예제 갤러리</h1>
         </div>
 
         <div class="topbar-actions">
           <label class="search">
-            <span>Search</span>
+            <span>검색</span>
             <input
               id="search"
               type="search"
-              placeholder="skill, effect, technique…"
+              placeholder="스킬, 효과, 기법…"
               autocomplete="off"
             />
             <kbd>⌘K</kbd>
@@ -55,7 +55,7 @@
               <path d="M13.26 9.92A5.6 5.6 0 0 1 2.65 9.64" />
               <path d="M2.65 12.8V9.64h3.15" />
             </svg>
-            Refresh
+            새로 고침
           </button>
           <button
             id="toggle-view"
@@ -75,7 +75,7 @@
               <rect x="1.65" y="8.95" width="5.4" height="5.4" rx="1.1" />
               <rect x="8.95" y="8.95" width="5.4" height="5.4" rx="1.1" />
             </svg>
-            Overview
+            개요
           </button>
         </div>
       </header>
@@ -83,10 +83,10 @@
       <main class="main-layout">
         <aside class="catalog">
           <div class="catalog-heading">
-            <span id="example-count">0 examples</span>
-            <span id="runtime-summary">runtime idle</span>
+            <span id="example-count">예제 0개</span>
+            <span id="runtime-summary">런타임 대기</span>
           </div>
-          <nav id="example-list" aria-label="Examples"></nav>
+          <nav id="example-list" aria-label="예제 목록"></nav>
         </aside>
 
         <section class="inspection">
@@ -94,21 +94,20 @@
             <div class="empty-orbit" aria-hidden="true">
               <span></span>
             </div>
-            <p class="eyebrow">No visual systems registered</p>
-            <h2>Add an example to any skill’s <code>examples/</code> directory.</h2>
+            <p class="eyebrow">등록된 비주얼 시스템이 없습니다</p>
+            <h2>아무 스킬의 <code>examples/</code> 디렉토리에 예제를 추가하세요.</h2>
             <p>
-              The gallery discovers it automatically when the directory contains
-              <code>index.html</code> and <code>example.json</code>.
+              디렉토리에 <code>index.html</code> 과 <code>example.json</code> 이 있으면 갤러리가 자동으로 인식합니다.
             </p>
           </div>
 
           <div id="single-view" class="single-view" hidden>
-            <div class="toolbar" aria-label="Example controls" hidden>
+            <div class="toolbar" aria-label="예제 컨트롤" hidden>
               <label>
-                Viewport
+                뷰포트
                 <select id="viewport">
-                  <option value="responsive">Responsive</option>
-                  <option value="default">Example default</option>
+                  <option value="responsive">반응형</option>
+                  <option value="default">예제 기본값</option>
                   <option value="1920x1080">1920 × 1080</option>
                   <option value="1440x900">1440 × 900</option>
                   <option value="1280x720">1280 × 720</option>
@@ -127,7 +126,7 @@
                 </select>
               </label>
               <label>
-                Time
+                시간
                 <select id="time-scale">
                   <option value="0.25">0.25×</option>
                   <option value="0.5">0.5×</option>
@@ -136,14 +135,14 @@
                 </select>
               </label>
               <label id="debug-control" hidden>
-                Debug
+                디버그
                 <select id="debug-mode"></select>
               </label>
-              <button id="pause" class="button" type="button">Pause</button>
-              <button id="reload" class="button" type="button">Reload</button>
-              <button id="capture" class="button" type="button">Capture</button>
+              <button id="pause" class="button" type="button">일시정지</button>
+              <button id="reload" class="button" type="button">다시 불러오기</button>
+              <button id="capture" class="button" type="button">캡쳐</button>
               <a id="standalone" class="button" target="_blank" rel="noreferrer">
-                Standalone
+                단독 열기
               </a>
             </div>
 
@@ -151,12 +150,12 @@
               <div id="stage" class="stage">
                 <iframe
                   id="example-frame"
-                  title="Selected Three.js example"
+                  title="선택한 Three.js 예제"
                   allow="fullscreen"
                 ></iframe>
               </div>
               <div class="stage-status">
-                <span id="frame-status" data-state="idle">idle</span>
+                <span id="frame-status" data-state="idle">대기</span>
                 <span id="frame-metrics"></span>
                 <span id="frame-size"></span>
               </div>

@@ -1,23 +1,36 @@
 {
-  "title": "GPU-Culled Flower Field",
-  "description": "A raw-WebGPU procedural meadow that reconstructs virtual flowers from integer IDs, compacts visible candidates through hierarchical tiles, and renders exact, reduced, and horizon-preserving flower tiers with indirect draws.",
+  "title": "GPU-컬링 꽃밭",
+  "description": "0-레코드 정수 후보 재구성, 32×32 타일 컬링, 3개 가시-ID 스트림, 간접 near/middle/far 드로, 곡선 텍스처드 꽃잎, 정체성-보존 지평선 머리, 루트된 가동-접촉 응답을 갖춘 100만-꽃 가상 필드.",
   "backend": "Raw WebGPU / WGSL",
   "techniques": [
-    "zero-record integer flower reconstruction",
-    "rotated multi-octave ecology density",
-    "32 by 32 hierarchical tile culling",
-    "three compacted visible-ID streams",
-    "indirect near, middle, and far drawing",
-    "curved atlas-textured petals",
-    "rooted wind and moving contact bend"
+    "가상 주소 + 32×32 타일 컬링",
+    "3 가시-ID 스트림 + 간접 드로",
+    "곡선 텍스처드 꽃잎",
+    "정체성-보존 지평선 머리",
+    "루트된 가동-접촉 응답"
   ],
-  "defaultViewport": { "width": 1440, "height": 900 },
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Hierarchical compact" },
-    { "value": "direct", "label": "Direct reference" },
-    { "value": "flat", "label": "Flat compaction" },
-    { "value": "uniform-petals", "label": "One petal variant" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "culling",
+      "label": "컬링"
+    },
+    {
+      "value": "tiers",
+      "label": "거리 티어"
+    },
+    {
+      "value": "wind",
+      "label": "바람"
+    }
   ],
   "controls": [
     "orbit",

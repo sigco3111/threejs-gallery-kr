@@ -1,36 +1,32 @@
 {
-  "title": "Raytraced Diamond",
-  "description": "A faceted gem whose material refracts the camera ray into the mesh, follows it against a GPU BVH through bounded total-internal-reflection bounces, and escapes into the environment cube map with per-channel IOR dispersion.",
+  "title": "레이 트레이싱 다이아몬드",
+  "description": "메시가 자체 광학 볼륨인 보석 — 카메라-레이 진입 굴절, GPU BVH 첫-히트 루프, 경계 있는 전반사 바운스, 채널별 IOR 분산, MIP-보정 환경 출구 샘플링, 라이브 카메라-행렬 유니폼을 갖춘 다이아몬드.",
   "backend": "WebGL2 / GLSL BVH-raytraced material",
   "techniques": [
-    "GPU BVH first-hit traversal inside the gem volume",
-    "bounded internal bounce loop with total internal reflection",
-    "per-channel IOR chromatic dispersion",
-    "mip-correct environment sampling from the ideal screen ray",
-    "gamma plus SMAA presentation chain"
+    "BVH 첫-히트 + 경계 있는 전반사 바운스",
+    "채널별 IOR 분산",
+    "MIP-보정 환경 출구 샘플링",
+    "라이브 카메라-행렬 유니폼",
+    "진실한 내부 광학 경로"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 1,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "single-ior",
-      "label": "No dispersion"
+      "value": "refraction",
+      "label": "굴절"
     },
     {
-      "value": "one-bounce",
-      "label": "One bounce"
+      "value": "dispersion",
+      "label": "분산"
     },
     {
-      "value": "flat-mips",
-      "label": "Raw-ray mips"
-    },
-    {
-      "value": "bvh",
-      "label": "BVH bounds"
+      "value": "bounces",
+      "label": "바운스"
     }
   ],
   "controls": [

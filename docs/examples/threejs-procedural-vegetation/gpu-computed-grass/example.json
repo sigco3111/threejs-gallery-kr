@@ -1,36 +1,36 @@
 {
-  "title": "GPU Computed Grass",
-  "description": "A dense realistic grass field with WebGL2 multiple-render-target blade data, Voronoi clump structure, terrain-conforming Bezier blades, distance LOD and culling, wind-facing yaw, travelling sway, clump-normal lighting, translucency, and distance blending.",
+  "title": "GPU-컴퓨티드 풀",
+  "description": "MRT 블레이드 매개변수 생성, 결정론적 지형-적합 배치, Voronoi 클럼프, Bezier 블레이드 폴딩, 바람-대향 요, 거리 LOD/컬링이 결합된 GPU 풀 필드. 노멀/색 페이딩, 투명도, 필드 진단을 함께 제공합니다.",
   "backend": "WebGL2 / GLSL MRT instanced vegetation",
   "techniques": [
-    "single-pass MRT blade parameter compute",
-    "Voronoi clump direction and presence fields",
-    "terrain-aligned Bezier blade deformation",
-    "distance LOD vertex folding and stochastic culling",
-    "clump-normal lighting and backlit grass translucency"
+    "MRT 블레이드 매개변수 생성",
+    "결정론적 지형-적합 배치 + Voronoi 클럼프",
+    "Bezier 블레이드 폴딩 + 바람-대향 요",
+    "거리 LOD / 컬링",
+    "노멀·색 페이딩 + 투명도"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 1,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "bladeParams",
-      "label": "Blade parameters"
+      "value": "blades",
+      "label": "블레이드"
     },
     {
       "value": "clumps",
-      "label": "Clumps"
+      "label": "클럼프"
     },
     {
       "value": "wind",
-      "label": "Wind and cull"
+      "label": "바람"
     },
     {
-      "value": "normals",
-      "label": "Lighting normals"
+      "value": "lod",
+      "label": "LOD"
     }
   ],
   "controls": [

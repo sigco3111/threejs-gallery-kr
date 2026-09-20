@@ -3,4 +3,4 @@ export {
   GpuCulledFlowerField,
   flowerStorageMetrics,
   maximumFlowerGridSize,
-} from "./source/gpu-culled-flower-field.js";
+} from "./source/gpu-culled-flower-field.ts";

@@ -1,14 +1,13 @@
 {
-  "title": "Volumetric Fluid Fire",
-  "description": "A WebGPU voxel fire volume whose mesh-surface emitters inject density and temperature into coupled velocity and dye fields, with curl turbulence, vorticity confinement, pressure projection, temperature-mapped HDR raymarching, and moving signed-distance colliders.",
+  "title": "볼류메트릭 유체 불",
+  "description": "완전한 WebGPU/TSL 속도·염료·압력·와도성·이미터·충돌·레이마칭·진단 시스템과 보정된 불 프리셋. 메시-표면 주입과 가동 SDF 경계, 온도-매핑 HDR 레이마칭이 결합됩니다.",
   "backend": "WebGPU / TSL compute and volume raymarching",
   "techniques": [
-    "three-dimensional velocity and dye advection",
-    "Jacobi pressure projection and vorticity confinement",
-    "mesh-surface storage-buffer emitters",
-    "baked signed-distance collision volume",
-    "temperature-tier HDR volume scattering",
-    "depth-aware additive bloom composition"
+    "3D 텍스처 소유권 + 고정 컴퓨트 스케줄",
+    "압력 프로젝션 + 핑퐁 일관성",
+    "메시-표면 주입 + 가동 SDF 경계",
+    "온도-매핑 HDR 레이마칭",
+    "보정된 불 프리셋 + 진단"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -16,12 +15,22 @@
   },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Final" },
-    { "value": "no-bloom", "label": "No bloom" },
-    { "value": "density", "label": "Density" },
-    { "value": "temperature", "label": "Temperature" },
-    { "value": "velocity", "label": "Velocity" },
-    { "value": "colliders", "label": "Colliders" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "velocity",
+      "label": "속도"
+    },
+    {
+      "value": "density",
+      "label": "밀도"
+    },
+    {
+      "value": "temperature",
+      "label": "온도"
+    }
   ],
   "controls": [
     "orbit",

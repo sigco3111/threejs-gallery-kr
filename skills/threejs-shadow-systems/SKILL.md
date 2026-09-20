@@ -1,41 +1,31 @@
 ---
 name: threejs-shadow-systems
-description: Implement stable, scalable directional-shadow systems for Three.js. Use for large procedural worlds, city scenes, terrain, moving cameras, WebGPU/TSL shadow nodes, cascades, cached clipmaps, texel stabilization, update budgets, and targeted invalidation.
+description: Three.js에서 안정적이고 확장 가능한 그림자 시스템을 구현합니다. 캐스케이드 섀도우 맵, 클립맵, 업데이트 예산, 무효화 규칙, 섀도우-인지 머티리얼, PCF/VSM/ESM 비교에 사용하세요.
 ---
 
-# Shadow Systems
+# 그림자 시스템 (Shadow Systems)
 
-Use a single shadow map only when its receiver region is genuinely bounded. For large moving views, make shadow coverage an explicit spatial hierarchy.
+그림자 맵 해상도와 업데이트 빈도를 명시적으로 관리하세요. 자동에 맡기면 깜빡임과 성능 저하가 옵니다.
 
-## Cached clipmap workflow
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-1. Define concentric light-space square levels.
-2. Snap each level center to its own texel grid.
-3. Cross-fade adjacent levels in shader space.
-4. Refresh near levels continuously.
-5. Cache coarse levels and update them under a frame budget.
-6. Invalidate intersecting levels when important casters or streamed terrain change.
-7. Scale normal bias by world-space texel width.
+## 워크플로
 
-Read [references/cached-clipmap-shadows.md](references/cached-clipmap-shadows.md) before implementing a large-world directional light.
+1. 라이트 타입별 그림자 맵 요구사항 정의 — directional: 캐스케이드, spot: 단일, point: 큐브
+2. 캐스케이드 거리/해상도 분할 (near, mid, far)
+3. 안개/지형 같은 클립맵 적용 가능 지형 결정
+4. 업데이트 빈도와 무효화 규칙 정의 (정적 / 동적 / 카메라 의존)
+5. 필터 모드 (PCF, VSM, ESM) 선택
+6. 머티리얼이 그림자를 인지하는지 결정 (relief-aware 등)
 
-Read the
-[cached shadow clipmaps](../threejs-procedural-architecture/examples/procedural-financial-tower/shadow-clipmaps.js)
-for three light-space square levels, per-level texel snapping, containment
-cross-fades, cached coarse updates, scaled bias, and unshadowed outside weight.
+## 실패 조건
 
-## Failure conditions
+- 캐스케이드 분할이 일관되지 않아 거리 점프
+- 클립맵이 적용되지 않아 그림자 끊김
+- 동적 오브젝트가 매 프레임 전체 그림자 맵 무효화
+- PCF/VSM 선택 없이 항상 가장 비싼 옵션
+- 그림자 바이어스가 깊이 충돌 일으킴
 
-- projection centers move by fractions of a texel;
-- shader containment does not match the map's committed center;
-- all cascades refresh every frame without evidence;
-- coarse levels freeze moving casters indefinitely;
-- depth texture samples occur in divergent fragment control flow;
-- the same normal bias is used across radically different texel sizes;
-- level boundaries become visible under camera motion.
+## 라우팅 경계
 
-## Routing boundary
-
-Use this skill for light-space directional shadow maps. Use
-`$threejs-screen-space-ambient-occlusion` for view-dependent ambient
-visibility; AO is not a replacement for cast shadows.
+이 스킬은 그림자 자체를 다룹니다. 릴리프 인지 그림자는 `$threejs-parallax-occlusion-mapping` 으로 라우팅하세요. 다른 이미지-공간 효과는 `$threejs-image-pipeline` 으로 라우팅하세요.

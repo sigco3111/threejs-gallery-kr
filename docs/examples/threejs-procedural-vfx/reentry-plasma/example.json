@@ -1,13 +1,13 @@
 {
-  "title": "Reentry Plasma",
-  "description": "A stack of closed, flow-aligned plasma wake shells with tapered expansion, advected filament fields, Fresnel-supported all-angle coverage, thermal color progression, and additive emission.",
+  "title": "재진입 플라즈마",
+  "description": "닫힌 레이어드 웨이크 셸, 흐름-축 변형, 이류된 필라멘트 필드, 불투명도 셰이핑, 가산 발광 진단을 갖춘 우주선-적합 플라즈마. 속도·밀도·온도가 결합된 일관된 외피가 비-블룸 베이스라인에서도 읽힙니다.",
   "backend": "WebGL2 / GLSL additive wake shells",
   "techniques": [
-    "closed layered capsule-profile wake geometry",
-    "flow-axis taper and expansion",
-    "coarse and fine advected filament fields",
-    "Fresnel-supported all-angle shell coverage",
-    "thermal color and additive emission hierarchy"
+    "닫힌 레이어드 웨이크 셸",
+    "흐름-축 변형 + 이류된 필라멘트 필드",
+    "불투명도 셰이핑 + 가산 발광",
+    "속도·밀도·온도 결합",
+    "비-블룸 베이스라인"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -15,11 +15,22 @@
   },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Final" },
-    { "value": "shell-coverage", "label": "Shell coverage" },
-    { "value": "filaments", "label": "Filaments" },
-    { "value": "thermal-color", "label": "Thermal color" },
-    { "value": "opacity", "label": "Opacity" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "shells",
+      "label": "셸"
+    },
+    {
+      "value": "filaments",
+      "label": "필라멘트"
+    },
+    {
+      "value": "emission",
+      "label": "발광"
+    }
   ],
   "controls": [
     "orbit",

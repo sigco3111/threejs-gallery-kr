@@ -1,57 +1,33 @@
 ---
 name: threejs-procedural-planets
-description: Author procedural planetary bodies in Three.js. Use for spherical terrain, continents, ridges, craters, biome masks, coastlines, material variation, analytic normals, altitude LOD, and bodies that must hold up from orbit through close approach.
+description: Three.js에서 절차적 행성, 달, 천체를 작성합니다. 구면 지형, 능선, 크레이터, 바이옴, 절차적 노멀, 고도 필터링, 행성-공간 좌표, 기후, 대기 결합에 사용하세요.
 ---
 
-# Procedural Planets
+# 절차적 행성 (Procedural Planets)
 
-Build a planet as a coupled field system evaluated on a unit direction. The same geological causes must drive geometry, color, roughness, normal, atmosphere handoff, and distance filtering.
+행성을 구면 지형 + 기후 + 표면 시스템 + 대기 결합의 통합으로 다루세요. 텍스처 한 장으로 환원하지 마세요.
 
-This skill contains exemplary examples and assets beyond descriptive guidance,
-they're worth studying, referencing, or even copying. Use them sufficiently
-when relevant and do NOT blindly skip them.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-## Required build order
+## 워크플로
 
-1. Establish planet-space direction, radius, sea level, and world-unit scale.
-2. Build macro silhouette fields before any surface material.
-3. Add named geological structures: continents, basins, ridges, craters, lava fields, or ice.
-4. Derive slope, cavity, altitude, latitude, exposure, and shoreline fields.
-5. Classify broad biomes from those causes.
-6. Derive displacement, color, roughness, and normal from the shared field bundle.
-7. Filter bands by represented mesh scale and camera altitude.
-8. Couple the material to atmosphere and lighting using the same planet transform.
+1. 행성 반경, 중력, 자전축 정의
+2. 구면 좌표계 (위도/경도/반경) 확립
+3. 절차적 높이 필드 (대륙 분포, 산맥, 크레이터) 적용
+4. 고도 필터로 바이옴 분포 생성 (극지/온대/열대/해양)
+5. 기후 필드 (온도, 습도, 풍향) 시뮬레이션
+6. 대기 결합 (있다면 `$threejs-atmosphere-aerial-perspective` 와 협업)
 
-Read [references/planet-field-and-atmosphere-systems.md](references/planet-field-and-atmosphere-systems.md) for terrain, biome, gas-giant, material, altitude-LOD, and atmosphere-handoff mechanisms, including a known CPU/GPU field-parity failure mode.
+[절차적 행성 표면 예제](../threejs-procedural-planets/examples/procedural-planet-surface/) 가 완전한 통합을 보여줍니다.
 
-Read the [procedural planet surface implementation](examples/procedural-planet-surface/planet-system.js)
-and its [shared terrain field](examples/procedural-planet-surface/terrain-field.js)
-for undeformed sphere coordinates, shared CPU/GLSL terrain, coupled biome and
-material causes, derivative bump, and altitude-filtered detail.
+## 실패 조건
 
-## Non-negotiable constraints
+- 평면 지형이 구면에 매핑되어 극 왜곡 발생
+- 바이옴이 위도만 따르고 고도/습도 무시
+- 기후가 정적이라 계절 변화 없음
+- 대기와 표면 라이팅이 분리되어 이중 그림자
+- 시드에 따라 행성이 거의 동일하게 보임
 
-- Domain-warp tangentially and renormalize; do not distort the sphere radially.
-- Craters need floor, wall, rim, and optional ejecta—not dark circles.
-- Continents and biomes must be region fields, not isolated threshold bubbles.
-- Geometry displacement and shader normals must describe the same height function.
-- Close detail may disappear with altitude; the macro silhouette may not.
-- Expose individual field views and a displacement exaggeration mode.
+## 라우팅 경계
 
-## Completion test
-
-The body must remain intentional in:
-
-- unlit silhouette;
-- flat albedo with no atmosphere;
-- grazing directional light;
-- orbit view;
-- close approach;
-- biome-mask and normal-only views;
-- at least three seeds without losing the chosen planetary identity.
-
-## Routing boundary
-
-Use `$threejs-procedural-fields` for a reusable field bundle without a complete
-body, and `$threejs-atmosphere-aerial-perspective` for scattering independent
-of planet generation. This skill owns the coupled planetary surface.
+이 스킬은 완전한 행성을 다룹니다. 표면 머티리얼만 필요하면 `$threejs-procedural-materials` 로 라우팅하세요. 대기만 필요하면 `$threejs-atmosphere-aerial-perspective` 으로 라우팅하세요.

@@ -1,48 +1,35 @@
 ---
 name: threejs-camera-direction
-description: Direct advanced Three.js camera systems. Use for scale-aware chase rigs, thrust lag, side/orbit cameras, body-relative up vectors, quaternion handoffs, authored cinematic framing, floating origins, pointer-look controls, camera collision constraints, projection ownership, and lifecycle restoration.
+description: 고급 Three.js 카메라 시스템을 직접 제어합니다. 스케일 인지 추격 릭, 추력 래그, 사이드/오빗 카메라, 바디 상대 업 벡터, 쿼터니언 핸드오프, 제작된 시네마틱 프레이밍, 플로팅 원점, 포인터 룩 컨트롤, 카메라 충돌 제약, 프로젝션 소유, 라이프사이클 복원에 사용하세요.
 ---
 
-# Camera Direction
+# 카메라 디렉션 (Camera Direction)
 
-Treat the camera as an authored visual system, not a passive viewport. Compose
-the subject, establish scale, choose a stable up frame, and make every mode
-handoff explicit.
+카메라를 수동적 뷰포트가 아닌 제작된 비주얼 시스템으로 다루세요. 피사체를 구도 잡고, 스케일을 확립하고, 안정적인 업 프레임을 선택한 뒤, 모든 모드 핸드오프를 명시적으로 만드세요.
 
-## Build order
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-1. Define the design frame: subject size, screen occupancy, lens, near/far,
-   motion, and horizon/up convention.
-2. Build camera targets in semantic frames: ship, body surface, docking axis,
-   or scene-authored shot.
-3. Derive position and orientation independently, then combine them once.
-4. Add input orbit/look only inside declared yaw/pitch and spatial constraints.
-5. Add frame-rate-independent follow or a bounded spring where the reference
-   uses inertia.
-6. Snapshot and restore camera projection/state when a scene owns it.
-7. Test mode transitions, cuts, pointer-lock reacquisition, resize, and large
-   coordinates.
+## 워크플로
 
-Read [references/camera-rig-and-cinematic-systems.md](references/camera-rig-and-cinematic-systems.md)
-for exact chase/side/orbit rigs, projection values, transition
-rules, floating-origin shot, pointer controls, and implementation limits.
+1. 카메라의 스케일과 단위를 정의 — 미터인지, 차량 길이인지, 행성 반경인지
+2. 안정적인 업 프레임 선택 — 월드 업, 바디 업, 헤딩 기준
+3. 사용되는 각 카메라 모드를 명시 — 추격, 사이드, 오빗, 시네마틱, FPS
+4. 모드 간 핸드오프를 쿼터니언 또는 변환 행렬로 명시
+5. 카메라 충돌, 플로팅 원점, 프로젝션 행렬 소유를 결정
+6. 각 카메라 모드의 추적/댐핑/지연 파라미터를 튜닝
 
-## Non-negotiable rules
+상세 패턴은 [references/camera-rig-and-cinematic-systems.md](references/camera-rig-and-cinematic-systems.md) 에 있습니다.
 
-- Use subject dimensions to derive offsets; do not tune one fixed distance for
-  differently scaled assets.
-- For planetary motion, derive up from the dominant body rather than global Y.
-- Interpolate position with `lerp` and orientation with `slerp`.
-- During an explicit handoff, use one interpolation stage. Do not stack a
-  transition blend and a second follow smoother over the same interval.
-- Re-sync yaw/pitch from the camera when pointer lock is acquired.
-- Update the projection matrix whenever FOV, near, far, or aspect changes.
-- Keep stars or infinite backgrounds camera-relative when large translation
-  would create false parallax or precision loss.
-- Restore camera and input ownership on scene disposal.
+## 실패 조건
 
-## Routing boundary
+- 카메라가 씬 스케일과 다른 단위로 작동 (예: 차량을 행성 스케일로 렌더)
+- 모드 핸드오프가 보간되지 않아 끊김
+- 업 벡터가 월드와 바디 사이에서 일관되지 않음
+- 카메라가 충돌을 무시하고 지형을 통과
+- 플로팅 원점 없이 큰 좌표에서 정밀도 손실
+- 프로젝션 행렬이 다른 시스템에 의해 덮어써짐
+- 카메라 상태가 씬 라이프사이클 변경 시 복원되지 않음
 
-Use `$threejs-procedural-animation` for object motion timelines, springs,
-docking, staging, and debris. This skill owns how the scene is viewed and how
-camera modes hand off.
+## 라우팅 경계
+
+이 스킬은 카메라 자체의 시스템과 모드를 다룹니다. 노출, 적응, 톤 매핑은 `$threejs-exposure-color-grading` 으로 라우팅하세요. 블룸, DOF, 모션 블러 같은 이미지-공간 합성은 `$threejs-image-pipeline` 으로 라우팅하세요. 시각 타겟을 여러 시스템으로 분해하는 결정은 `$threejs-skill-router` 로 라우팅하세요.

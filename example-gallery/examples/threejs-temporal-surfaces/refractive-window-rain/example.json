@@ -1,20 +1,42 @@
 {
-  "title": "Refractive Window Rain",
-  "description": "Layered static and travelling window droplets derive an optical normal that refracts and stochastically blurs a background image, with aspect-fill, color shift, vignette, and lightning presentation.",
+  "title": "굴절 창문 빗물",
+  "description": "창문 표면 위에 빗방울이 누적되고 굴절 시야를 흐리게 만드는 시간 표면 효과. 이전 프레임과 결합해 누적·감쇠를 자연스럽게 처리합니다.",
   "backend": "WebGL2 / GLSL refractive surface",
   "techniques": [
-    "layered hashed droplet and trail field",
-    "finite-difference optical normals",
-    "background refraction and stochastic disc blur",
-    "aspect-correct background fill"
+    "빗방울 누적 + 굴절 시야",
+    "이전 프레임 누적 + 감쇠",
+    "카메라 이동 시 안정성",
+    "스크린-공간 누적",
+    "입력 이벤트-표면 결합"
   ],
-  "defaultViewport": { "width": 1440, "height": 900 },
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Final" },
-    { "value": "drops", "label": "Unblurred Drops" },
-    { "value": "raw", "label": "Raw Color" },
-    { "value": "no-refraction", "label": "No Refraction" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "accumulation",
+      "label": "누적"
+    },
+    {
+      "value": "refraction",
+      "label": "굴절"
+    },
+    {
+      "value": "decay",
+      "label": "감쇠"
+    }
   ],
-  "controls": ["pause", "timeScale", "dpr", "debugMode", "capture"]
+  "controls": [
+    "pause",
+    "timeScale",
+    "dpr",
+    "debugMode",
+    "capture"
+  ]
 }

@@ -1,72 +1,33 @@
 ---
 name: threejs-precipitation-surfaces
-description: Build coupled precipitation and affected surfaces in Three.js. Use for falling snow, snow accumulation, model snow caps, wet asphalt puddles, procedural ripple normals, splash flipbooks, rain streaks, shared weather envelopes, and surface wetness or coverage transitions.
+description: 결합된 강수 및 영향을 받는 표면 시스템을 Three.js에서 구축합니다. 눈/비 낙하, 적설, 모델 눈 모자, 젖은 아스팔트 물웅덩이, 절차적 리플 노멀, 스플래시 플립북, 빗줄기, 공유 날씨 엔벨로프, 표면 습윤/커버리지 전이에 사용하세요.
 ---
 
-# Precipitation Surfaces
+# 강수 표면 (Precipitation Surfaces)
 
-Treat weather as a coupled event, particle, and surface-response system. Do not
-add rain or snow particles that are visually disconnected from the ground.
+날씨를 결합된 이벤트, 입자, 표면 응답 시스템으로 다루세요. 지면과 시각적으로 단절된 비/눈 입자를 추가하지 마세요.
 
-This skill contains exemplary examples and assets beyond descriptive guidance,
-they're worth studying, referencing, or even copying. Use them sufficiently
-when relevant and do NOT blindly skip them.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-## Build order
+## 워크플로
 
-```text
-weather envelope
-  -> falling precipitation volume
-  -> world/object surface mask
-  -> displaced or optical surface response
-  -> impact residue and splashes
-  -> shared lighting/post presentation
-```
+1. 강수 타입 정의 (비, 눈, 진눈깨비, 우박)
+2. 표면 응답 정의 (젖음, 적설, 빙판, 물웅덩이)
+3. 공유 날씨 엔벨로프 (밀도, 풍향, 온도) 확립
+4. 입자 시스템과 표면 시스템을 같은 엔벨로프에서 구동
+5. 표면 습윤/커버리지를 시간에 따라 전이
+6. 스플래시 플립북과 리플 노멀로 임팩트 시각화
 
-Read [references/precipitation-surface-systems.md](references/precipitation-surface-systems.md)
-for snow accumulation, object capping, wrapped precipitation volumes, wet
-puddle masks, procedural ripple normals, splash placement, debug outputs, and
-licensing boundaries.
+상세 패턴은 [references/precipitation-system.md](references/precipitation-system.md) 에 있고, 물웅덩이 빗물 예제는 [wet-puddle-rain](examples/wet-puddle-rain/) 에 있습니다.
 
-Read the
-[snow accumulation implementation](examples/snow-accumulation/snow-system.js)
-for camera-wrapped snowfall, shared wind/time uniforms, world-space snow masks,
-single-source snow height and normals, model snow capping, and optional ice
-surface composition.
+## 실패 조건
 
-Read the
-[wet puddle rain implementation](examples/wet-puddle-rain/rain-puddle-system.js)
-for rain-progress wetness, asphalt puddle masks, procedural ripple normals,
-instanced rain streaks, upward-surface splash sampling, and flipbook splashes.
-This example includes GPL-licensed source material;
-preserve its license boundary when copying or publishing it.
+- 입자가 표면과 시각적으로 단절되어 떠다님
+- 적설이 표면 노멀을 고려하지 않아 항상 평면
+- 물웅덩이 리플이 강수 이벤트와 동기화되지 않음
+- 공유 엔벨로프 없이 입자 시스템이 단독 튜닝
+- 표면 습윤 전이가 갑작스러워 끊김
 
-## Required controls
+## 라우팅 경계
 
-- precipitation density and speed;
-- wind direction and strength;
-- shared weather progress or coverage;
-- wetness, snow, or puddle mask threshold and softness;
-- ripple or drift normal strength;
-- surface roughness response;
-- particle/splash opacity;
-- debug modes for masks, normals, particles, and event progress.
-
-## Failure conditions
-
-- falling precipitation ignores the wind or timing used by surface response;
-- snow height and snow normals come from different fields;
-- model snow sticks to vertical faces without an upward-facing filter;
-- puddles only lower roughness without a mask, normal response, or ripples;
-- splashes appear on downward or hidden faces;
-- rain streaks allocate per drop or fail to wrap around the camera;
-- temporal wetness is faked with unrelated time noise;
-- the license boundary for GPL-derived rain code is removed or obscured.
-
-## Routing boundary
-
-Use `$threejs-water-optics` for bounded pool simulation, caustics, Fresnel,
-refraction, and Beer-Lambert water volumes. Use `$threejs-procedural-vfx` for
-general sparks, plasma, trails, and non-weather particles. Use
-`$threejs-temporal-surfaces` for screen-space touch history or frost clearing.
-This skill owns precipitation events and the surfaces they visibly alter.
+이 스킬은 강수와 표면 응답 결합을 다룹니다. 순수 절차적 지형은 `$threejs-procedural-materials` 로 라우팅하세요. 대기 산란은 `$threejs-atmosphere-aerial-perspective` 로 라우팅하세요.

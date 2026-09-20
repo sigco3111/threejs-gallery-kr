@@ -1,66 +1,31 @@
 ---
 name: threejs-procedural-fields
-description: Build coherent procedural scalar and vector fields for Three.js materials and geometry. Use for terrain, planets, wear, biomes, clouds, water masks, displacement, roughness, normals, domain warping, and any visual where several channels must derive from shared causes.
+description: Three.js에서 절차적 스칼라 및 벡터 필드를 구축합니다. Perlin/Simplex/Worley 노이즈, 주파수 밴드, FBM, 도메인 와핑, 그라디언트, 절차적 노멀 생성에 사용하세요.
 ---
 
-# Procedural Fields
+# 절차적 필드 (Procedural Fields)
 
-Do not start by stacking noise. Start by defining the fields the object physically or stylistically needs.
+필드를 주파수 밴드, 진폭, 시드로 정의하세요. 시각적 결과는 그 조합에서 나옵니다. 노이즈 함수는 도구일 뿐, 답이 아닙니다.
 
-## Field contract
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-Before shader code, write a field bundle:
+## 워크플로
 
-```text
-coordinates
-  → macro form
-  → meso structure
-  → derived causes
-  → material channels
-```
+1. 필드 타입 선택 (스칼라 높이, 벡터 흐름, 마스크)
+2. 기본 노이즈 함수 선택 (Perlin, Simplex, Worley, Gabor)
+3. 옥타브 수와 진폭 비율 (보통 2.0) 정의 → FBM
+4. 도메인 와핑으로 자연스러운 왜곡 추가
+5. 그라디언트로 노멀 계산
+6. 밴드 제한 / 정규화로 일관된 스케일 확보
 
-Example:
+## 실패 조건
 
-```text
-sphereDirection
-  → warpedDirection
-  → elevation + ridges + craterDepth
-  → slope + cavity + latitude + moisture
-  → biome + color + roughness + bump
-```
+- 단일 옥타브로 평면적 결과
+- 옥타브 진폭이 균등하여 저주파가 약하거나 고주파가 약함
+- 도메인 와핑 좌표가 같은 노이즈 호출 → 자기-상관
+- 그라디언트가 셀 크기와 무관하여 거리에 따라 변함
+- 시드 변경에도 패턴이 거의 동일
 
-## Required workflow
+## 라우팅 경계
 
-1. Choose coordinates that remain stable under camera and object motion.
-2. Lock real or perceptual scale for each frequency band.
-3. Create named primary fields. Never hide the whole look in one expression.
-4. Derive secondary fields from causes: slope from normals, shore from sea-level distance, wear from exposure, dirt from cavity.
-5. Reuse the same fields across color, roughness, normal, displacement, emission, and scattering.
-6. Add debug output for every named field.
-7. Filter high-frequency fields by derivatives, tessellation density, or camera distance.
-
-Read [references/field-stack-recipes.md](references/field-stack-recipes.md)
-before implementation. It records sphere, terrain, water, and
-structured-placement field contracts plus common parity defects.
-
-Read the
-[procedural planet surface](../threejs-procedural-planets/examples/procedural-planet-surface/planet-system.js)
-for a shared CPU/GLSL field bundle whose height, continents, climate, biomes,
-roughness, and normals remain independently inspectable.
-
-## Non-negotiable rules
-
-- Independent noise per channel produces visual soup. Share structure.
-- Domain warp the coordinates, not every result.
-- Warp spherical coordinates tangentially, then renormalize.
-- Use different frequency bands for silhouette, regions, surface breakup, and micro-normal.
-- Do not displace geometry with frequencies the mesh cannot represent.
-- Keep categorical masks broad enough to avoid isolated “bubble” regions.
-- Parameter names must describe perception: `ridgeWidth`, `coastBlend`, `cavityDarkening`, not `noise3Amount`.
-
-## Routing boundary
-
-Use this skill when the shared field model is the task. Use
-`$threejs-procedural-materials` when the task is channel assembly and material
-response, and `$threejs-procedural-planets` when the deliverable is a complete
-planetary body.
+이 스킬은 필드 계산만 다룹니다. 필드를 지형에 적용하는 것은 `$threejs-procedural-planets` 또는 `$threejs-procedural-vegetation` 으로 라우팅하세요. 머티리얼 안에서 사용되는 필드는 `$threejs-procedural-materials` 으로 라우팅하세요.

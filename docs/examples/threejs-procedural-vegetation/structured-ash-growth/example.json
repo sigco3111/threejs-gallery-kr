@@ -1,16 +1,13 @@
 {
-  "title": "Ash Growth System",
-  "description": "A structured Ash growth system with exact per-level species parameters, queue growth, deciduous terminal continuations, taper-coupled child radii, stratified and permuted emergence, final-branch leaf placement, rounded double cards, bark textures, rooted leaf wind, and a complete simplex-patched meadow with grass, flowers, rocks, forest, sky, fog, and daylight.",
+  "title": "구조화 재 성장",
+  "description": "재(Ash) 종 프리셋과 연속 규칙, 자식 배치, 잎/머티리얼/바람 계약이 결합된 절차적 나무 시스템. 성장 계층과 렌더링 적응을 분리해 진단 가능한 결과를 만듭니다.",
   "backend": "WebGL2 / GLSL",
   "techniques": [
-    "exact Ash Medium species table",
-    "deciduous terminal continuation branches",
-    "stratified and permuted child emergence",
-    "taper-coupled child radius",
-    "rounded double leaf cards",
-    "rooted multi-frequency leaf wind",
-    "shared CPU and shader simplex patch field",
-    "textured bark and complete meadow composition"
+    "재 종 프리셋 + 연속 규칙",
+    "자식 배치 + 시맨틱 분기 토폴로지",
+    "잎·머티리얼·바람 계약",
+    "성장 계층과 렌더링 적응 분리",
+    "진단 가능한 예산 관리"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -20,23 +17,19 @@
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "hierarchy",
-      "label": "Branch hierarchy"
+      "value": "branches",
+      "label": "분기"
     },
     {
-      "value": "continuations",
-      "label": "Terminal continuations"
+      "value": "leaves",
+      "label": "잎"
     },
     {
-      "value": "leaf-origins",
-      "label": "Leaf origins"
-    },
-    {
-      "value": "normals",
-      "label": "Surface normals"
+      "value": "wind",
+      "label": "바람"
     }
   ],
   "controls": [

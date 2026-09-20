@@ -1,48 +1,33 @@
 ---
 name: threejs-visual-validation
-description: Validate advanced Three.js graphics as authored systems rather than subjective screenshots. Use for fixed-view visual contracts, field and pass diagnostics, no-post baselines, seed sweeps, camera-scale tests, temporal stability checks, GPU budgets, and regression evidence for procedural scenes.
+description: Three.js 씬의 시각적 검증을 위한 진단 도구와 프로토콜을 정의합니다. 고정-뷰 캡쳐, 진단 모자이크, 시드/스케일 스윕, 시간/GPU 증거, 회귀 감지에 사용하세요.
 ---
 
-# Visual Validation
+# 시각 검증 (Visual Validation)
 
-Evaluate the mechanism that creates the image. A beautiful hero screenshot can hide unstable fields, broken depth, seed failures, or post-processing dependence.
+"보인다/안 보인다" 가 아니라 측정된 증거로 검증하세요. 단일 캡쳐가 아닌, 시드/스케일/시간 스윕이 있어야 회귀를 잡습니다.
 
-## Validation sequence
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-1. Freeze deterministic inputs.
-2. Capture the no-post baseline.
-3. Capture system-specific diagnostic views.
-4. Test the intended camera-distance envelope.
-5. Sweep representative seeds and parameter extremes.
-6. Test motion and temporal stability.
-7. Record image, geometry, memory, and timing budgets.
-8. Keep a small regression set tied to visual invariants.
+## 워크플로
 
-Read [references/graphics-validation-protocol.md](references/graphics-validation-protocol.md)
-for visual contracts, required inspection controls, mechanism-specific
-evidence, temporal checks, budgets, and explicit rejection criteria.
+1. 검증하려는 시각적 속성을 한 문장으로 정의
+2. 고정-뷰 캡쳐로 베이스라인 확보
+3. 시드 스윕 — 동일 씬을 N 개 시드로 생성하고 변동성 측정
+4. 스케일 스윕 — 동일 씬을 다른 거리/스케일로 렌더링하고 일관성 확인
+5. 시간 스윕 — 동일 씬을 N 프레임에 걸쳐 캡쳐하고 안정성 확인
+6. GPU 증거 — 프레임 시간, 메모리 사용량 기록
 
-## Required evidence
+상세 프로토콜은 [references/graphics-validation-protocol.md](references/graphics-validation-protocol.md) 에 있습니다.
 
-- fixed camera and seed manifest;
-- final and no-post captures;
-- field/pass diagnostic mosaic;
-- near, design, and far camera views;
-- at least one stress seed;
-- frame-time and render-target inventory;
-- written invariants and known compromises.
+## 실패 조건
 
-## Failure conditions
+- 단일 캡쳐만으로 검증 완료 선언
+- 시드 변경에도 결과가 동일 (의사난수 미작동)
+- 스케일 변경 시 외형이 부자연스럽게 변함
+- 시간이 지나며 결과가 흐려지거나 누적됨
+- 검증 절차 없이 "예쁘다" 주관적 판단만
 
-- approval relies on a single frame;
-- post-processing cannot be disabled per pass;
-- random seeds are not reproducible;
-- GPU time is inferred only from CPU frame time;
-- temporal artifacts are judged from still images;
-- comparison thresholds ignore intentional stochastic pixels without stabilizing them.
+## 라우팅 경계
 
-## Routing boundary
-
-This skill evaluates an implementation; it does not supply the implementation
-mechanism. Load the subject or image-effect skill first, then use this protocol
-to decide whether the result is acceptable.
+이 스킬은 검증 절차만 담당합니다. 각 효과의 구현은 해당 원자 스킬로 라우팅하세요.

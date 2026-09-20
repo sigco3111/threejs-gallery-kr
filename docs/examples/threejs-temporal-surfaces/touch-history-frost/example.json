@@ -1,14 +1,13 @@
 {
-  "title": "Touch-History Frost",
-  "description": "A complete screen-space frost graph with a procedural source scene, reduced-resolution separable blur, three pre-rendered crystalline structure targets, full-resolution half-float touch-history ping-pong, frame-rate-independent decay, visible and tilt-response channels, frost compositing, two-scale refractive normals, reset/resize ownership, and state diagnostics.",
+  "title": "터치 이력 프로스트",
+  "description": "터치/드래그 이벤트가 누적되며 유리 표면에 성에가 형성되고 녹는 시간 표면 효과. 시간 누적 버퍼와 카메라-안정화로 깜빡임 없이 그려집니다.",
   "backend": "WebGL2 / GLSL render-target pipeline",
   "techniques": [
-    "full-resolution touch-history ping-pong",
-    "frame-rate-independent deposit and decay",
-    "reduced-resolution separable scene blur",
-    "pre-rendered crystalline structure targets",
-    "frost mask and sharp-blur coupling",
-    "two-scale normal refraction"
+    "터치 이력 누적 + 성에 형성/녹음",
+    "시간 누적 버퍼 + 감쇠",
+    "카메라 이동 시 안정성",
+    "스크린-공간 누적",
+    "입력 이벤트-표면 결합"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -16,15 +15,22 @@
   },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Final" },
-    { "value": "root-scene", "label": "Root scene" },
-    { "value": "blur", "label": "Reduced blur" },
-    { "value": "history-previous", "label": "Previous history" },
-    { "value": "deposit", "label": "Current deposit" },
-    { "value": "history-next", "label": "Next history" },
-    { "value": "structure", "label": "Static structure" },
-    { "value": "frost-mask", "label": "Frost mask" },
-    { "value": "no-refraction", "label": "No refraction" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "frost",
+      "label": "프로스트"
+    },
+    {
+      "value": "touch",
+      "label": "터치"
+    },
+    {
+      "value": "decay",
+      "label": "감쇠"
+    }
   ],
   "controls": [
     "pointer",

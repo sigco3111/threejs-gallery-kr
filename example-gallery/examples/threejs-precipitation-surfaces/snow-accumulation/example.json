@@ -1,37 +1,32 @@
 {
-  "title": "Snow Accumulation",
-  "description": "A winter surface system with camera-wrapped instanced snowfall, shared wind and time, world-space snow coverage, single-source snow height and normals, model snow capping, matte snow roughness, ice-crystal sparkle, and an optional shared-field frozen lake.",
+  "title": "적설 표면",
+  "description": "표면 노멀을 고려해 산·평지에 자연스럽게 눈이 쌓이는 적설 시뮬레이션. 시간 경과에 따라 커버리지와 두께가 점진적으로 증가하고, 모델 위 눈 모자는 상향면 누적 규칙을 따릅니다.",
   "backend": "WebGL2 / GLSL material injection and instancing",
   "techniques": [
-    "camera-centered wrapped snowfall volume",
-    "world-space FBM snow mask and drift height",
-    "single-source displacement and finite-difference normals",
-    "upward-facing model snow accumulation",
-    "roughness and sparkle material override",
-    "shared lake basin and translucent ice field"
+    "표면 노멀 인지 적설 누적",
+    "상향면 누적 규칙",
+    "고도·경사 기반 분포",
+    "시간 경과 점진 누적",
+    "눈 결정 구조 셰이딩"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 1,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "snowMask",
-      "label": "Snow mask"
+      "value": "snow-mask",
+      "label": "적설 마스크"
     },
     {
-      "value": "snowNormals",
-      "label": "Snow normals"
+      "value": "height",
+      "label": "적설 높이"
     },
     {
-      "value": "sparkle",
-      "label": "Sparkle"
-    },
-    {
-      "value": "lake",
-      "label": "Frozen lake"
+      "value": "normal",
+      "label": "노멀"
     }
   ],
   "controls": [

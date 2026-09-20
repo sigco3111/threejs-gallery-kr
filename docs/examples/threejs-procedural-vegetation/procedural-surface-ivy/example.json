@@ -1,10 +1,44 @@
 {
-  "title": "Procedural Surface Ivy",
-  "description": "A deterministic ivy skeleton follows and reprojects a painted stroke onto arbitrary mesh geometry, grows tangent-plane branches, builds parallel-transport tube stems, and animates instanced hinged leaves and flower umbels.",
+  "title": "절차적 표면 아이비",
+  "description": "시드된 스플라인-팔로잉 줄기, 반복 메시 리프로젝션, 탄젠트-평면 크리프와 드룹, 평행-수송 튜브 링, 성장 리베일, 인스턴스된 잎과 산형화, 강체 병경-힌지 바람을 갖춘 표면-팔로잉 덩굴.",
   "backend": "WebGPU / procedural mesh vegetation",
-  "techniques": ["seeded spline-following ivy skeleton", "BVH-accelerated surface reprojection", "parallel-transport stem tubes", "instanced leaves with petiole-hinge wind", "distance-driven growth reveal"],
-  "defaultViewport": { "width": 1440, "height": 900 },
+  "techniques": [
+    "시드된 스플라인-팔로잉 줄기",
+    "반복 메시 리프로젝션 + 탄젠트 평면",
+    "평행-수송 튜브 링 + 크리프/드룹",
+    "성장 리베일 + 인스턴스 잎과 산형화",
+    "강체 병경-힌지 바람"
+  ],
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
   "defaultDpr": 1,
-  "debugModes": [{ "value": "final", "label": "Final" }, { "value": "ivy-only", "label": "Ivy Only" }, { "value": "still", "label": "Still Air" }, { "value": "host-only", "label": "Host Only" }],
-  "controls": ["orbit", "pan", "pause", "timeScale", "dpr", "debugMode", "capture"]
+  "debugModes": [
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "stems",
+      "label": "줄기"
+    },
+    {
+      "value": "leaves",
+      "label": "잎"
+    },
+    {
+      "value": "growth",
+      "label": "성장"
+    }
+  ],
+  "controls": [
+    "orbit",
+    "pan",
+    "pause",
+    "timeScale",
+    "dpr",
+    "debugMode",
+    "capture"
+  ]
 }

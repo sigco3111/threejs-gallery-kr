@@ -1,13 +1,13 @@
 {
-  "title": "Procedural Planet Surface",
-  "description": "A terrestrial planet surface with undeformed sphere-direction ownership, a deterministic CPU terrain stack evaluated by the same value-noise field in GLSL, tangential planet-space climate warping, coupled ocean/biome/roughness causes, derivative bump, and specular anti-aliasing.",
+  "title": "절차적 행성 표면",
+  "description": "공유 지질·기후·물·바이옴·러프니스·도함수 노멀이 결합된 절차적 행성 표면. 위도·고도·습도에 따른 바이옴 분포와 행성-공간 좌표계를 사용합니다.",
   "backend": "WebGL2 / GLSL planet surface",
   "techniques": [
-    "undeformed sphere-direction attribute",
-    "shared deterministic CPU and GLSL terrain field",
-    "tangential spherical domain warp",
-    "coupled climate biome and material masks",
-    "derivative procedural bump and roughness filtering"
+    "공유 지질·기후·물·바이옴·러프니스 원인",
+    "위도·고도·습도 기반 바이옴 분포",
+    "행성-공간 좌표계",
+    "도함수 노멀과 안정 좌표",
+    "절차적 크레이터와 산맥"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -17,27 +17,19 @@
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "height",
-      "label": "Shared terrain height"
-    },
-    {
-      "value": "continents",
-      "label": "Continent and coast"
+      "value": "biome",
+      "label": "바이옴"
     },
     {
       "value": "climate",
-      "label": "Humidity and temperature"
+      "label": "기후"
     },
     {
-      "value": "biomes",
-      "label": "Biome ownership"
-    },
-    {
-      "value": "normals",
-      "label": "Resolved normals"
+      "value": "elevation",
+      "label": "표고"
     }
   ],
   "controls": [

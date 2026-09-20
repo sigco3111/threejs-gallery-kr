@@ -1,23 +1,36 @@
 {
-  "title": "Coastal Breaker Ocean",
-  "description": "A deterministic procedural ocean carried into the beach through a signed-distance coastline, shallow-water swash chains, wet-sand shading, persistent foam, and a camera-following warped ocean grid.",
+  "title": "코스트 브레이커 바다",
+  "description": "FFT 스펙트럼으로 만든 광역 바다 + 하이브리드 Gerstner 큰 파랑 + 스넬 창, 거품, 백워시. 해안 전이가 자연스럽게 끝나도록 마루 응답과 결합됩니다.",
   "backend": "WebGPU / TSL",
   "techniques": [
-    "band-limited gravity and capillary wave fields",
-    "signed-distance mainland and island coast",
-    "Lagrangian shallow-water swash chain",
-    "persistent world and film foam accumulation",
-    "shoreline wet-sand optical transition",
-    "camera-following nonuniform ocean grid"
+    "FFT 스펙트럼 + 하이브리드 Gerstner",
+    "스넬 창 + 거품 + 백워시",
+    "마루 응답 결합",
+    "코스트 전이 안정화",
+    "바람/페치 길이 파라미터"
   ],
-  "defaultViewport": { "width": 1440, "height": 932 },
+  "defaultViewport": {
+    "width": 1440,
+    "height": 932
+  },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Final coast" },
-    { "value": "normals", "label": "Surface normals" },
-    { "value": "foam", "label": "Foam fields" },
-    { "value": "shoreline", "label": "Signed coast" },
-    { "value": "wireframe", "label": "Warped grids" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "spectrum",
+      "label": "스펙트럼"
+    },
+    {
+      "value": "snell",
+      "label": "스넬 창"
+    },
+    {
+      "value": "foam",
+      "label": "거품"
+    }
   ],
   "controls": [
     "orbit",

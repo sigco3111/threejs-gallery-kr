@@ -1,14 +1,13 @@
 {
-  "title": "Schwarzschild Geodesic Black Hole",
-  "description": "A full-screen WebGL black hole renderer with RK2 null-geodesic integration, interpolated equatorial disk crossings, relativistic disk emission, lensed procedural deep field, and HDR bloom composition.",
+  "title": "슈바르츠실트 측지선 블랙홀",
+  "description": "슈바르츠실트 메트릭의 해석적 측지선을 따라 광선을 적분합니다. 적분 스텝 수와 거리-가중 누적, 배경 천체 매핑이 결합되어 우주 광학 시뮬레이션을 제공합니다.",
   "backend": "WebGL / GLSL geodesic renderer",
   "techniques": [
-    "RK2 midpoint null-geodesic integration",
-    "adaptive step size with horizon capture and escape termination",
-    "interpolated equatorial accretion-disk crossings",
-    "Keplerian shear, Doppler beaming, gravitational redshift, and blackbody disk color",
-    "procedural deep-field background sampled by escaped ray direction",
-    "half-float HDR target with brightpass, separable blur, ACES composite, aberration, vignette, and grain"
+    "슈바르츠실트 해석적 측지선",
+    "거리-가중 누적 + 적분 스텝 관리",
+    "배경 천체 매핑 (별·은하)",
+    "사건의 지평선 보호 누적",
+    "카메라 의존 적색편이"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -18,27 +17,19 @@
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "escape-direction",
-      "label": "Escape direction"
+      "value": "geodesic",
+      "label": "측지선"
     },
     {
-      "value": "transmittance",
-      "label": "Transmittance"
+      "value": "background",
+      "label": "배경 천체"
     },
     {
-      "value": "disk-crossing",
-      "label": "Disk crossing"
-    },
-    {
-      "value": "closest-approach",
-      "label": "Closest approach"
-    },
-    {
-      "value": "step-count",
-      "label": "Step count"
+      "value": "lensing",
+      "label": "렌즈 효과"
     }
   ],
   "controls": [

@@ -1,56 +1,18 @@
-// GitHub Pages lives under /<repo>/ — see the inline shim at the top of
-// runtime/index.html. It runs *before* any module code and wraps global
-// fetch() + XMLHttpRequest.open() to redirect absolute-path URLs through
-// the repo prefix (hardcoded because we can't use <base> — that would also
-// rewrite our own relative <script src>).
-// Here we only need to handle the dynamic import of scene.js: prepend the
-// repo prefix manually.
+// GitHub Pages lives under /<repo>/ — inject <base> so absolute paths
+// in example code resolve correctly under the repo prefix.
+{
+  const m = window.location.pathname.match(/^(\/[^/]+)?\/example-gallery\//);
+  const repoPrefix = m ? (m[1] || "") : "";
+  if (repoPrefix) {
+    const base = document.createElement("base");
+    base.href = repoPrefix + "/";
+    document.head.prepend(base);
+    window.__repoPrefix = repoPrefix;
+  }
+}
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { exampleRuntime } from "./example-runtime.js";
-import { EXRLoader } from "three/addons/loaders/EXRLoader.js";
-import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-
-const REPO_PREFIX = "/threejs-gallery-kr";
-
-// THREE.TextureLoader / RGBELoader / GLTFLoader / EXRLoader / CubeTextureLoader
-// can call fetch via three.js's image-loading pipeline. Wrapping their .load()
-// ensures absolute-path asset URLs like "/skills/foo/bar.webp" resolve under
-// the repo path. (fetch wrapper in runtime/index.html already handles most,
-// but some loaders cache the URL before our wrapper runs.)
-// NOTE: wrap the base Loader too — custom loaders (PrecomputedTexturesLoader,
-// STBNLoader, DataLoader subclasses) extend it and bypass the per-class wraps.
-import { Loader } from "three";
-function wrapLoaderLoad(LoaderCtor) {
-  if (!LoaderCtor || !LoaderCtor.prototype?.load) return;
-  const originalLoad = LoaderCtor.prototype.load;
-  const redirectOne = (u) => {
-    if (typeof u !== "string") return u;
-    if (u.charAt(0) === "/") {
-      // Absolute path — prepend repo prefix by string concatenation
-      // (new URL() ignores the base when the spec is an absolute path).
-      return window.location.origin + REPO_PREFIX + u;
-    }
-    if (u.startsWith(window.location.origin + "/") && !u.startsWith(window.location.origin + REPO_PREFIX + "/")) {
-      // Fully-qualified URL missing the repo prefix (e.g. resolveAsset()
-      // built on a prefix-less base) — splice the prefix back in.
-      return window.location.origin + REPO_PREFIX + u.slice(window.location.origin.length);
-    }
-    if (u.startsWith("http://") || u.startsWith("https://") || u.startsWith("data:")) {
-      // Already absolute URL or data URI — leave as-is.
-      return u;
-    }
-    // Relative path — resolve under repo prefix so scenes that pass
-    // "assets/foo.hdr" still land under /threejs-gallery-kr/.
-    return new URL(u, window.location.origin + REPO_PREFIX + "/").href;
-  };
-  LoaderCtor.prototype.load = function patchedLoad(url, ...rest) {
-    // CubeTextureLoader takes an ARRAY of 6 URLs — redirect each entry.
-    const redirected = Array.isArray(url) ? url.map(redirectOne) : redirectOne(url);
-    return originalLoad.call(this, redirected, ...rest);
-  };
-}
 
 const params = new URLSearchParams(window.location.search);
 const modulePath = params.get("module");
@@ -61,10 +23,12 @@ if (!modulePath?.startsWith("/examples/")) {
 }
 
 // dynamic import resolves against window.location.origin (not <base>),
-// so we must prepend the repo prefix manually.
+// so we must prepend the repo prefix manually using document.baseURI
+// (which respects the injected <base> tag).
 // NOTE: modulePath starts with "/" — new URL() would discard the base,
 // so use string concatenation to preserve the repo prefix.
-const resolvedModulePath = window.location.origin + REPO_PREFIX + modulePath;
+const repoPrefix = window.__repoPrefix || "";
+const resolvedModulePath = window.location.origin + repoPrefix + modulePath;
 const adapterModule = await import(resolvedModulePath);
 const adapter = adapterModule.default;
 
@@ -76,12 +40,6 @@ const rawWebGpu = adapter.backend === "raw-webgpu";
 const THREE = adapter.backend === "webgpu"
   ? await import("three/webgpu")
   : await import("three");
-wrapLoaderLoad(Loader);
-wrapLoaderLoad(EXRLoader);
-wrapLoaderLoad(RGBELoader);
-wrapLoaderLoad(GLTFLoader);
-wrapLoaderLoad(THREE.TextureLoader);
-wrapLoaderLoad(THREE.CubeTextureLoader);
 const canvas = document.querySelector("canvas");
 const rendererOptions = {
   canvas,
@@ -174,10 +132,8 @@ const context = {
   runtime: exampleRuntime,
   moduleUrl: new URL(resolvedModulePath),
   resolveAsset(relativePath) {
-    // resolvedModulePath is the fully-qualified URL the adapter module was
-    // loaded from — use it as the base so relative paths like "assets/foo.hdr"
-    // resolve under the same repo path the adapter itself lives in.
-    return new URL(relativePath, resolvedModulePath).href;
+    return new URL(relativePath, resolvedModulePath)
+      .href;
   },
 };
 

@@ -112,7 +112,7 @@ function applyViewport() {
 
   elements.frame.style.width = `${dimensions.width}px`;
   elements.frame.style.height = `${dimensions.height}px`;
-  elements.frameSize.textContent = `${dimensions.width} × ${dimensions.height}`;
+  elements.frameSize.textContent = dimensions ? `${dimensions.width} × ${dimensions.height}` : "반응형";
 }
 
 function updateDebugModes(example) {
@@ -170,7 +170,7 @@ function settleOverviewThumbnailJob(job, attempt, result) {
 function failOverviewThumbnailJob(job, attempt, message) {
   settleOverviewThumbnailJob(job, attempt, {
     status: "error",
-    message: message || "Thumbnail render failed.",
+    message: message || "썸네일 렌더링 실패.",
   });
 }
 
@@ -184,7 +184,7 @@ function startOverviewThumbnailJob(job) {
   job.timeoutId = window.setTimeout(
     () => {
       controller.abort();
-      failOverviewThumbnailJob(job, attempt, "Thumbnail render timed out.");
+      failOverviewThumbnailJob(job, attempt, "썸네일 렌더링 시간 초과.");
     },
     OVERVIEW_THUMBNAIL_TIMEOUT_MS,
   );
@@ -354,7 +354,7 @@ function renderOverview() {
     article.tabIndex = 0;
     article.dataset.active = String(example.id === state.selectedId);
     article.setAttribute("role", "button");
-    article.setAttribute("aria-label", `Inspect ${example.title}`);
+    article.setAttribute("aria-label", `${example.title} 검토`);
     const inspectExample = () => {
       state.mode = "single";
       selectExample(example.id);
@@ -370,7 +370,7 @@ function renderOverview() {
     const thumbnailShell = document.createElement("div");
     thumbnailShell.className = "overview-thumbnail-shell";
     thumbnailShell.dataset.state = "loading";
-    thumbnailShell.dataset.message = "Rendering thumbnail…";
+    thumbnailShell.dataset.message = "썸네일 렌더링 중…";
 
     const thumbnail = document.createElement("img");
     thumbnail.className = "overview-thumbnail";
@@ -385,7 +385,7 @@ function renderOverview() {
     title.textContent = example.title;
     const inspect = document.createElement("span");
     inspect.className = "inspect-label";
-    inspect.textContent = "Inspect";
+    inspect.textContent = "검토";
     footer.append(title, inspect);
     article.append(thumbnailShell, footer);
     elements.overview.append(article);
@@ -444,13 +444,13 @@ function selectExample(id, { reload = true } = {}) {
   elements.timeScale.value = String(state.timeScale);
   updateDebugModes(example);
   elements.standalone.href = exampleUrl(example);
-  elements.pause.textContent = state.paused ? "Resume" : "Pause";
+  elements.pause.textContent = state.paused ? "재개" : "일시정지";
   applyViewport();
   syncListSelection({ reveal: true });
   renderMode();
 
   if (reload) {
-    setFrameStatus("loading");
+    setFrameStatus("불러오는 중", "loading");
     elements.frameMetrics.textContent = "";
     elements.frame.src = exampleUrl(example);
   }
@@ -485,18 +485,16 @@ function setRuntimeSummary(label, status = "idle") {
 }
 
 async function loadExamples({ preserveSelection = true } = {}) {
-  setRuntimeSummary("discovering", "loading");
+  setRuntimeSummary("예제 검색 중", "loading");
   const response = await fetch("/api/examples", { cache: "no-store" });
   if (!response.ok) {
-    throw new Error(`Discovery failed with ${response.status}`);
+    throw new Error(`예제 검색 실패 (HTTP ${response.status})`);
   }
   const payload = await response.json();
   state.examples = payload.examples;
   state.filtered = payload.examples;
-  elements.count.textContent = `${payload.count} ${
-    payload.count === 1 ? "example" : "examples"
-  }`;
-  setRuntimeSummary("runtime ready", "ready");
+  elements.count.textContent = `예제 ${payload.count}개`;
+  setRuntimeSummary("런타임 준비 완료", "ready");
 
   const requested = new URL(window.location.href).searchParams.get("example");
   const previous = preserveSelection && state.mode === "single"
@@ -529,7 +527,7 @@ elements.refresh.addEventListener("click", async () => {
   try {
     await loadExamples();
   } catch (error) {
-    setRuntimeSummary("discovery failed", "error");
+    setRuntimeSummary("예제 검색 실패", "error");
     console.error(error);
   } finally {
     refreshPending = false;
@@ -562,13 +560,13 @@ elements.debugMode.addEventListener("change", () => {
 });
 elements.pause.addEventListener("click", () => {
   state.paused = !state.paused;
-  elements.pause.textContent = state.paused ? "Resume" : "Pause";
+  elements.pause.textContent = state.paused ? "재개" : "일시정지";
   sendState();
 });
 elements.reload.addEventListener("click", () => {
   const example = selectedExample();
   if (example) {
-    setFrameStatus("loading");
+    setFrameStatus("불러오는 중", "loading");
     elements.frame.src = exampleUrl(example);
   }
 });
@@ -586,7 +584,7 @@ elements.capture.addEventListener("click", () => {
 });
 
 elements.frame.addEventListener("load", () => {
-  setFrameStatus("loaded");
+  setFrameStatus("불러옴", "ready");
   sendState();
   elements.frame.contentWindow?.postMessage(
     { source: "threejs-example-gallery", type: "ping" },
@@ -602,9 +600,9 @@ window.addEventListener("message", (event) => {
   if (event.source !== elements.frame.contentWindow) return;
 
   if (event.data.type === "ready") {
-    setFrameStatus("ready", "ready");
+    setFrameStatus("준비 완료", "ready");
   } else if (event.data.type === "runtime-error") {
-    setFrameStatus(event.data.message || "runtime error", "error");
+    setFrameStatus(event.data.message || "런타임 오류", "error");
   } else if (event.data.type === "metrics") {
     elements.frameMetrics.textContent = Object.entries(event.data.metrics ?? {})
       .map(([key, value]) => `${key} ${value}`)
@@ -651,7 +649,7 @@ window.addEventListener("keydown", (event) => {
 });
 
 loadExamples({ preserveSelection: false }).catch((error) => {
-  setRuntimeSummary("discovery failed", "error");
+  setRuntimeSummary("예제 검색 실패", "error");
   elements.empty.hidden = false;
   elements.empty.querySelector("h2").textContent = error.message;
 });

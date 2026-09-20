@@ -1,56 +1,42 @@
 ---
 name: threejs-atmosphere-aerial-perspective
-description: Implement physically motivated sky and aerial-perspective systems in Three.js. Use for planetary atmospheres, ground-to-space transitions, Rayleigh/Mie scattering, precomputed LUTs, depth-based transmittance and inscattering, sun/moon discs, and atmosphere-aware lighting.
+description: Three.js에서 물리 기반 하늘 및 시차 원근 시스템을 구현합니다. 행성 대기, 지표-우주 전이, Rayleigh/Mie 산란, 사전 계산 LUT, 깊이 기반 투과도·입사산란, 태양/달 디스크, 대기 인지 조명에 사용하세요.
 ---
 
-# Atmosphere and Aerial Perspective
+# 대기 및 시차 원근 (Atmosphere and Aerial Perspective)
 
-Treat sky rendering and aerial perspective as two views of the same scattering model. They must share radii, density profiles, coefficients, sun direction, exposure scale, and coordinate transforms.
+하늘 렌더링과 시차 원근을 동일한 산란 모델의 두 시각으로 다룹니다. 반경, 밀도 프로파일, 계수, 태양 방향, 노출 스케일, 좌표 변환을 반드시 공유해야 합니다.
 
-This skill contains exemplary examples and assets beyond descriptive guidance,
-they're worth studying, referencing, or even copying. Use them sufficiently
-when relevant and do NOT blindly skip them.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-## Choose the implementation tier
+## 구현 티어 선택
 
-- Small scene with no orbital camera: analytic height/distance approximation.
-- Planetary ground-to-space camera: ray integration or precomputed LUTs.
-- Large geospatial world: LUTs plus world-to-planet transform, altitude correction, and depth-aware aerial perspective.
+- 궤도 카메라가 없는 작은 씬: 해석적 높이/거리 근사
+- 행성 지표-우주 카메라: 레이 적분 또는 사전 계산 LUT
+- 대규모 지리 공간 월드: LUT + 월드→행성 변환, 고도 보정, 깊이 인지 시차 원근
 
-Read [references/atmosphere-system-contract.md](references/atmosphere-system-contract.md)
-before implementation. It separates the LUT/ellipsoid architecture from
-dynamic integration and the shell/post handoff.
+구현 전에 [references/atmosphere-system-contract.md](references/atmosphere-system-contract.md) 를 읽으세요. LUT/타원체 아키텍처와 동적 적분, 셸/포스트 핸드오프를 분리합니다.
 
-Read the [LUT sky and aerial-perspective entry](examples/lut-aerial-perspective/atmosphere-effect.js)
-and its `source/` modules for the SkyMaterial, SkyLightProbe,
-SunDirectionalLight, AerialPerspectiveEffect, precomputed-texture loader,
-sun/moon direction, lens flare, tone mapping, and dithering path used by the
-LUT example.
+LUT 예제에서 사용하는 [LUT 하늘과 시차 원근 엔트리](examples/lut-aerial-perspective/atmosphere-effect.js) 와 그 `source/` 모듈을 읽으세요. SkyMaterial, SkyLightProbe, SunDirectionalLight, AerialPerspectiveEffect, 사전 계산 텍스처 로더, 태양/달 방향, 렌즈 플레어, 톤 매핑, 디더링 경로가 있습니다.
 
-## Required outputs
+## 필수 출력
 
-- sky radiance;
-- sun transmittance/color;
-- segment transmittance from camera to visible surface;
-- segment inscattering;
-- optional sky irradiance for materials;
-- explicit scale conversion between world units and atmosphere units.
+- 하늘 복사 휘도
+- 태양 투과도/색상
+- 카메라에서 가시 표면까지 세그먼트 투과도
+- 세그먼트 입사산란
+- 머티리얼용 선택적 하늘 복사 조도
+- 월드 단위와 대기 단위 간 명시적 스케일 변환
 
-## Failure conditions
+## 실패 조건
 
-- sky and terrain haze use different sun directions or coefficients;
-- the atmosphere is a uniformly transparent sphere;
-- camera altitude is measured in a local flat frame during orbital motion;
-- scene depth is treated as linear when it is not;
-- exposure is used to hide incorrect radiance scale;
-- atmosphere fades abruptly at shell entry.
+- 하늘과 지형 헤이즈가 서로 다른 태양 방향이나 계수를 사용
+- 대기가 균일하게 투명한 구체로 표현됨
+- 궤도 운동 중 카메라 고도를 평면 로컬 프레임에서 측정
+- 씬 깊이가 비선형인데 선형으로 취급
+- 잘못된 복사 휘도 스케일을 노출로 가림
+- 셸 진입부에서 대기가 갑자기 끊김
 
-## Routing boundary
+## 라우팅 경계
 
-This skill owns molecular/aerosol sky scattering and surface-segment aerial
-perspective. Use `$threejs-volumetric-clouds` for weather-shaped cloud density,
-temporal cloud reconstruction, and cloud shadows. Use
-`$threejs-procedural-vfx` for emissive aurora curtain volumes and their
-perspective/equirectangular radiance materials, and for standalone filmic HDR
-lens-flare compositors. Keep the LUT example's lens flare here when it remains
-one stage in the sky-scattering and aerial-perspective composition.
+이 스킬은 분자/에어로졸 하늘 산란과 표면-세그먼트 시차 원근을 담당합니다. `$threejs-volumetric-clouds` 는 날씨 형태의 구름 밀도, 시간적 구름 재구성, 구름 그림자에 사용하세요. `$threejs-procedural-vfx` 는 발광 오로라 커튼 볼륨과 그 원근/이방사 재질, 그리고 단독 필름릭 HDR 렌즈 플레어 합성기에 사용하세요. LUT 예제의 렌즈 플레어는 하늘 산란과 시차 원근 합성의 한 단계로 남아있을 때 여기에 둡니다.

@@ -1,15 +1,14 @@
 {
-  "title": "Porcelain & Brass Submarine",
-  "description": "A complete procedural hard-surface submarine assembled from a tilted-collar hull loft, UV-space apertures and ornament, parallel-transport sweeps, revolved fittings, lens-section fin lofts, a furnished glass cabin, a shrouded eight-blade propeller, generated material textures, and explicit per-part topology evidence.",
-  "backend": "WebGPU / TSL node materials",
+  "title": "포셀린-황동 잠수함",
+  "description": "경사진 칼라 헐 로프트와 평행-수송 트림, 가구 있는 유리 캐빈, 둘러싼 프로펠러, 렌즈-섹션 핀으로 구성된 완전한 잠수함 어셈블리. 시맨틱 서브어셈블리, UV-소유 개구부, 생성된 피팅과 모델 진단을 함께 제공합니다.",
+  "backend": "WebGPU / TSL 노드 머티리얼",
   "techniques": [
-    "tilted-collar sampled hull loft",
-    "arc-length UVs and UV-space aperture ownership",
-    "parallel-transport tube sweeps",
-    "lens-section fin and propeller lofts",
-    "procedural hull ornament and quilt normal textures",
-    "semantic complete-model assembly",
-    "per-part triangle diagnostics"
+    "경사진 칼라 헐 로프트와 평행-수송 트림",
+    "시맨틱 서브어셈블리 + UV-소유 개구부",
+    "생성된 피팅 (밸브·파이프·핸드레일)",
+    "유리 캐빈 가구 디테일",
+    "렌즈-섹션 핀과 둘러싼 프로펠러",
+    "파트별 삼각형 진단"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -19,19 +18,19 @@
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
       "value": "topology",
-      "label": "Assembly topology"
+      "label": "토폴로지"
     },
     {
-      "value": "hull-loft",
-      "label": "Hull loft"
+      "value": "apertures",
+      "label": "개구부"
     },
     {
-      "value": "no-glass",
-      "label": "No glass"
+      "value": "trim",
+      "label": "트림"
     }
   ],
   "controls": [

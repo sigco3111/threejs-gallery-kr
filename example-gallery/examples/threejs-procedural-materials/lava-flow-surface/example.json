@@ -1,33 +1,32 @@
 {
-  "title": "Lava Flow Surface",
-  "description": "A raymarched hot terrain material with one advected height field driving ridge shape, normals, lava/rock identity, volumetric glow, ember occlusion, fog, vignette, and film grain.",
+  "title": "용암 흐름 표면",
+  "description": "레이마칭 절차적 높이 필드에서 노멀, 암석/용암 정체성, 발광, 글로우, 잉걸불, 안개, 그레인이 단일 머티리얼 원인 스택에 결합된 표면. 고온 발광과 냉각 암석의 시간적 전이를 다룹니다.",
   "backend": "WebGL2 / GLSL raymarched material",
   "techniques": [
-    "advected fBm terrain distance field",
-    "finite-difference normals from the same height field",
-    "height and ridge coupled lava-rock material identity",
-    "near-surface emissive glow accumulation",
-    "ray-occluded ember particles",
-    "fog, vignette, and film grain in the material"
+    "레이마칭 절차적 높이 필드",
+    "결합된 노멀·정체성·발광·글로우",
+    "잉걸불 입자와 안개",
+    "시간적 냉각/가열 전이",
+    "단일 머티리얼 원인 스택"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 1,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "height",
-      "label": "Height"
+      "value": "temperature",
+      "label": "온도"
     },
     {
-      "value": "normals",
-      "label": "Normals"
+      "value": "embers",
+      "label": "잉걸불"
     },
     {
-      "value": "emission",
-      "label": "Emission"
+      "value": "glow",
+      "label": "글로우"
     }
   ],
   "controls": [

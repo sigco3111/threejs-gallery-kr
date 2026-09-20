@@ -1,24 +1,36 @@
 {
-  "title": "Physical Diffraction Grating",
-  "description": "A printed card substrate with an additive wave-optical foil layer whose embossed star and stripe groove fields return wavelength-selective radiance from a fixed strip emitter without time, framebuffer, or painted-rainbow inputs.",
+  "title": "물리적 회절격자",
+  "description": "인쇄 기판 위에 가산 HDR 포일 응답을 얹은 회절격자. 별·줄무늬 마스크가 국부 그루브 각도·피치·릴리프를 선택하고, 파장이 단독으로 스펙트럼 색을 소유합니다. 전체 광학 모델은 TSL 그래프로 표현됩니다.",
   "backend": "WebGPU / pure TSL node graph",
   "techniques": [
-    "phase-grating diffraction orders",
-    "Bessel order efficiency",
-    "CIE 1931 spectral reconstruction",
-    "blackbody emitter weighting",
-    "finite-coherence azimuth broadening",
-    "pure TSL Fn, If, and Loop graph",
-    "embossed star and stripe microstructure",
-    "additive radiance over a printed substrate"
+    "엠보스드 필드 + CIE/블랙바디 스펙트럼",
+    "위상 격자 + Bessel 차수 효율",
+    "결맞음-확산 + 스트립 이미터",
+    "가산 레이어 + 안정 객체-프레임",
+    "순수 TSL 그래프 (`Fn`, `If`, `Loop`)"
   ],
-  "defaultViewport": { "width": 1440, "height": 900 },
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Calibrated foil" },
-    { "value": "no-stars", "label": "Stripe gratings" },
-    { "value": "shallow-relief", "label": "Shallow relief" },
-    { "value": "broad-azimuth", "label": "Broad azimuth" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "groove",
+      "label": "그루브"
+    },
+    {
+      "value": "spectrum",
+      "label": "스펙트럼"
+    },
+    {
+      "value": "substrate",
+      "label": "기판"
+    }
   ],
   "controls": [
     "orbit",

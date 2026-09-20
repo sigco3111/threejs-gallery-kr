@@ -1,39 +1,34 @@
 ---
 name: threejs-exposure-color-grading
-description: Build a measured exposure and grading path in Three.js. Use for a 64x36 encoded luminance meter, asynchronous readback, weighted log-average exposure, asymmetric adaptation, single tone-map ownership, and a generated 32-cube post-tone-map LUT.
+description: 측정 가능한 노출과 그레이딩 경로를 Three.js에서 구축합니다. 64×36 인코딩 휘도 미터, 비동기 리드백, 가중 로그 평균 노출, 비대칭 적응, 단일 톤-맵 소유, 32-큐브 톤-맵 후 LUT 생성에 사용하세요.
 ---
 
-# Exposure and Color Grading
+# 노출 및 색 보정 (Exposure and Color Grading)
 
-Treat exposure, tone mapping, grading, and output conversion as distinct stages. Tune them from measured HDR signal, not by stacking compensating color operations.
+노출, 톤 매핑, 그레이딩, 출력 변환을 별개의 단계로 다루세요. 보상용 색 연산을 쌓지 말고, 측정된 HDR 신호에서부터 튜닝하세요.
 
-## Order
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-```text
-HDR scene
-  → luminance meter
-  → adapted exposure
-  → tone map
-  → creative grade / 3D LUT
-  → final output conversion
-```
+## 순서
 
-Read [references/scene-referred-color-pipeline.md](references/scene-referred-color-pipeline.md)
-for the exact 64x36 meter, encoded readback, adaptation constants, 32-cube LUT,
-and signal-ownership ambiguities.
+1. 인코딩 휘도 미터로 씬 휘도 분포 측정
+2. 가중 로그 평균으로 노출 설정
+3. 비대칭 적응 (위로 느리게, 아래로 빠르게)
+4. 단일 톤-맵 함수 선택 (ACES, Reinhard, AgX 등)
+5. 32-큐브 LUT 로 그레이딩 적용 (선택적)
+6. sRGB/Display-P3 인코딩으로 출력
 
-## Failure conditions
+상세 패턴과 32-큐브 LUT 생성 코드는 [references/exposure-grading-system.md](references/exposure-grading-system.md) 에 있습니다.
 
-- tone mapping occurs in both materials and post;
-- exposure is used to repair physically inconsistent light ratios;
-- meter weighting and scene framing are not inspected;
-- adaptation speed is the same toward light and dark;
-- LUT input/output spaces are undocumented;
-- sRGB encoding happens twice;
-- a display-domain LUT is moved before tone mapping without being rebuilt.
+## 실패 조건
 
-## Routing boundary
+- 노출이 임의로 선택되어 흰색이 클램프되거나 검정이 침몰
+- 톤 매핑이 그레이딩 LUT 앞에 적용되지 않음
+- 가중 평균이 균등 평균으로 대체되어 명부/암부 노출이 잘못됨
+- 적응이 대칭적이어서 깜빡임 발생
+- 여러 톤-맵 함수가 파이프라인에서 충돌
+- LUT 인코딩이 잘못된 색 공간에서 수행
 
-Use `$threejs-bloom` for HDR glow contribution and
-`$threejs-image-pipeline` when this color path must share ownership with AO,
-atmosphere, or effect-local render targets.
+## 라우팅 경계
+
+이 스킬은 노출/톤-맵/LUT 만을 다룹니다. 블룸, DOF, GTAO 같은 이미지-공간 합성은 `$threejs-image-pipeline` 으로 라우팅하세요. 시각 타겟 결정은 `$threejs-skill-router` 로 라우팅하세요.

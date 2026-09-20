@@ -1,15 +1,13 @@
 {
-  "title": "Spectral Cascade Ocean",
-  "description": "A deterministic spectral-ocean inspection path with directional JONSWAP/TMA spectra, three disjoint wavelength cascades, packed complex displacement fields, staged two-dimensional GPU IFFTs, choppy derivatives, persistent Jacobian whitecaps, fold-aware normals, shared analytic sky reflection, crest scatter, and filtered micro-detail.",
+  "title": "스펙트럼 캐스케이드 바다",
+  "description": "여러 스펙트럼 대역을 캐스케이드 적분해 자연스러운 주파수 분포를 만듭니다. 큰 파랑과 잔물결이 일관된 외양을 보입니다.",
   "backend": "WebGL2 fragment FFT inspection path",
   "techniques": [
-    "three disjoint directional spectrum cascades",
-    "GPU staged two-dimensional inverse FFT",
-    "packed horizontal displacement fields",
-    "finite-difference derivative map assembly",
-    "persistent Jacobian whitecaps",
-    "fold-aware normal reconstruction",
-    "shared sky and reflection radiance"
+    "다중 스펙트럼 대역 캐스케이드",
+    "자연스러운 주파수 분포",
+    "큰 파랑과 잔물결 일관성",
+    "FFT 합성",
+    "바람/페치 길이 파라미터"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -19,31 +17,19 @@
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "cascade-bands",
-      "label": "Cascade bands"
+      "value": "cascade",
+      "label": "캐스케이드"
     },
     {
-      "value": "normals",
-      "label": "Resolved normals"
+      "value": "spectrum",
+      "label": "스펙트럼"
     },
     {
-      "value": "jacobian",
-      "label": "Jacobian / foam history"
-    },
-    {
-      "value": "spectrum-0",
-      "label": "250 m spectrum"
-    },
-    {
-      "value": "spectrum-1",
-      "label": "17 m spectrum"
-    },
-    {
-      "value": "spectrum-2",
-      "label": "5 m spectrum"
+      "value": "wind",
+      "label": "바람"
     }
   ],
   "controls": [

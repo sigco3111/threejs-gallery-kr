@@ -1,14 +1,13 @@
 {
-  "title": "Holographic Shape Transition",
-  "description": "An additive holographic projection whose silhouette is carried entirely by a squared Fresnel rim with grazing falloff, banded by footprint-filtered object-space scanlines, jittered by a height-phased glitch gate, and handed shape to shape by one shared vertical sweep with complementary discards.",
+  "title": "홀로그래픽 형상 전이",
+  "description": "가산 림 셸(제곱 Fresnel 입사 + 그레이징 폴오프), 풋프린트-필터 객체-공간 스캔라인, 높이-위상 글리치 변위, 인덱스-게이트 참여. 형상 세트 전반 공유 스윕 범위와 보완-디스카드 핸드오프.",
   "backend": "WebGL2 / GLSL additive shell",
   "techniques": [
-    "squared Fresnel rim with grazing falloff",
-    "footprint-filtered object-space scanlines",
-    "height-phased incommensurate-sine glitch gate",
-    "shared normalised sweep range across a shape set",
-    "complementary discard handover under additive blending",
-    "index-gated shared shell material"
+    "가산 림 셸 + 제곱 Fresnel 입사",
+    "풋프린트-필터 객체-공간 스캔라인",
+    "높이-위상 글리치 변위",
+    "공유 스윕 범위 + 보완-디스카드 핸드오프",
+    "인덱스-게이트 참여"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -16,11 +15,22 @@
   },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Final" },
-    { "value": "scanlines", "label": "Scanline density" },
-    { "value": "fresnel", "label": "Fresnel rim" },
-    { "value": "transition", "label": "Sweep range" },
-    { "value": "glitch", "label": "Glitch displacement" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "rim",
+      "label": "림 셸"
+    },
+    {
+      "value": "scanlines",
+      "label": "스캔라인"
+    },
+    {
+      "value": "transition",
+      "label": "전이"
+    }
   ],
   "controls": [
     "orbit",

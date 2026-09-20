@@ -1,24 +1,41 @@
 {
-  "title": "Procedural Optimus Humanoid",
-  "description": "A complete 1.73-metre humanoid robot assembled from parameter-curve lofts, pillow panels, exact CSG cuts, angle-limited bevels, five-finger hands, articulated mechanical subassemblies, and object-space procedural PBR materials.",
-  "backend": "WebGPU / TSL node materials",
+  "title": "절차적 옵티머스 휴머노이드",
+  "description": "176개 객체 토르소/머리/팔/손/엉덩이/다리/발 어셈블리, 5지 손, 891,809개 방출 삼각형, 14개 PBR 정체성, 정확한 폴리곤 컷, 각도-제한 베벨, 분할 코너 노멀, 도함수-필터 객체-공간 러프니스와 범프를 갖춘 완전한 휴먼-스케일 로봇.",
+  "backend": "WebGPU / TSL 노드 머티리얼",
   "techniques": [
-    "shape-preserving and natural-cubic parameter curves",
-    "superellipse loft and parallel-transport spine kernels",
-    "pillow-shell panels with paired front and back surfaces",
-    "exact polygon CSG difference",
-    "angle-limited multi-segment bevel construction",
-    "corner-normal splitting across authored sharp edges",
-    "complete semantic humanoid assembly",
-    "filtered object-space procedural roughness and bump"
+    "176 객체 시맨틱 어셈블리 + 5지 손",
+    "정확한 폴리곤 컷과 각도-제한 베벨",
+    "분할 코너 노멀과 평행-수송 트림",
+    "14개 PBR 머티리얼 슬롯",
+    "도함수-필터 객체-공간 러프니스와 범프",
+    "891,809개 방출 삼각형 진단"
   ],
-  "defaultViewport": { "width": 1440, "height": 900 },
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Complete assembly" },
-    { "value": "topology", "label": "Wireframe topology" },
-    { "value": "upper-body", "label": "Upper body" },
-    { "value": "lower-body", "label": "Lower body" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "topology",
+      "label": "토폴로지"
+    },
+    {
+      "value": "slots",
+      "label": "머티리얼 슬롯"
+    },
+    {
+      "value": "roughness",
+      "label": "러프니스"
+    },
+    {
+      "value": "bump",
+      "label": "범프"
+    }
   ],
   "controls": [
     "orbit",

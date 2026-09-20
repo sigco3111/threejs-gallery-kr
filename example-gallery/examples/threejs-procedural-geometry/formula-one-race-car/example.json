@@ -1,17 +1,17 @@
 {
-  "title": "Formula One Race Car",
-  "description": "A complete open-wheel race car built as one continuous parameter-curve loft from nose to engine cover, with a recess-opening cockpit section, superellipse sidepods carrying a real inlet aperture, spanwise airfoil wing lofts, a two-plane livery projector, a load-deflected tyre carcass, and per-part triangle evidence.",
-  "backend": "WebGPU / TSL node materials",
+  "title": "포뮬러 원 경주용 차",
+  "description": "노즈부터 엔진 커버까지 하나의 연속적인 매개변수-곡선 로프트로 만든 오픈-휠 경주용 차. 콕핏 리세스 단면, 수퍼엘립스 사이드포드(실제 인렛 개구부 포함), 스팬와이즈 에어포일 윙 로프트, 2-평면 리버리 프로젝터, 하중-편향 타이어 캐스카스, 파트별 삼각형 진단을 포함합니다.",
+  "backend": "WebGPU / TSL 노드 머티리얼",
   "techniques": [
-    "monotone parameter-curve tracks driving one continuous hull loft",
-    "semantic section control points with a cockpit recess parameter",
-    "superellipse sidepod sections with undercut and aero shelf",
-    "spanwise airfoil lofts with chord, incidence, camber and dihedral",
-    "authored outline plates with holes, bevels and 3D warps",
-    "two-plane world-normal livery projector",
-    "measured tyre carcass with baked contact-patch deflection",
-    "generated carbon twill, sidewall and display textures",
-    "per-part triangle diagnostics"
+    "단조 매개변수-곡선 트랙이 구동하는 연속 헐 로프트",
+    "콕핏 리세스 파라미터를 가진 시맨틱 단면 컨트롤 포인트",
+    "언더컷과 에어로 셸프가 있는 수퍼엘립스 사이드포드 단면",
+    "코드·인시던스·캠버·디헤드럴의 스팬와이즈 에어포일 로프트",
+    "구멍·베벨·3D 왜곡이 있는 작성된 외곽 플레이트",
+    "2-평면 월드-노멀 리버리 프로젝터",
+    "베이크드 접촉-패치 편향이 있는 측정된 타이어 캐스카스",
+    "생성된 카본 트윌·사이드월·디스플레이 텍스처",
+    "파트별 삼각형 진단"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -19,11 +19,26 @@
   },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Final" },
-    { "value": "topology", "label": "Assembly topology" },
-    { "value": "no-livery", "label": "Bare structure" },
-    { "value": "projector", "label": "Projector planes" },
-    { "value": "rolling", "label": "Rolling carcass" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "topology",
+      "label": "어셈블리 토폴로지"
+    },
+    {
+      "value": "no-livery",
+      "label": "베어 구조"
+    },
+    {
+      "value": "projector",
+      "label": "프로젝터 평면"
+    },
+    {
+      "value": "rolling",
+      "label": "롤링 캐스카스"
+    }
   ],
   "controls": [
     "orbit",

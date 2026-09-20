@@ -1,17 +1,14 @@
 {
-  "title": "Sport Motorcycle",
-  "description": "A complete supersport machine emitted from one steering-geometry contract: a slot-tagged mesh writer, revolved wheels with tangentially varying spoke arms, a rotor alpha mask, an upright-frame twin-spar rail, bore-local engine volumes, superellipse bodywork with real panel shells, a hanging chain, and a signed-volume orientation guard.",
-  "backend": "WebGPU / TSL node materials",
+  "title": "스포츠 모터사이클",
+  "description": "슬롯-태그 방출, 리볼브와 직립 프레임 스윕, 오프셋 패널 셸, 스포크 휠, 매달린 체인 경로, 볼륨-감사된 어셈블리를 갖춘 스포츠 바이크. 시맨틱 파트 분리와 충돌 감사로 일관된 제작 결과를 보장합니다.",
+  "backend": "WebGPU / TSL 노드 머티리얼",
   "techniques": [
-    "steering-axis placement of every front-end part from rake and triple offset",
-    "semantic mesh writer with per-part material slots",
-    "revolve, parallel-transport and upright-frame sweeps",
-    "thick panel shells with authored rim thickness",
-    "superellipse bodywork sections with exponent-carried creases",
-    "petal rotor alpha mask and spoke-arm lofts",
-    "catenary-sampled chain with per-link plates",
-    "signed-volume orientation guard",
-    "per-slot triangle diagnostics"
+    "슬롯-태그 방출",
+    "리볼브 + 직립 프레임 스윕",
+    "오프셋 패널 셸과 스포크 휠",
+    "매달린 체인 경로",
+    "볼륨-감사된 어셈블리",
+    "시맨틱 파트 분리"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -19,12 +16,22 @@
   },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Final" },
-    { "value": "topology", "label": "Assembly topology" },
-    { "value": "slots", "label": "Material slots" },
-    { "value": "normals", "label": "World normals" },
-    { "value": "nobody", "label": "Bodywork removed" },
-    { "value": "noglass", "label": "No glass" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "slots",
+      "label": "슬롯"
+    },
+    {
+      "value": "shells",
+      "label": "셸"
+    },
+    {
+      "value": "chain",
+      "label": "체인"
+    }
   ],
   "controls": [
     "orbit",

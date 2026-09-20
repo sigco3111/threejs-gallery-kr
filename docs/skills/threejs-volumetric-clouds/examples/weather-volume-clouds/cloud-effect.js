@@ -1,8 +1,8 @@
-export * from "./source/clouds/index.js";
-export * from "./source/atmosphere/index.js";
-export * from "./source/geospatial/index.js";
-export { DitheringEffect } from "./source/effects/DitheringEffect.js";
-export { LensFlareEffect } from "./source/effects/LensFlareEffect.js";
+export * from "./source/clouds/index.ts";
+export * from "./source/atmosphere/index.ts";
+export * from "./source/geospatial/index.ts";
+export { DitheringEffect } from "./source/effects/DitheringEffect.ts";
+export { LensFlareEffect } from "./source/effects/LensFlareEffect.ts";
 export {
   EffectComposer,
   EffectPass,

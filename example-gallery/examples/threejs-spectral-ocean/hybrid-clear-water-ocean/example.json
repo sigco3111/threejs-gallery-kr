@@ -1,43 +1,32 @@
 {
-  "title": "Hybrid Clear Water Ocean",
-  "description": "A clear-water ocean material layered on deterministic spectral cascades, with three FFT bands, long Gerstner swell, shared sky reflection, screen-space sand-bed refraction, animated bed caustics, Beer-Lambert absorption, GGX sun highlights, crest scatter, and foam diagnostics.",
+  "title": "하이브리드 맑은 물 바다",
+  "description": "FFT 통계 바다와 해석 Gerstner의 결합으로 깊은 청량감을 표현합니다. 깊이 기반 흡수와 산란이 잠수 효과를 만듭니다.",
   "backend": "WebGL2 fragment FFT plus GLSL hybrid water",
   "techniques": [
-    "three directional FFT wave cascades",
-    "long Gerstner swell over spectral displacement",
-    "FFT derivative and Gerstner normal fusion",
-    "shared analytic sky and reflection radiance",
-    "screen-space sand-bed refraction",
-    "animated caustic light on the refracted bed",
-    "Beer-Lambert clear-water absorption",
-    "Jacobian and slope foam diagnostics"
+    "하이브리드 FFT + Gerstner",
+    "깊이 기반 흡수와 산란",
+    "잠수 효과",
+    "맑은 물 색 표현",
+    "바람/페치 길이 파라미터"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 1,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "cascade-bands",
-      "label": "Cascade bands"
-    },
-    {
-      "value": "normals",
-      "label": "Resolved normals"
-    },
-    {
-      "value": "foam",
-      "label": "Foam"
-    },
-    {
-      "value": "refraction",
-      "label": "Refraction"
+      "value": "spectrum",
+      "label": "스펙트럼"
     },
     {
       "value": "absorption",
-      "label": "Absorption"
+      "label": "흡수"
+    },
+    {
+      "value": "scatter",
+      "label": "산란"
     }
   ],
   "controls": [

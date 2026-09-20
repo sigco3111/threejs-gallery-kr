@@ -1,60 +1,31 @@
 ---
 name: threejs-procedural-architecture
-description: Build authored procedural buildings and architectural kits in Three.js. Use for massing grammars, exposed-edge analysis, façade bays, profiles, arches, cornices, roofs, ornaments, material-slot mesh compilation, deterministic variants, and procedural city assets.
+description: Three.js에서 절차적 건물, 매스, 파사드, 도시 블록을 구축합니다. 매싱 문법, 파사드 모듈, 노출-엣지 분석, 머티리얼-슬롯 컴파일, 반복 가능한 빌딩 시스템에 사용하세요.
 ---
 
-# Procedural Architecture
+# 절차적 건축 (Procedural Architecture)
 
-Separate design planning from mesh emission. A building generator should produce an inspectable plan before it produces triangles.
+건물을 매싱(매스)과 파사드(외관) 두 레이어로 나누세요. 매스는 볼륨, 파사드는 표면. 둘은 다른 시스템입니다.
 
-This skill contains exemplary examples and assets beyond descriptive guidance,
-they're worth studying, referencing, or even copying. Use them sufficiently
-when relevant and do NOT blindly skip them.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-## Required architecture
+## 워크플로
 
-```text
-settings
-  → mass grammar
-  → exposed-surface graph
-  → façade/roof placements
-  → module registry
-  → material-slot mesh writer
-  → geometries
-```
+1. 매스 그래프 정의 — 건물 풋프린트, 높이, 셰이프
+2. 노출-엣지 분석으로 파사드 평면 분할
+3. 파사드 모듈(창문, 발코니, 디테일) 라이브러리 구축
+4. 슬롯 시스템으로 모듈을 표면 단위로 컴파일
+5. 머티리얼-슬롯 매핑 (유리, 콘크리트, 금속 등)
+6. 결정론적 시드 기반 생성
 
-Read [references/grammar-and-mesh-compiler.md](references/grammar-and-mesh-compiler.md) before implementing the generator.
+## 실패 조건
 
-Read the
-[procedural financial tower compiler](examples/procedural-financial-tower/building-system.js)
-for seeded tier planning, semantic façade placement, reserved zones,
-material-slot BufferGeometry output, projected detail, and mechanism-specific
-diagnostics.
+- 매스와 파사드가 단일 시스템에 결합되어 재사용 불가
+- 창문/디테일이 균일하지 않고 노이즈처럼 보임
+- 모듈 라이브러리가 슬롯 의도를 무시하고 무작위 배치
+- 머티리얼이 슬롯마다 일관되지 않음
+- 시드 변경에도 결과가 거의 동일 (의사난수 미작동)
 
-## Rules
+## 라우팅 경계
 
-- Massing, façade rhythm, and detail modules are separate layers.
-- Resolve exposed edges before façade placement. Do not decorate hidden internal faces.
-- Modules own semantic anchors and construction depth, not global building coordinates.
-- Compile by material slot to reduce draw calls without destroying material separation.
-- Preserve real dimensions for floor height, bay width, trim projection, and texture density.
-- Randomness may select among valid designs; it must not repair invalid geometry.
-- Provide topology, façade ownership, material/geometry, and shadow diagnostics
-  appropriate to the renderer path.
-
-## Acceptance
-
-The generated building must survive:
-
-- silhouette-only view;
-- flat untextured material;
-- grazing light;
-- close inspection of corners and roof transitions;
-- seed variation without broken bays, overlapping ownership, or floating ornament;
-- triangle and module-count reporting.
-
-## Routing boundary
-
-Use `$threejs-procedural-geometry` for a reusable profile, sweep, ring, or mesh
-writer without a building grammar. This skill owns massing, façade semantics,
-architectural modules, and building-plan compilation.
+이 스킬은 건물 생성을 다룹니다. 식생이나 자연 지형은 `$threejs-procedural-vegetation` 으로 라우팅하세요. 행성 지형은 `$threejs-procedural-planets` 으로 라우팅하세요.

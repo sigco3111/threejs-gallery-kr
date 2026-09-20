@@ -1,9 +1,9 @@
 /* ---------------------------------------------------------------------------
-   Visual example gallery — achromatic inspection chrome.
+   비주얼 예제 갤러리 — 무채색 검토 크롬.
 
-   The rendered example is the only source of colour in this interface. Every
-   surface, rule, and label is a warm neutral on cool graphite so the eye
-   calibrates on the render and not on the tooling around it.
+   렌더된 예제가 이 인터페이스에서 유일한 색상입니다. 모든 표면, 룰,
+   라벨은 차가운 그래파이트 위의 따뜻한 뉴트럴이므로, 눈은 주변 도구가
+   아니라 렌더에 보정됩니다.
 --------------------------------------------------------------------------- */
 
 :root {

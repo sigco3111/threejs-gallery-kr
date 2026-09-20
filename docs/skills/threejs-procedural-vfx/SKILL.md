@@ -1,119 +1,63 @@
 ---
 name: threejs-procedural-vfx
-description: Author production real-time VFX in Three.js. Use for filmic HDR lens-flare compositors, highlight-derived ghosts, field-angle pupil deformation, localized glare and bloom, raymarched aurora curtains, finite-footprint emissive slabs, uniform volume integration, equirectangular radiance probes, WebGPU voxel fire and smoke, coupled volumetric fluid fields, mesh-surface emitters, signed-distance fire collisions, ship-conforming reentry plasma, generated capsule wakes, instanced analytic sparks, timed dissolving debris, dense-swap effect pools, additive holographic projections, Fresnel rim shells, scanline banding, glitch displacement, swept shape-to-shape handovers, and explicit scene-relative HDR emission hierarchy.
+description: Three.js에서 프로덕션 실시간 VFX를 작성합니다. 필름릭 HDR 렌즈-플레어 합성기, 하이라이트-유도 고스트, 시야각 동공 변형, 국부 글레어와 블룸, 레이마칭 오로라 커튼, 유한-풋프린트 발광 슬랩, 균등 볼륨 적분, 이방사 복사 프로브, WebGPU 복셀 불과 연기, 결합된 볼류메트릭 유체 필드, 메시-표면 이미터, 부호-거리 불 충돌, 선박-적합 재진입 플라즈마, 생성된 캡슐 웨이크, 인스턴스 해석 스파크, 시간 제어 디졸빙 잔해, 밀도-스왑 이펙트 풀, 가산 홀로그래픽 투영, Fresnel 림 셸, 스캔라인 밴딩, 글리치 변위, 스윕트 형상-간 핸드오버, 명시적 씬-상대 HDR 발광 계층에 사용하세요.
 ---
 
-# Procedural VFX
+# 절차적 VFX (Procedural VFX)
 
-Build effects from an event envelope, motion field, geometry representation, and shading response. Avoid independent particle emitters that happen to share a color.
+이벤트 엔벨로프, 모션 필드, 지오메트리 표현, 셰이딩 응답으로 효과를 빌드하세요. 우연히 색을 공유하는 독립 입자 이미터를 피하세요.
 
-This skill contains exemplary examples and assets beyond descriptive guidance,
-they're worth studying, referencing, or even copying. Use them sufficiently
-when relevant and do NOT blindly skip them.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-## Effect graph
+## 이펙트 그래프
 
 ```text
-subject/event state
-  → effect-specific geometry, voxel fields, or instance attributes
-  → flow-facing masks or analytic age
-  → material response
-  → pool/lifetime ownership
-  → HDR and bloom contribution
+주체/이벤트 상태
+  → 이펙트-특화 지오메트리, 복셀 필드 또는 인스턴스 속성
+  → 흐름-대향 마스크 또는 해석적 노화
+  → 머티리얼 응답
+  → 풀/수명 소유권
+  → HDR과 블룸 기여
 ```
 
-Read [references/procedural-vfx-system.md](references/procedural-vfx-system.md)
-for ship-conforming reentry shells, capsule wakes, dense instanced
-spark/debris pools, holographic projection shells, HDR hierarchy, and
-implementation limits.
+선박-적합 재진입 셸, 캡슐 웨이크, 밀도 인스턴스 스파크/잔해 풀, 홀로그래픽 투영 셸, HDR 계층, 구현 한계는 [references/procedural-vfx-system.md](references/procedural-vfx-system.md) 에 있습니다.
 
-Read [references/volumetric-fluid-fire.md](references/volumetric-fluid-fire.md)
-for three-dimensional texture ownership, fixed fluid-compute scheduling,
-mesh-surface injection, pressure projection, moving SDF boundaries,
-temperature-mapped HDR raymarching, exact presets, and failure diagnostics.
+3차원 텍스처 소유권, 고정 유체-컴퓨트 스케줄링, 메시-표면 주입, 압력 프로젝션, 가동 SDF 경계, 온도-매핑 HDR 레이마칭, 정확한 프리셋, 실패 진단은 [references/volumetric-fluid-fire.md](references/volumetric-fluid-fire.md) 에 있습니다.
 
-Read [references/volumetric-aurora-curtains.md](references/volumetric-aurora-curtains.md)
-for finite emissive-slab bounds, warped curtain density, uniform ray steps,
-gentle start jitter, matching screen/probe materials, exact constants, limits,
-and failure diagnostics.
+유한 발광-슬랩 경계, 휩쓴 커튼 밀도, 균등 레이 스텝, 부드러운 시작 지터, 매칭 스크린/프로브 머티리얼, 정확한 상수, 한계, 실패 진단은 [references/volumetric-aurora-curtains.md](references/volumetric-aurora-curtains.md) 에 있습니다.
 
-Read [references/filmic-lens-flare.md](references/filmic-lens-flare.md) for HDR
-emitter extraction, optical-axis invariants, field-angle pupil deformation,
-finite ghost families, spectral rings, localized bloom, film response, exact
-constants, limits, and failure diagnostics.
+HDR 이미터 추출, 광축 불변량, 시야각 동공 변형, 유한 고스트 패밀리, 스펙트럼 링, 국부 블룸, 필름 응답, 정확한 상수, 한계, 실패 진단은 [references/filmic-lens-flare.md](references/filmic-lens-flare.md) 에 있습니다.
 
-Read the [reentry plasma implementation](examples/reentry-plasma/reentry-plasma.js)
-for closed layered wake shells, flow-axis deformation, advected filament
-fields, opacity shaping, and additive emission diagnostics.
+닫힌 레이어드 웨이크 셸, 흐름-축 변형, 이류된 필라멘트 필드, 불투명도 셰이핑, 가산 발광 진단은 [재진입 플라즈마 구현](examples/reentry-plasma/reentry-plasma.js) 에 있습니다.
 
-Read the
-[hologram projection material](examples/holographic-shape-transition/hologram-material.js)
-for the additive rim shell itself: squared Fresnel incidence with grazing
-falloff, footprint-filtered object-space scanlines, height-phased glitch
-displacement, and index-gated participation. Read its
-[shape-transition driver](examples/holographic-shape-transition/hologram-transition.js)
-for the shared sweep range across a shape set, the linear progress ramp inside a
-longer dwell, and the complementary-discard handover.
+가산 림 셸 자체 — 제곱 Fresnel 입사와 그레이징 폴오프, 풋프린트-필터된 객체-공간 스캔라인, 높이-위상 글리치 변위, 인덱스-게이트 참여 — 는 [홀로그램 투영 머티리얼](examples/holographic-shape-transition/hologram-material.js) 에 있습니다. 형상 세트 전반의 공유 스윕 범위, 더 긴 드웰 내 선형 진행 램프, 보완-디스카드 핸드오버는 [형상 전이 드라이버](examples/holographic-shape-transition/hologram-transition.js) 에 있습니다.
 
-Read the
-[volumetric fluid fire implementation](examples/volumetric-fluid-fire/volumetric-fluid-fire.js)
-for the complete WebGPU/TSL velocity, dye, pressure, vorticity, emitter,
-collision, raymarch, and diagnostic system plus its calibrated fire preset.
+완전한 WebGPU/TSL 속도, 염료, 압력, 와도성, 이미터, 충돌, 레이마칭, 진단 시스템과 보정된 불 프리셋은 [볼류메트릭 유체 불 구현](examples/volumetric-fluid-fire/volumetric-fluid-fire.js) 에 있습니다.
 
-Read the
-[raymarched aurora implementation](examples/raymarched-aurora-curtains/aurora-curtains.js)
-for the reusable emitting field, perspective-ray material, four-sample
-equirectangular radiance material, shared uniforms, and calibrated curtain
-preset without sky, terrain, weather, lighting, or renderer setup.
+재사용 가능 발광 필드, 원근-레이 머티리얼, 4-샘플 이방사 복사 머티리얼, 공유 유니폼, 하늘/지형/날씨/라이팅/렌더러 셋업 없이 보정된 커튼 프리셋은 [레이마칭 오로라 구현](examples/raymarched-aurora-curtains/aurora-curtains.js) 에 있습니다.
 
-Read the
-[filmic lens-flare implementation](examples/filmic-lens-flare/filmic-lens-flare.js)
-for top-origin HDR sun detection, panorama-ray reconstruction, stable source
-projection, finite radial ghost families, field-deformed pupil shapes, spectral
-ring and star response, localized bloom, and the complete filmic composite.
+상단-원점 HDR 태양 검출, 파노라마-레이 재구성, 안정 소스 투영, 유한 반경 고스트 패밀리, 필드-변형 동공 형상, 스펙트럼 링과 별 응답, 국부 블룸, 완전한 필름릭 합성은 [필름릭 렌즈-플레어 구현](examples/filmic-lens-flare/filmic-lens-flare.js) 에 있습니다.
 
-## Rules
+## 규칙
 
-- Every layer must have a role in silhouette, motion, illumination, or residue.
-- Give velocity, dye, pressure, vorticity, and collisions explicit texture
-  ownership and one fixed compute schedule.
-- For low-angle aurora, use a finite shallow emitting footprint, uniform ray
-  steps, gentle start jitter, and step-length-weighted accumulation. Do not add
-  extinction or an elevation gate after the footprint already removes the long
-  limb path.
-- Keep aurora emission separable from sky, stars, atmosphere, terrain lighting,
-  weather, and grading; expose the same radiance through perspective and
-  equirectangular materials.
-- Convert velocity to volume UVW with the world-size vector; never advect a
-  non-cubic volume as though its axes had equal scale.
-- Keep the pressure ping-pong endpoint consistent with the projection read.
-- Use normalized lifetime curves instead of scattered time constants.
-- Derive secondary motion from the same flow or event direction.
-- Keep bloom as a response to HDR emission, not as the effect's only shape.
-- Derive lens ghosts from an HDR emitter, keep every synthetic centre on one
-  optical axis, and deform pupil footprints from object-space field angle rather
-  than screen radius.
-- Keep the lens-flare family finite; do not extend calibrated terminal haze into
-  an arbitrary bead chain or place diffraction stars at ghost centres.
-- Pool instances and trails; do not allocate per burst.
-- Filter every periodic band by pixel footprint, and fade it to the band's own
-  mean rather than to zero.
-- Measure rim incidence in a frame built from an inverse-transpose normal matrix.
-- Give a multi-shape transition one shared normalised range and complementary
-  discards, never per-shape ranges or overlapping coverage.
-- Expose spawn, simulation, overdraw, and luminance debug views.
-- Include a non-bloom baseline that remains legible.
+- 모든 레이어는 실루엣, 모션, 조명 또는 잔여물에서 역할을 가져야 함
+- 속도, 염료, 압력, 와도성, 충돌에 명시적 텍스처 소유권과 하나의 고정 컴퓨트 스케줄 부여
+- 저각 오로라의 경우 유한 얕은 발광 풋프린트, 균등 레이 스텝, 부드러운 시작 지터, 스텝-길이-가중 누적을 사용. 풋프린트가 이미 긴 limb 경로를 제거한 후 소광 또는 고도 게이트를 추가하지 말 것
+- 오로라 발광을 하늘, 별, 대기, 지형 라이팅, 날씨, 그레이딩과 분리; 원근과 이방사 머티리얼을 통해 동일한 복사 휘도 노출
+- 속도를 월드-크기 벡터로 볼륨 UVW 로 변환; 축이 같은 스케일을 가진 것처럼 비-입방 볼륨을 이류하지 말 것
+- 압력 핑퐁 엔드포인트가 프로젝션 읽기와 일관되게 유지
+- 흩어진 시간 상수 대신 정규화된 수명 곡선 사용
+- 보조 모션을 같은 흐름 또는 이벤트 방향에서 유도
+- 블룸을 효과의 유일한 형태가 아니라 HDR 발광에 대한 응답으로 유지
+- 렌즈 고스트를 HDR 이미터에서 유도; 모든 합성 센서를 단일 광축에 유지; 동공 풋프린트를 스크린 반경이 아닌 객체-공간 시야각에서 변형
+- 렌즈-플레어 패밀리를 유한으로 유지; 보정된 터미널 헤이즈를 임의 비드 체인으로 확장하거나 회절 별을 고스트 센터에 두지 말 것
+- 인스턴스와 트레일을 풀링; 버스트당 할당 금지
+- 모든 주기 밴드를 픽셀 풋프린트로 필터링하고 밴드 자신의 평균으로 페이드
+- 림 입사를 역-전치 노멀 행렬에서 빌드된 프레임에서 측정
+- 다중 형상 전이에 하나의 공유 정규화 범위와 보완 디스카드 부여; 형상별 범위 또는 중복 커버리지 금지
+- 스폰, 시뮬레이션, 오버드로, 휘도 디버그 뷰 노출
+- 읽을 수 있는 비-블룸 베이스라인 포함
 
-## Routing boundary
+## 라우팅 경계
 
-Use `$threejs-temporal-surfaces` only for the screen-space
-frost/touch-history pipeline. Use `$threejs-precipitation-surfaces` for
-falling rain or snow, splash flipbooks, and weather events that alter ground
-materials. Use `$threejs-volumetric-clouds` for atmospheric weather layers and
-planet-scale cloud volumes. Use `$threejs-atmosphere-aerial-perspective` for
-molecular/aerosol sky scattering and surface-segment aerial perspective. Keep
-standalone filmic HDR lens-flare compositors, emissive aurora curtain volumes,
-bounded interactive fire and smoke, subject-space plasma, generated wakes,
-sparks, pooled debris, and additive projection shells in this skill. Keep lens
-flare in `$threejs-atmosphere-aerial-perspective` when it remains one stage in a
-shared sky-scattering and aerial-perspective composition.
+스크린-공간 프로스트/터치-히스토리 파이프라인에만 `$threejs-temporal-surfaces` 를 사용하세요. 낙하 비/눈, 스플래시 플립북, 지면 머티리얼을 바꾸는 날씨 이벤트에는 `$threejs-precipitation-surfaces` 를 사용하세요. 대기 날씨 레이어와 행성-스케일 구름 볼륨에는 `$threejs-volumetric-clouds` 를 사용하세요. 분자/에어로졸 하늘 산란과 표면-세그먼트 시차 원근에는 `$threejs-atmosphere-aerial-perspective` 를 사용하세요. 단독 필름릭 HDR 렌즈-플레어 합성기, 발광 오로라 커튼 볼륨, 경계 있는 인터랙티브 불과 연기, 주체-공간 플라즈마, 생성된 웨이크, 스파크, 풀링된 잔해, 가산 투영 셸은 이 스킬에 두세요. 공유 하늘 산란과 시차 원근 합성의 한 단계로 남아있을 때 렌즈 플레어는 `$threejs-atmosphere-aerial-perspective` 에 두세요.

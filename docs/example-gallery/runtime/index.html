@@ -72,44 +72,20 @@
       html, body, canvas { width: 100%; height: 100%; margin: 0; display: block; }
       body { overflow: hidden; background: #020305; font-family: system-ui, sans-serif; }
       canvas { touch-action: none; }
-
-      /* Floating Korean overlay */
       .overlay {
-        position: fixed;
-        top: 14px;
-        left: 14px;
-        z-index: 10;
+        position: fixed; top: 14px; left: 14px; z-index: 10;
         background: rgba(8, 12, 20, 0.55);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
-        padding: 10px 14px;
-        color: #e8edf2;
-        font-size: 13px;
-        line-height: 1.4;
-        max-width: 360px;
-        pointer-events: auto;
+        backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px;
+        padding: 10px 14px; color: #e8edf2; font-size: 13px; line-height: 1.4; max-width: 360px;
       }
       .overlay h1 { margin: 0 0 4px; font-size: 15px; font-weight: 600; }
-      .overlay .skill {
-        font-size: 11px;
-        color: #8aa4d1;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        margin-bottom: 4px;
-      }
+      .overlay .skill { font-size: 11px; color: #8aa4d1; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 4px; }
       .overlay .desc { font-size: 12px; color: #b8c4d4; margin: 6px 0 0; }
       .overlay a { color: #6ec1ff; text-decoration: none; font-size: 12px; }
       .overlay a:hover { text-decoration: underline; }
       .overlay .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
-      .overlay .badge {
-        font-size: 10px;
-        padding: 2px 6px;
-        background: rgba(110, 193, 255, 0.12);
-        color: #6ec1ff;
-        border-radius: 4px;
-      }
+      .overlay .badge { font-size: 10px; padding: 2px 6px; background: rgba(110, 193, 255, 0.12); color: #6ec1ff; border-radius: 4px; }
     </style>
     <script type="importmap">
       {
@@ -123,11 +99,7 @@
           "fflate": "https://esm.sh/fflate@0.8.2?deps=three@0.185.1",
           "postprocessing": "https://esm.sh/postprocessing@6.37.4?deps=three@0.185.1",
           "three-mesh-bvh": "https://esm.sh/three-mesh-bvh@0.9.10?deps=three@0.185.1",
-          "three-stdlib": "./three-stdlib-exr-loader.js",
-          "/skills/": "./../../skills/",
-          "/example-gallery/support/": "./../../example-gallery/support/",
-          "/example-gallery/runtime/": "./../../example-gallery/runtime/",
-          "/examples/": "./../../examples/"
+          "three-stdlib": "./three-stdlib-exr-loader.js"
         }
       }
     </script>
@@ -143,7 +115,6 @@
     <canvas></canvas>
     <script type="module" src="./inspection-host.js"></script>
     <script>
-      // Korean overlay populated from URL params
       (() => {
         const params = new URLSearchParams(window.location.search);
         const title = params.get("krTitle");

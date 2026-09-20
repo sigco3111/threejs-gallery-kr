@@ -1,38 +1,32 @@
 {
-  "title": "Interactive Pool Volume",
-  "description": "A bounded pool volume with a ping-pong heightfield storing height, velocity, and packed normals; draggable sphere displacement; finite-difference wave propagation; ray-traced water surface optics; and differential-area caustic projection.",
+  "title": "인터랙티브 풀 볼륨",
+  "description": "사용자 인터랙션으로 만들어지는 풀 표면 — 풀 높이필드가 인터랙티브 리플과 결합되어 Beer-Lambert 흡수와 라이팅이 일관됩니다.",
   "backend": "WebGL2 / GLSL heightfield water",
   "techniques": [
-    "RGBA ping-pong water state",
-    "discrete wave equation propagation",
-    "draggable sphere displacement into the water heightfield",
-    "finite-difference packed normal update",
-    "ray-traced sphere and wall refraction/reflection",
-    "differential-area caustic render target with sphere occlusion",
-    "shadered tile pool and caustic receiver"
+    "인터랙티브 리플 + 풀 높이필드",
+    "Beer-Lambert 흡수",
+    "객체-기반 리플",
+    "라이팅과 풀 높이 일관성",
+    "인터랙션 매핑"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 1,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "height",
-      "label": "Height"
+      "value": "ripples",
+      "label": "리플"
     },
     {
-      "value": "normals",
-      "label": "Normals"
+      "value": "depth",
+      "label": "깊이"
     },
     {
-      "value": "velocity",
-      "label": "Velocity"
-    },
-    {
-      "value": "caustics",
-      "label": "Caustics"
+      "value": "interaction",
+      "label": "인터랙션"
     }
   ],
   "controls": [

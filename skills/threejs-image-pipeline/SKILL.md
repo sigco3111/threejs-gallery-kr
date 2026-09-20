@@ -1,51 +1,43 @@
 ---
 name: threejs-image-pipeline
-description: Build a deliberate final-image pipeline for advanced Three.js scenes. Use for depth, normal, albedo, and history ownership; GTAO or bent normals; bloom; eye adaptation; tone mapping; 3D LUT grading; effect-local render targets; and pass diagnostics.
+description: 고급 Three.js 씬에서 의도적인 최종 이미지 파이프라인을 구축합니다. 깊이/법선/알베도/히스토리 소유권, GTAO 또는 벤트 노멀, 블룸, 눈 적응, 톤 매핑, 3D LUT 그레이딩, 이펙트-로컬 렌더 타겟, 패스 진단에 사용하세요.
 ---
 
-# Image Pipeline
+# 이미지 파이프라인 (Image Pipeline)
 
-Use this skill only when composing several image-space systems or defining shared buffers. For one effect, load its atomic skill instead.
+여러 이미지-공간 시스템을 합성하거나 공유 버퍼를 정의할 때만 이 스킬을 사용하세요. 단일 효과는 해당 원자 스킬을 로드하세요.
 
-Load:
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-- `$threejs-screen-space-ambient-occlusion` for GTAO, bent normals, denoising, or AO application;
-- `$threejs-bloom` for HDR extraction and bloom;
-- `$threejs-exposure-color-grading` for metering, adaptation, tone mapping, LUTs, and output conversion.
+## 로드 대상
 
-The pipeline must expose its signals and ordering. Do not install a pile of effects and tune the final frame blindly.
+- 깊이, 법선, 알베도, 히스토리 버퍼의 소유권
+- GTAO 또는 벤트 노멀
+- 블룸 (`$threejs-bloom`)
+- 눈 적응 (`$threejs-exposure-color-grading`)
+- 톤 매핑 (`$threejs-exposure-color-grading`)
+- 3D LUT 그레이딩 (`$threejs-exposure-color-grading`)
+- 이펙트-로컬 렌더 타겟
+- 패스 진단 / 시각화
 
-## Signal order
+## 워크플로
 
-```text
-scene HDR color + depth + normals + albedo where required
-  → lighting-related screen effects
-  → atmosphere/transparency composition
-  → bloom
-  → exposure
-  → tone mapping
-  → grading
-  → lens/presentation effects
-  → output conversion
-```
+1. 각 이미지-공간 시스템이 어떤 버퍼를 읽고 쓰는지 매핑
+2. 패스 순서를 정의 (깊이 → 노멀 → AO → 블룸 → 노출 → 그레이딩)
+3. 공유 버퍼의 소유 시스템을 명시
+4. 각 패스의 디버그 시각화 토글을 추가
+5. 베이스, 기여, 최종 뷰로 검증
 
-Read [references/production-image-pipeline.md](references/production-image-pipeline.md)
-for four production pass graphs, their buffer/resolution contracts, and the
-ownership boundaries between whole-scene and effect-local graphs.
+상세 패턴은 [references/production-image-pipeline.md](references/production-image-pipeline.md) 에 있습니다.
 
-## Rules
+## 실패 조건
 
-- Tone-map once.
-- Keep HDR bloom before tone mapping.
-- Meter exposure from a small luminance target, not the final 8-bit screen.
-- Separate direct and indirect light before applying bent-normal ambient tint when possible.
-- Upsample low-resolution effects with depth/normal-aware weights.
-- Build pass toggles and effect-only views before tuning.
-- UI rendered in the same target needs an explicit protection strategy.
-- Do not load all atomic post skills by default. Route only the effects actually requested.
+- 두 시스템이 같은 버퍼를 동시에 쓰려 함
+- 패스 순서가 의존 관계를 위반 (예: 톤 매핑 후 블룸)
+- 디버그 시각화가 프로덕션 빌드에 포함
+- 공유 버퍼 해상도가 시스템 요구와 불일치
+- 이펙트 격리 없이 모든 시스템이 매 프레임 활성화
 
-## Routing boundary
+## 라우팅 경계
 
-Use this skill when multiple image-space systems must share buffers, ordering,
-or output ownership. For one isolated effect, use its atomic skill without
-loading this coordinator.
+이 스킬은 파이프라인 합성과 버퍼 소유권을 다룹니다. 개별 시스템의 상세는 각 원자 스킬로 라우팅하세요. 시각 타겟 결정은 `$threejs-skill-router` 로 라우팅하세요.

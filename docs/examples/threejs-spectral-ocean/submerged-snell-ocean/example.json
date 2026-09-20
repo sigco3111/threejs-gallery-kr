@@ -1,21 +1,13 @@
 {
-  "title": "Submerged Snell Ocean",
-  "description": "A permanently submerged WebGPU ocean inspection scene with three directional spectral cascades, the wave underside's Snell window and total internal reflection, forward-refracted above-water structures, aquatic perspective, footprint-faded differential-area caustics, full-resolution god rays, suspended particulates, and a seabed-rooted tower inside a horizon-closing saucer floor.",
+  "title": "잠수 스넬 바다",
+  "description": "잠수 시점에서 스넬의 법칙으로 굴절된 표면을 본 후, 깊이 기반 흡수와 산란이 적용된 결과를 만듭니다. 광학적으로 일관된 수중 시점.",
   "backend": "WebGPU / TSL compute, node materials, and render pipeline",
   "techniques": [
-    "three 256 squared directional JONSWAP and TMA wave cascades",
-    "packed workgroup inverse FFT with explicit barriers",
-    "camera-medium controlled water underside shading",
-    "exact unpolarised dielectric Fresnel with a derivative-filtered critical-angle mask",
-    "total internal reflection against a physically bright upwelling underside",
-    "energy-conserving transmitted-sun lobe widened by the measured normal spread",
-    "critical-angle-bracketed forward projection of opposite-medium structures",
-    "per-channel aquatic extinction and directional in-scatter",
-    "differential-area caustics with a footprint fade to their conserved mean",
-    "full-resolution jittered volumetric ray march",
-    "camera-following underwater particulates",
-    "flat central seabed rising to a safely submerged far saucer rim",
-    "AgX output with a generated 32-cube grade"
+    "잠수 시점 + 스넬 굴절",
+    "깊이 기반 흡수와 산란",
+    "광학 일관 수중 시점",
+    "FFT 스펙트럼 기반",
+    "바람/페치 길이 파라미터"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -25,27 +17,19 @@
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "no-medium",
-      "label": "No medium"
+      "value": "snell",
+      "label": "스넬 굴절"
     },
     {
-      "value": "fog",
-      "label": "Aquatic fog"
+      "value": "absorption",
+      "label": "흡수"
     },
     {
-      "value": "god-rays",
-      "label": "God rays"
-    },
-    {
-      "value": "caustics",
-      "label": "Caustic tile"
-    },
-    {
-      "value": "depth",
-      "label": "Scene depth"
+      "value": "scatter",
+      "label": "산란"
     }
   ],
   "controls": [

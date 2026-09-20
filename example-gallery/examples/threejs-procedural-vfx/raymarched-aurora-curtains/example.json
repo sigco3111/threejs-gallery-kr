@@ -1,13 +1,13 @@
 {
-  "title": "Raymarched Aurora Curtains",
-  "description": "A finite-footprint emissive slab whose warped volumetric curtain field is integrated with uniform, gently start-jittered ray steps, shown over a procedural polar-night snow desert.",
+  "title": "레이마칭 오로라 커튼",
+  "description": "유한 얕은 발광 풋프린트, 균등 레이 스텝, 부드러운 시작 지터, 스텝-길이 가중 누적으로 만든 오로라. 발광이 하늘/별/대기와 분리되어 원근과 이방사 머티리얼 양쪽에서 동일한 복사 휘도를 보입니다.",
   "backend": "WebGL2 / GLSL volumetric raymarch",
   "techniques": [
-    "finite-footprint emissive aurora slab",
-    "three-octave warped volumetric curtain field",
-    "uniform step-length-weighted ray integration",
-    "gentle start jitter",
-    "supersampled equirectangular radiance probe"
+    "유한 얕은 발광 풋프린트",
+    "균등 레이 스텝 + 부드러운 시작 지터",
+    "스텝-길이 가중 누적",
+    "원근 + 이방사 머티리얼의 동일 복사 휘도",
+    "공유 유니폼 세트"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -15,10 +15,22 @@
   },
   "defaultDpr": 1,
   "debugModes": [
-    { "value": "final", "label": "Final" },
-    { "value": "aurora-only", "label": "Aurora only" },
-    { "value": "no-aurora", "label": "No aurora" },
-    { "value": "radiance-probe", "label": "Radiance probe" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "footprint",
+      "label": "풋프린트"
+    },
+    {
+      "value": "rays",
+      "label": "레이"
+    },
+    {
+      "value": "radiance",
+      "label": "복사 휘도"
+    }
   ],
   "controls": [
     "orbit",

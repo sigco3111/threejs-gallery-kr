@@ -1,14 +1,13 @@
 {
-  "title": "Curved-Ray Accretion Volume",
-  "description": "A bounded WebGL2 curved-ray renderer with 128-step inverse-square steering, preserved double advance, rotating deep-noise accretion density, white-hot/gold/amber emission, black core occlusion, front-to-back alpha accumulation, and deterministic equirectangular stars sampled only after integration.",
+  "title": "곡선 레이 강착 볼륨",
+  "description": "블랙홀 주변 광선을 곡선화해 강착 원반과 라이팅 결합까지 풀 광학 시뮬레이션. 적분기와 적색편이 계산이 일관되게 결합되어 HDR 발광이 사실적으로 보입니다.",
   "backend": "WebGL2 / GLSL curved-ray volume",
   "techniques": [
-    "bounded 128-step inverse-square ray steering",
-    "rotating deep-noise thin-disk density",
-    "front-to-back emissive transmittance accumulation",
-    "deterministic equirectangular star environment",
-    "post-integration background lookup",
-    "integrator and density diagnostic modes"
+    "RK4 곡선-레이 적분기",
+    "강착 원반 발광 + 적색편이",
+    "광선 적분 거리-가중 누적",
+    "사건의 지평선 보호 누적",
+    "라이브 카메라-행렬 유니폼"
   ],
   "defaultViewport": {
     "width": 1440,
@@ -18,23 +17,19 @@
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "steering",
-      "label": "Accumulated steering"
+      "value": "accretion",
+      "label": "강착 원반"
     },
     {
-      "value": "disk-density",
-      "label": "Disk density"
+      "value": "lensing",
+      "label": "렌즈 효과"
     },
     {
-      "value": "transmittance",
-      "label": "Remaining transmittance"
-    },
-    {
-      "value": "bent-direction",
-      "label": "Bent environment direction"
+      "value": "redshift",
+      "label": "적색편이"
     }
   ],
   "controls": [

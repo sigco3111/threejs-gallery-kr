@@ -1,43 +1,36 @@
 ---
 name: threejs-bloom
-description: Implement production bloom in advanced Three.js scenes. Use for HDR signal ordering, bloom-node controls, dual selective bloom with guaranteed material restoration, scene-relative emissive hierarchy, and effect-isolation diagnostics.
+description: 고급 Three.js 씬에서 프로덕션 블룸을 구현합니다. HDR 신호 순서, 블룸 노드 컨트롤, 머티리얼 복원을 보장하는 듀얼 셀렉티브 블룸, 씬 상대 발광 계층, 이펙트 격리 진단에 사용하세요.
 ---
 
-# Bloom
+# 블룸 (Bloom)
 
-Bloom is a camera/display response to bright HDR signal. Establish scene exposure and emissive luminance before tuning blur.
+블룸은 밝은 HDR 신호에 대한 카메라/디스플레이 반응입니다. 블러를 튜닝하기 전에 먼저 씬 노출과 발광 휘도를 확립하세요.
 
-## Workflow
+## 워크플로
 
-1. Inspect pre-tone-map luminance.
-2. Choose which scene values should bloom.
-3. Choose a single-node or dual selective-render ownership model.
-4. Calibrate threshold, radius, smooth width, and strength in HDR.
-5. Restore all substituted materials transactionally for selective passes.
-6. Composite before exposure/tone mapping.
-7. Validate base, contribution, and final views.
+1. 톤 매핑 전 휘도를 점검
+2. 씬에서 어떤 값이 블룸되어야 할지 결정
+3. 단일 노드 또는 듀얼 셀렉티브 렌더 소유 모델 선택
+4. 임계값, 반경, 스무스 폭, 강도를 HDR로 보정
+5. 셀렉티브 패스를 위해 치환된 모든 머티리얼을 트랜잭션으로 복원
+6. 노출/톤 매핑 전에 합성
+7. 베이스, 기여, 최종 뷰 검증
 
-Read [references/hdr-bloom-system.md](references/hdr-bloom-system.md) for the
-HDR ordering, dual selective-bloom transaction, compact emissive hierarchy,
-and the costs and limits of each ownership model.
+HDR 순서, 듀얼 셀렉티브 블룸 트랜잭션, 컴팩트 발광 계층, 그리고 각 소유 모델의 비용과 한계는 [references/hdr-bloom-system.md](references/hdr-bloom-system.md) 에 있습니다.
 
-Apply the material substitution/restoration ownership pattern in the
-reference before adding selective bloom to a composed scene.
+합성 씬에 셀렉티브 블룸을 추가하기 전에, 레퍼런스의 머티리얼 치환/복원 소유 패턴을 적용하세요.
 
-## Failure conditions
+## 실패 조건
 
-- bloom creates the only visible form of an effect;
-- all bright materials share one arbitrary emission multiplier;
-- threshold is tuned after tone mapping;
-- selective bloom requires mutating scene materials every frame without restoration guarantees;
-- transparent particles disappear from extraction because pass ownership is unclear;
-- bloom radius changes wildly with resolution;
-- highlights become gray because energy is clamped too early.
+- 블룸이 어떤 효과의 유일한 가시 형태를 만들어냄
+- 모든 밝은 머티리얼이 임의의 단일 발광 배수를 공유
+- 임계값이 톤 매핑 이후에 튜닝됨
+- 셀렉티브 블룸이 매 프레임 씬 머티리얼을 복원 보장 없이 변경
+- 투명 입자가 추출에서 사라짐 (패스 소유 불명확)
+- 블룸 반경이 해상도에 따라 급격히 변함
+- 에너지가 너무 일찍 클램프되어 하이라이트가 회색이 됨
 
-## Routing boundary
+## 라우팅 경계
 
-Use `$threejs-exposure-color-grading` for metering, adaptation, tone mapping,
-and LUTs. Load `$threejs-image-pipeline` only when bloom must be composed with
-several shared image-space systems. A per-pixel ray integrator that owns its own
-reduced-resolution target and accumulation history keeps its bloom internal;
-route that to `$threejs-raymarched-space-effects`.
+미터링, 적응, 톤 매핑, LUT 는 `$threejs-exposure-color-grading` 을 사용하세요. 블룸이 여러 공유 이미지-공간 시스템과 합성되어야 할 때만 `$threejs-image-pipeline` 을 로드하세요. 자체 저해상도 타겟과 누적 히스토리를 가진 픽셀당 레이 적분기는 블룸을 내부에 유지하세요. 이 경우 `$threejs-raymarched-space-effects` 로 라우팅합니다.

@@ -1,56 +1,29 @@
 ---
 name: threejs-temporal-surfaces
-description: Build view-aligned and screen-space surface effects in Three.js. Use for touch-history frost and thaw, ping-pong accumulation, reduced-resolution blur, crystalline masks, two-scale refraction, and procedural rain droplets that refract and blur a background through wet glass.
+description: Three.js에서 시간에 따라 변하는 표면 효과를 구현합니다. 터치 이력, 프로스트 누적, 창문 빗물, 스크린-공간 누적, 시간-기반 마스킹, 표면 변형에 사용하세요.
 ---
 
-# Temporal Surfaces
+# 시간 표면 (Temporal Surfaces)
 
-Choose persistent history or procedural screen-space evolution explicitly. Do
-not fake accumulation with time-only noise, and do not allocate history for an
-effect whose complete state is analytic in time.
+시간에 따라 누적되는 효과를 명시적으로 다루세요. 단일 프레임 효과가 아니라 시간에 따라 진화하는 표면입니다.
 
-This skill contains exemplary examples and assets beyond descriptive guidance,
-they're worth studying, referencing, or even copying. Use them sufficiently
-when relevant and do NOT blindly skip them.
+이 스킬은 단순한 설명 외에 검증된 예제와 에셋을 포함하므로, 관련 시 참고하거나 복사해서 활용하세요. 무작정 건너뛰지 마세요.
 
-## Pipeline
+## 워크플로
 
-```text
-persistent surface: input -> ping-pong state -> blur -> structure -> refraction
-procedural surface: time/coverage -> analytic field -> optical normal -> refraction/blur
-```
+1. 시간-누적 버퍼 정의 (보통 previous frame blend)
+2. 입력 이벤트 정의 (터치, 빗방울, 결로)
+3. 누적 속도와 감쇠율 정의
+4. 표면 반응 매핑 (굴절, 흐림, 얼음 결정 등)
+5. 카메라 이동 시 안정성 확보
 
-Read [references/ping-pong-accumulation.md](references/ping-pong-accumulation.md)
-for an exact frost pass graph, pointer-history channels, blur and refraction
-coupling, and implementation defects that must be corrected.
+## 실패 조건
 
-Read the
-[touch-history frost implementation](examples/touch-history-frost/frost-surface-effect.js) for the
-previous/deposit/next state transition, reduced blur, static structures,
-frost-mask composition, and two-scale refraction.
+- 누적 버퍼가 카메라 움직임에 따라 끌림
+- 감쇠율 부재로 영구 누적
+- 표면이 입력 이벤트와 시각적으로 단절
+- 템포럴 안정성 부족으로 깜빡임
 
-Read [references/refractive-window-rain.md](references/refractive-window-rain.md)
-and the
-[refractive window rain implementation](examples/refractive-window-rain/window-rain-effect.js)
-for layered static and travelling droplets, finite-difference optical normals,
-background refraction, stochastic disc blur, aspect fill, and presentation.
+## 라우팅 경계
 
-## Rules
-
-- Separate persistent state, analytic procedural state, and scene color.
-- Preserve separate visible-mask and tilt-response channels.
-- Use half-float for this history path unless a measured lower format is equivalent.
-- Convert per-frame history decay to frame-rate-independent decay.
-- Run the two-pass scene blur at reduced resolution.
-- Pre-render static procedural textures once.
-- Define and test resize/reset behavior for both history targets and static targets.
-- Do not route world footprints, object-UV paint, or simulation-plane wetness here; this skill is view-aligned or screen-space.
-
-## Routing boundary
-
-Use `$threejs-procedural-vfx` for world- or object-space residue and particles.
-Use `$threejs-precipitation-surfaces` for world-space rain, puddles, snow, and
-weather-surface coupling. Use `$threejs-procedural-materials` when a body must
-transmit its surroundings through its own volume rather than through a
-screen-aligned pane. This skill owns view-aligned wet-glass optics and
-screen-space persistent history.
+이 스킬은 화면-공간 시간 표면만 다룹니다. 굴절 바디 자체는 `$threejs-procedural-materials` 로 라우팅하세요. 빗방울/스플래시 같은 강수 이벤트는 `$threejs-precipitation-surfaces` 로 라우팅하세요.

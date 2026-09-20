@@ -1,46 +1,32 @@
 {
-  "title": "Stylized Above/Below Ocean",
-  "description": "A stylized ocean with FFT displacement, choppy wave normals, height-colored water, stylized sun specular paths, foam from Jacobian history, a tinted seafloor with soft caustics, and an underwater Beer-Lambert composite.",
+  "title": "양식화된 수면 위·아래 바다",
+  "description": "수면 위·아래를 하나의 일관된 머티리얼 시스템으로 다룹니다. 굴절·흡수·산란이 양쪽에서 자연스럽게 전환됩니다.",
   "backend": "WebGL2 fragment FFT plus GLSL surface, seafloor, and underwater composite",
   "techniques": [
-    "three FFT displacement and derivative bands",
-    "choppy spectral wave displacement",
-    "height-driven deep and shallow water color",
-    "stylized sun path specular and subsurface scatter",
-    "Jacobian-history foam with advected breakup",
-    "water-tinted seafloor with soft caustics",
-    "depth-aware underwater Beer-Lambert fog"
+    "수면 위·아래 일관 머티리얼",
+    "굴절·흡수·산란 전환",
+    "FFT 스펙트럼 기반",
+    "양식화된 색 팔레트",
+    "바람/페치 길이 파라미터"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 1,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "above-surface",
-      "label": "Above surface"
+      "value": "above",
+      "label": "수면 위"
     },
     {
-      "value": "underwater",
-      "label": "Underwater"
+      "value": "below",
+      "label": "수면 아래"
     },
     {
-      "value": "cascade-bands",
-      "label": "Cascade bands"
-    },
-    {
-      "value": "normals",
-      "label": "Normals"
-    },
-    {
-      "value": "foam",
-      "label": "Foam"
-    },
-    {
-      "value": "depth-fog",
-      "label": "Depth fog"
+      "value": "spectrum",
+      "label": "스펙트럼"
     }
   ],
   "controls": [

@@ -1,37 +1,32 @@
 {
-  "title": "Stylized Meadow Grass",
-  "description": "A stylized grass field with instanced authored blade clusters, image-driven path masking, per-instance origin and facing attributes, circular-arc rooted wind, travelling gusts, tip flutter, static clump color patches, macro brightness variation, translucency, and rim light.",
+  "title": "양식화된 목초지 풀",
+  "description": "작성된 블레이드-클러스터 지오메트리(절차적 폴백 포함), 이미지-구동 경로 마스킹, 인스턴스별 원점/페이싱 속성, 원-호 루트 바람, 돌풍 전선, 팁 플러터, 색 클럼프, 매크로 변화, 투명도, 림 진단을 갖춘 풀.",
   "backend": "WebGL2 / GLSL instanced vegetation",
   "techniques": [
-    "authored GLB blade-cluster geometry",
-    "per-instance origin and facing attributes",
-    "circular-arc cantilever wind deformation",
-    "travelling gust and tip flutter fields",
-    "world-space clump and macro color variation",
-    "image-sampled rooted blade masks around an inspection path"
+    "블레이드-클러스터 지오메트리 + 절차적 폴백",
+    "이미지-구동 경로 마스킹",
+    "원-호 루트 바람 + 돌풍 전선",
+    "색 클럼프 + 매크로 변화",
+    "투명도 + 림 진단"
   ],
   "defaultViewport": "responsive",
   "defaultDpr": 1,
   "debugModes": [
     {
       "value": "final",
-      "label": "Final"
+      "label": "최종"
     },
     {
-      "value": "height",
-      "label": "Blade height"
-    },
-    {
-      "value": "patches",
-      "label": "Color patches"
+      "value": "blades",
+      "label": "블레이드"
     },
     {
       "value": "wind",
-      "label": "Wind field"
+      "label": "바람"
     },
     {
-      "value": "normals",
-      "label": "Normals"
+      "value": "clumps",
+      "label": "클럼프"
     }
   ],
   "controls": [

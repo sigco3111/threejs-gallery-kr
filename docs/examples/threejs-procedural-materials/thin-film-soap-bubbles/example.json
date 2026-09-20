@@ -1,23 +1,36 @@
 {
-  "title": "Thin-Film Soap Bubbles",
-  "description": "Air-film-air soap bubbles with Airy thin-film reflectance, wavelength-dependent film index, two membrane passes, bounded inter-bubble reflections, capillary deformation, physical flight, puncture retraction, and visible liquid-drop aftermath.",
+  "title": "박막 비눗방울",
+  "description": "공기-박막-공기 Airy 간섭이 이미지를 구동하는 시스템. 파장 의존 수성 인덱스, 앞·뒤 멤브레인 패스, 해석적 근접-거품 반사, 볼륨-보존 모세관 모드, 부력과 항력, Taylor-Culick 파열과 가시-낙하 여파.",
   "backend": "WebGPU / TSL",
   "techniques": [
-    "Airy thin-film Fresnel reflectance",
-    "finite RGB spectral-band integration",
-    "front and rear membrane passes",
-    "bounded analytic inter-bubble reflections",
-    "buoyancy drag and capillary shape modes",
-    "Taylor-Culick puncture retraction",
-    "camera-aware physical inflow"
+    "Airy 방정식 + 대표 RGB 스펙트럼 밴드",
+    "두 멤브레인 패스 + 경계 있는 보조 반사",
+    "볼륨-보존 모세관 모드 + 부력/항력",
+    "Taylor-Culick 파열 + 가시-낙하 여파",
+    "카메라-인지 유입"
   ],
-  "defaultViewport": { "width": 1440, "height": 900 },
+  "defaultViewport": {
+    "width": 1440,
+    "height": 900
+  },
   "defaultDpr": 1.75,
   "debugModes": [
-    { "value": "final", "label": "Final bubbles" },
-    { "value": "no-interreflection", "label": "Environment only" },
-    { "value": "spherical-membranes", "label": "Spherical membranes" },
-    { "value": "rear-membranes", "label": "Rear membranes" }
+    {
+      "value": "final",
+      "label": "최종"
+    },
+    {
+      "value": "thickness",
+      "label": "두께"
+    },
+    {
+      "value": "interference",
+      "label": "간섭"
+    },
+    {
+      "value": "membrane",
+      "label": "멤브레인"
+    }
   ],
   "controls": [
     "orbit",
