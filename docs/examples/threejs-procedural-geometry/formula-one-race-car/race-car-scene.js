@@ -1,5 +1,5 @@
 import * as THREE from "three/webgpu";
-import { createStudioStage } from "/example-gallery/support/studio-stage.js";
+import { createStudioStage } from "/threejs-gallery-kr/example-gallery/support/studio-stage.js";
 import { createFormulaOneRaceCar } from
   "/threejs-gallery-kr/skills/threejs-procedural-geometry/examples/formula-one-race-car/race-car-model.js";
 
