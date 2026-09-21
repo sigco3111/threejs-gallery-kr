@@ -1,14 +1,15 @@
 // GitHub Pages lives under /<repo>/ — inject <base> so absolute paths
-// in example code resolve correctly under the repo prefix.
+// in example code resolve correctly under the repo prefix. Always
+// inject because per-example pages live under /examples/... (not
+// /example-gallery/...) and the previous pathname-based detection
+// missed them, breaking absolute-path imports like
+// /example-gallery/support/studio-stage.js.
+const REPO_PREFIX = "/threejs-gallery-kr";
 {
-  const m = window.location.pathname.match(/^(\/[^/]+)?\/example-gallery\//);
-  const repoPrefix = m ? (m[1] || "") : "";
-  if (repoPrefix) {
-    const base = document.createElement("base");
-    base.href = repoPrefix + "/";
-    document.head.prepend(base);
-    window.__repoPrefix = repoPrefix;
-  }
+  const base = document.createElement("base");
+  base.href = REPO_PREFIX + "/";
+  document.head.prepend(base);
+  window.__repoPrefix = REPO_PREFIX;
 }
 
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";

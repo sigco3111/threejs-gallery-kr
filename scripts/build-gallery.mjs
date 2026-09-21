@@ -591,6 +591,47 @@ async function runConvertTs() {
     }
   }
   await deleteTs(DST);
+
+  // Patch runtime/inspection-host.js to always inject a <base> tag.
+  // Without this, absolute-path imports inside scene.js (e.g. for
+  // /example-gallery/support/studio-stage.js, /skills/...) break on
+  // pages outside the /example-gallery/ pathname — like our per-example
+  // pages at /examples/<skill>/<slug>/. fetch shims and importmap
+  // helpers alone cannot intercept every module-specifier resolution
+  // path, so a real <base> is the only reliable fix.
+  const runtimeHostPath = path.join(DST, "example-gallery", "runtime", "inspection-host.js");
+  const oldBlock = `// GitHub Pages lives under /<repo>/ — inject <base> so absolute paths
+// in example code resolve correctly under the repo prefix.
+{
+  const m = window.location.pathname.match(/^(\\/[^/]+)?\\/example-gallery\\//);
+  const repoPrefix = m ? (m[1] || "") : "";
+  if (repoPrefix) {
+    const base = document.createElement("base");
+    base.href = repoPrefix + "/";
+    document.head.prepend(base);
+    window.__repoPrefix = repoPrefix;
+  }
+}`;
+  const newBlock = `// GitHub Pages lives under /<repo>/ — inject <base> so absolute paths
+// in example code resolve correctly under the repo prefix. Always
+// inject because per-example pages live under /examples/... (not
+// /example-gallery/...) and the previous pathname-based detection
+// missed them, breaking absolute-path imports like
+// /example-gallery/support/studio-stage.js.
+const REPO_PREFIX = "/threejs-gallery-kr";
+{
+  const base = document.createElement("base");
+  base.href = REPO_PREFIX + "/";
+  document.head.prepend(base);
+  window.__repoPrefix = REPO_PREFIX;
+}`;
+  const hostSrc = await readFile(runtimeHostPath, "utf8");
+  if (hostSrc.includes(oldBlock)) {
+    await writeFile(runtimeHostPath, hostSrc.replace(oldBlock, newBlock));
+    console.log("Patched runtime/inspection-host.js: always inject <base>");
+  } else if (!hostSrc.includes('window.__repoPrefix = REPO_PREFIX')) {
+    console.log("WARNING: runtime/inspection-host.js block not found, leaving as-is");
+  }
 }
 
 function GALLERY_TEMPLATE() {
