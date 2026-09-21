@@ -534,6 +534,29 @@ body { margin: 0; height: 100vh; display: flex; align-items: center; justify-con
   const finalHtml = template.replace("__DATA__", dataJson);
   await writeFile(path.join(DST, "index.html"), finalHtml);
 
+  // Post-process: inject cache-busting meta tags into ALL html files so
+  // users always fetch the freshest build (no stale CDN/browser cache).
+  const CACHE_META = `<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />`;
+  let cachePatched = 0;
+  async function patchHtmlFiles(dir) {
+    for (const entry of await readdir(dir, { withFileTypes: true })) {
+      const p = path.join(dir, entry.name);
+      if (entry.isDirectory()) await patchHtmlFiles(p);
+      else if (entry.name.endsWith(".html")) {
+        const txt = await readFile(p, "utf8");
+        if (txt.includes("</head>") && !txt.includes("no-cache, no-store, must-revalidate")) {
+          const patched = txt.replace("</head>", `${CACHE_META}\n</head>`);
+          await writeFile(p, patched);
+          cachePatched += 1;
+        }
+      }
+    }
+  }
+  await patchHtmlFiles(DST);
+  console.log(`Injected cache-busting meta into ${cachePatched} html files`);
+
   console.log(`Built ${examples.length} examples, ${Object.keys(grouped).length} skill groups`);
 }
 
@@ -612,6 +635,10 @@ footer .repo-link { font-family: "JetBrains Mono", monospace; font-size: 0.8rem;
 .install-banner h3 { font-size: 1rem; color: var(--accent); margin-bottom: 8px; }
 .install-banner pre { background: #03060c; color: #c5d4ed; padding: 12px 16px; border-radius: 8px; font-family: "JetBrains Mono", monospace; font-size: 0.78rem; overflow-x: auto; border: 1px solid var(--border); margin-top: 8px; }
 </style>
+<!-- Cache busting: force revalidation on every load so users always see the latest build. -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 </head>
 <body>
 <header class="hero">
