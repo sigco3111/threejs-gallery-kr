@@ -557,7 +557,40 @@ body { margin: 0; height: 100vh; display: flex; align-items: center; justify-con
   await patchHtmlFiles(DST);
   console.log(`Injected cache-busting meta into ${cachePatched} html files`);
 
+  // Convert all .ts source files to .js so GitHub Pages serves them with
+  // the right MIME type. .ts files would be served as video/mp2t and
+  // rejected by browsers with strict module-script MIME checking.
+  await runConvertTs();
+
   console.log(`Built ${examples.length} examples, ${Object.keys(grouped).length} skill groups`);
+}
+
+async function runConvertTs() {
+  const { spawn } = await import("node:child_process");
+  await new Promise((resolve, reject) => {
+    const child = spawn(
+      process.execPath,
+      [path.join(SRC, "scripts", "convert-ts.mjs")],
+      { stdio: "inherit" },
+    );
+    child.on("exit", (code) =>
+      code === 0 ? resolve() : reject(new Error(`convert-ts.mjs exited with ${code}`)),
+    );
+    child.on("error", reject);
+  });
+
+  // Delete original .ts files now that .js bundles exist alongside.
+  // GitHub Pages serves .ts as video/mp2t MIME type, which browsers reject
+  // for module scripts. Keeping the .ts would let stale imports fetch it.
+  const { rm } = await import("node:fs/promises");
+  async function deleteTs(dir) {
+    for (const entry of await readdir(dir, { withFileTypes: true })) {
+      const p = path.join(dir, entry.name);
+      if (entry.isDirectory()) await deleteTs(p);
+      else if (entry.name.endsWith(".ts")) await rm(p);
+    }
+  }
+  await deleteTs(DST);
 }
 
 function GALLERY_TEMPLATE() {
