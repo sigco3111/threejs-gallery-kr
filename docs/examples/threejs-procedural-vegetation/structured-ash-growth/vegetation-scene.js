@@ -89,9 +89,9 @@ const [
   textureLoader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/structured-ash-growth/bark-normal.jpg"),
   textureLoader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/structured-ash-growth/bark-roughness.jpg"),
   textureLoader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-vegetation/assets/structured-ash-growth/ash.png"),
-  textureLoader.loadAsync("/examples/threejs-procedural-vegetation/structured-ash-growth/assets/ground-grass.jpg"),
-  textureLoader.loadAsync("/examples/threejs-procedural-vegetation/structured-ash-growth/assets/ground-dirt.jpg"),
-  textureLoader.loadAsync("/examples/threejs-procedural-vegetation/structured-ash-growth/assets/ground-normal.jpg"),
+  textureLoader.loadAsync("/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/ground-grass.jpg"),
+  textureLoader.loadAsync("/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/ground-dirt.jpg"),
+  textureLoader.loadAsync("/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/ground-normal.jpg"),
 ]);
 
 for (const texture of [
@@ -524,7 +524,7 @@ dracoLoader.setDecoderPath("https://cdn.jsdelivr.net/npm/three@0.185.1/examples/
 gltfLoader.setDRACOLoader(dracoLoader);
 
 const gltf = await gltfLoader.loadAsync(
-  "/examples/threejs-procedural-vegetation/structured-ash-growth/assets/grass.glb",
+  "/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/grass.glb",
 );
 const grassSource = gltf.scene.children.find((child) => child.isMesh);
 const grassMaterial = new THREE.MeshPhongMaterial({
@@ -678,9 +678,9 @@ scene.add(grass);
 const flowers = new THREE.Group();
 const flowerRandom = new SceneRandom(81924);
 for (const asset of [
-  "/examples/threejs-procedural-vegetation/structured-ash-growth/assets/flower-white.glb",
-  "/examples/threejs-procedural-vegetation/structured-ash-growth/assets/flower-blue.glb",
-  "/examples/threejs-procedural-vegetation/structured-ash-growth/assets/flower-yellow.glb",
+  "/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/flower-white.glb",
+  "/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/flower-blue.glb",
+  "/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/flower-yellow.glb",
 ]) {
   const flowerSource = (await gltfLoader.loadAsync(asset)).scene;
   flowerSource.traverse((object) => {
@@ -713,9 +713,9 @@ scene.add(flowers);
 const rocks = new THREE.Group();
 const rockRandom = new SceneRandom(25177);
 for (const asset of [
-  "/examples/threejs-procedural-vegetation/structured-ash-growth/assets/rock1.glb",
-  "/examples/threejs-procedural-vegetation/structured-ash-growth/assets/rock2.glb",
-  "/examples/threejs-procedural-vegetation/structured-ash-growth/assets/rock3.glb",
+  "/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/rock1.glb",
+  "/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/rock2.glb",
+  "/threejs-gallery-kr/examples/threejs-procedural-vegetation/structured-ash-growth/assets/rock3.glb",
 ]) {
   const source = (await gltfLoader.loadAsync(asset)).scene.children.find(
     (child) => child.isMesh,

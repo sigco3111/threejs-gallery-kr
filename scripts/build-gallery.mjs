@@ -150,17 +150,18 @@ async function copyDir(src, dst) {
 function rewrite(content) {
   // Rewrite absolute asset URLs from /example-gallery/examples/ → /examples/
   // Support files stay at /example-gallery/support/
-  // Skills/ → /threejs-gallery-kr/skills/ so dynamic imports / fetches
-  // resolve under the GitHub Pages repo prefix. Our fetch shim adds the
-  // prefix for window.fetch, but module-loader specifiers (dynamic import
+  // Skills/Examples/Assets → /threejs-gallery-kr/<...> so dynamic imports /
+  // fetches resolve under the GitHub Pages repo prefix. Our fetch shim adds
+  // the prefix for window.fetch, but module-loader specifiers (dynamic import
   // targets) bypass fetch in some browsers, so we rewrite at build time
-  // instead. Same for /assets/, /example-gallery/, and the scene folder
-  // itself.
+  // instead. Same for /examples/, /assets/, /example-gallery/, and the scene
+  // folder itself.
   const REPO_PREFIX = "/threejs-gallery-kr";
   return content
     .replace(/(['"])\/example-gallery\/examples\//g, "$1/examples/")
     .replace(/(['"])\/skills\//g, `$1${REPO_PREFIX}/skills/`)
     .replace(/(['"])\/assets\//g, `$1${REPO_PREFIX}/assets/`)
+    .replace(/(['"])\/examples\//g, `$1${REPO_PREFIX}/examples/`)
     .replace(/(from\s+["'])\/example-gallery\//g, "$1/example-gallery/")
     .replace(/(import\s*\(\s*["'])\/example-gallery\//g, "$1/example-gallery/");
 }

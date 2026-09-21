@@ -73,9 +73,9 @@ const [
   loader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/antique-gold-frame.webp"),
   loader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/dark-ebony-frame.webp"),
   loader.loadAsync("/threejs-gallery-kr/skills/threejs-procedural-geometry/assets/sculpted-gallery-frame/gallery-mat-board.webp"),
-  loader.loadAsync("/examples/threejs-procedural-geometry/sculpted-gallery-frame/assets/gallery-plaster.webp"),
-  loader.loadAsync("/examples/threejs-procedural-geometry/sculpted-gallery-frame/assets/gallery-plaster-bump.webp"),
-  loader.loadAsync("/examples/threejs-procedural-geometry/sculpted-gallery-frame/assets/gallery-floor.webp"),
+  loader.loadAsync("/threejs-gallery-kr/examples/threejs-procedural-geometry/sculpted-gallery-frame/assets/gallery-plaster.webp"),
+  loader.loadAsync("/threejs-gallery-kr/examples/threejs-procedural-geometry/sculpted-gallery-frame/assets/gallery-plaster-bump.webp"),
+  loader.loadAsync("/threejs-gallery-kr/examples/threejs-procedural-geometry/sculpted-gallery-frame/assets/gallery-floor.webp"),
 ]);
 for (const texture of [walnutTexture, goldTexture, ebonyTexture, matTexture]) {
   configureTexture(texture, 1, 1);
